@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0.升级tab栏切换在上一节中写了单一的一个容器里面tab切换的示例，在实际开发中往往都是多个容器里的多个tab互相切换，例如淘宝首页的几楼都是这样，本节先升级一下上节的示例，鼠标滑过时选中tab，如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端入门—js第四天">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/前端入门—js第四天/index.html">
+<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:description" content="0.升级tab栏切换在上一节中写了单一的一个容器里面tab切换的示例，在实际开发中往往都是多个容器里的多个tab互相切换，例如淘宝首页的几楼都是这样，本节先升级一下上节的示例，鼠标滑过时选中tab，如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-14T10:42:09.744Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端入门—js第四天">
+<meta name="twitter:description" content="0.升级tab栏切换在上一节中写了单一的一个容器里面tab切换的示例，在实际开发中往往都是多个容器里的多个tab互相切换，例如淘宝首页的几楼都是这样，本节先升级一下上节的示例，鼠标滑过时选中tab，如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/前端入门—js第四天/"/>
+
+
+
+
+
+  <title>前端入门—js第四天 | 一颗向上的草莓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一颗向上的草莓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/前端入门—js第四天/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端入门—js第四天</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T18:41:06+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端—javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">前端—javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0-升级tab栏切换"><a href="#0-升级tab栏切换" class="headerlink" title="0.升级tab栏切换"></a>0.升级tab栏切换</h3><p>在上一节中写了单一的一个容器里面tab切换的示例，在实际开发中往往都是多个容器里的多个tab互相切换，例如淘宝首页的几楼都是这样，本节先升级一下上节的示例，鼠标滑过时选中tab，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;01tab栏切换升级版&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        *&#123;</span><br><span class="line">            margin: 0;</span><br><span class="line">            padding: 0;</span><br><span class="line">        &#125;</span><br><span class="line">        .box&#123;</span><br><span class="line">            width: 300px;</span><br><span class="line">            height: 300px;</span><br><span class="line">            border:1px solid #ccc;</span><br><span class="line">            margin: 50px auto;</span><br><span class="line">            overflow: hidden;</span><br><span class="line">        &#125;</span><br><span class="line">        ul&#123;</span><br><span class="line">            list-style-type: none;</span><br><span class="line">        &#125;</span><br><span class="line">        .top span&#123;</span><br><span class="line">            display: inline-block;</span><br><span class="line">            background-color: pink;</span><br><span class="line">            width: 70px;</span><br><span class="line">            height: 30px;</span><br><span class="line">            line-height: 30px;</span><br><span class="line">            text-align: center;</span><br><span class="line">            cursor:pointer;</span><br><span class="line">        &#125;</span><br><span class="line">        .top span.current&#123;</span><br><span class="line">            background-color: purple;</span><br><span class="line">        &#125;</span><br><span class="line">        .bottom li&#123;</span><br><span class="line">            width: 100%;</span><br><span class="line">            height: 270px;</span><br><span class="line">            background-color: purple;</span><br><span class="line">            display: none;</span><br><span class="line">        &#125;</span><br><span class="line">        .bottom li.show&#123;</span><br><span class="line">            display: block;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            //获取所有的span和li(这里需要指出的是span和li必须是一一对应的，即个数必须得相等)</span><br><span class="line">            var spans = document.getElementsByTagName(&quot;span&quot;);</span><br><span class="line">            var lis = document.getElementsByTagName(&quot;li&quot;);</span><br><span class="line">            for(var i=0;i&lt;spans.length;i++)&#123;</span><br><span class="line">                spans[i].index = i;  //给span设置index属性，先存下下标,关键</span><br><span class="line">                spans[i].onmouseover = function()&#123;</span><br><span class="line">                    //清除所有的li和span的属性（排他思想）</span><br><span class="line">                    for(var j=0;j&lt;spans.length;j++)&#123;</span><br><span class="line">                        spans[j].className=&quot;&quot;;</span><br><span class="line">                        lis[j].className=&quot;&quot;;</span><br><span class="line">                    &#125;</span><br><span class="line">                    //选中点击的span和它对应的li</span><br><span class="line">                    this.className=&quot;current&quot;;</span><br><span class="line">                    lis[this.index].className=&quot;show&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;</span><br><span class="line">        &lt;span class=&quot;current&quot;&gt;新闻&lt;/span&gt;</span><br><span class="line">        &lt;span&gt;体育&lt;/span&gt;</span><br><span class="line">        &lt;span&gt;娱乐&lt;/span&gt;</span><br><span class="line">        &lt;span&gt;八卦&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">            &lt;li class=&quot;show&quot;&gt;新闻模块&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;体育模块&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;娱乐模块&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;八卦模块&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;top&quot;&gt;</span><br><span class="line">        &lt;span class=&quot;current&quot;&gt;新闻&lt;/span&gt;</span><br><span class="line">        &lt;span&gt;体育&lt;/span&gt;</span><br><span class="line">        &lt;span&gt;娱乐&lt;/span&gt;</span><br><span class="line">        &lt;span&gt;八卦&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;bottom&quot;&gt;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">            &lt;li class=&quot;show&quot;&gt;新闻模块&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;体育模块&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;娱乐模块&lt;/li&gt;</span><br><span class="line">            &lt;li&gt;八卦模块&lt;/li&gt;</span><br><span class="line">        &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-循环语句"><a href="#1-循环语句" class="headerlink" title="1.循环语句"></a>1.循环语句</h3><p>js(以及大多数其它语言)都会有for循环，while循环，do while循环。</p>
+<ul>
+<li>for循环：for(初始化;条件;增量){ //执行语句}</li>
+<li>while循环:while(条件){ //执行语句}</li>
+<li>do while循环:do{ //执行语句} while(条件);<br>由以上可知，do while循环至少会执行一次语句（因为先执行才判断条件是否成立），三个循环不是太难，这里不再举例。<h3 id="2-switch分支语句"><a href="#2-switch分支语句" class="headerlink" title="2.switch分支语句"></a>2.switch分支语句</h3>switch是从多个条件中选择一个匹配的去执行，跟if  elseif的作用是一样的，但是效率的话switch更高。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;02switch语句&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        body&#123;</span><br><span class="line">            background: url(images/chun1.jpg) no-repeat;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">           var sel =  document.getElementById(&quot;sel&quot;);</span><br><span class="line">           sel.onchange = function()&#123;</span><br><span class="line">               switch(this.value)&#123;</span><br><span class="line">                   case &quot;1&quot;:</span><br><span class="line">                   document.body.style.backgroundImage = &quot;url(images/chun1.jpg)&quot;;</span><br><span class="line">                   break;</span><br><span class="line">                   case &quot;2&quot;:</span><br><span class="line">                       document.body.style.backgroundImage = &quot;url(images/xia1.jpg)&quot;;</span><br><span class="line">                       break;</span><br><span class="line">                   case &quot;3&quot;:</span><br><span class="line">                       document.body.style.backgroundImage = &quot;url(images/qiu1.jpg)&quot;;</span><br><span class="line">                       break;</span><br><span class="line">                   case &quot;4&quot;:</span><br><span class="line">                       document.body.style.backgroundImage = &quot;url(images/dong1.jpg)&quot;;</span><br><span class="line">                       break;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;select name=&quot;&quot; id=&quot;sel&quot;&gt;</span><br><span class="line">    &lt;option value=&quot;1&quot;&gt;春意盎然&lt;/option&gt;</span><br><span class="line">    &lt;option value=&quot;2&quot;&gt;夏日炎炎&lt;/option&gt;</span><br><span class="line">    &lt;option value=&quot;3&quot;&gt;秋声瑟瑟&lt;/option&gt;</span><br><span class="line">    &lt;option value=&quot;4&quot;&gt;冬雪皑皑&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里根据不同的下拉选框，换不同的北京图片。onchange可以监听下拉改变事件，当当前选定的值匹配到1,2,3,4是执行对应的case语句，执行完毕之后需要break（字面意思打断）停止当前代码继续向下执行。可以使用backgroundImage属性来修改背景图片，如果是链接用url，路径不要加引号。</p>
+<h3 id="3-数组常用方法"><a href="#3-数组常用方法" class="headerlink" title="3.数组常用方法"></a>3.数组常用方法</h3><h4 id="3-1添加数组元素"><a href="#3-1添加数组元素" class="headerlink" title="3.1添加数组元素"></a>3.1添加数组元素</h4><ul>
+<li>push()   从数组后面追加元素<br>使用push()方法可向数组末尾添加一个或多个元素，<strong><em>并返回数组新的长度</em></strong>。例如：<br>var arr = [“张三”,”李四”];    var length = arr.push(“王五”);   则执行结果是length=3，arr=[“张三”,”李四”,”王五”]; </li>
+<li>unshift()  从数组前面添加元素<br>使用unshift()方法可在数组开头添加一个或多个元素，<strong><em>并返回数组新的长度</em></strong>。例如：<br>var arr = [“张三”,”李四”];    var length = arr.push(“王五”);   则执行结果是length=3，arr=[“王五”,张三”,”李四”]; <h4 id="3-2删除数组元素"><a href="#3-2删除数组元素" class="headerlink" title="3.2删除数组元素"></a>3.2删除数组元素</h4></li>
+<li>pop()   删除数组最后一个元素，<strong><em>并返回最后一个元素的值</em></strong><br>如var arr=[1,3,5],var a = arr.pop(),执行完毕a=5,arr=[1,3];</li>
+<li>shift()  删除数组第一个元素，<strong><em>并返回第一个元素的值</em></strong><br>如var arr=[1,3,5],var a = arr.shift(),执行完毕a=1,arr=[3,5];<h4 id="3-3连接数组元素"><a href="#3-3连接数组元素" class="headerlink" title="3.3连接数组元素"></a>3.3连接数组元素</h4></li>
+<li>concat()  连接两个或多个数组<br>使用concat()可以连接两个或多个数组，它不会修改当前的数组，只会返回一个连接后的新的数组<br>var a=[1,2,3];  var b = [‘a’,’b’,’c’];  var c = a.concat(b);连接之后数组a,b都不会改变，c=[1,2,3,’a’,’b’,’c’];<h4 id="3-4把数组中的元素连接成字符串"><a href="#3-4把数组中的元素连接成字符串" class="headerlink" title="3.4把数组中的元素连接成字符串"></a>3.4把数组中的元素连接成字符串</h4></li>
+<li>join()  使用分隔符将数组中的元素连接成字符串<br>使用join(‘分隔符’)函数可将数组中的元素通过分隔符连接成一个字符串，分隔符可以为空，为空时默认分隔符都逗号。<br>如var arr = [1,2,3];  则var str = arr.join(‘-‘);  str的结果就是1-2-3.<h4 id="3-5把字符串分割成数组"><a href="#3-5把字符串分割成数组" class="headerlink" title="3.5把字符串分割成数组"></a>3.5把字符串分割成数组</h4></li>
+<li>split() 使用分隔符将字符串分割成数组。这个其实就是上面方法的逆运算<br>使用split(‘分隔符’,’数组长度’)函数可以将字符串按照分隔符分割成数组，其中分隔符和数组长度都可以省略，分隔符省略时默认是逗号。<br>如：var str = aa-bb-cc; var arr = str.split(“-“);  则arr数组的值为[aa,bb,cc].<h3 id="4-DOM操作"><a href="#4-DOM操作" class="headerlink" title="4.DOM操作"></a>4.DOM操作</h3>js是由ECMAScript(欧洲计算机协会，负责描述了js的基本语法和对象)，DOM(Document Object Model文档对象模型，负责处理网页内容)对象和BOM(Borwser Object Model浏览器对象模型，负责处理与浏览器交互)对象组成。<br>在这里我们主要介绍DOM，DOM为文档提供了结构化的描述，其实就是定义了如何通过脚本来访问文档结构（说白了就是怎么使用js操作html元素）。<h4 id="4-1节点"><a href="#4-1节点" class="headerlink" title="4.1节点"></a>4.1节点</h4>整个html文档是个文档节点；<br>每个html标签是个元素节点；<br>标签中的文字是文字节点；<br>标签的属性是属性节点；<br>在html中一切皆是节点。<h4 id="4-2访问节点"><a href="#4-2访问节点" class="headerlink" title="4.2访问节点"></a>4.2访问节点</h4>getElementById();  根据id访问节点；<br>getElementsByTagName();  根据标签名访问节点；<br>getElementsByClassName(();  根据类名访问节点，但是这个方法存在兼容问题，对于IE6/7/8不支持，我们可以封装自己的方法。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;03封装class类&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        div&#123;</span><br><span class="line">            width: 50px;</span><br><span class="line">            height: 50px;</span><br><span class="line">            margin: 10px;</span><br><span class="line">            background: pink;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            //封装我们自己的根据类名获取元素的方法</span><br><span class="line">            function getByClass(classname)&#123;</span><br><span class="line">                //判断是否支持js原生方法（即区分IE678和其它浏览器）</span><br><span class="line">                if(document.getElementsByClassName)&#123;</span><br><span class="line">                    return document.getElementsByClassName(classname);</span><br><span class="line">                &#125;</span><br><span class="line">                //程序走到这里，说明不支持document.getElementsByClassName方法，获取全部节点，遍历判断</span><br><span class="line">                var arr = [];  //定义返回数组</span><br><span class="line">                var elems = document.getElementsByTagName(&quot;*&quot;);  //获取页面所有节点</span><br><span class="line">                for(var i=0;i&lt;elems.length;i++)&#123;</span><br><span class="line">                    //获取这个元素的class类，并使用空格分割（比如demo test，不分割单纯的判断会有问题）</span><br><span class="line">                    var classes = elems[i].className.split(&quot; &quot;);</span><br><span class="line">                    for(var j=0;j&lt;classes.length;j++)&#123;</span><br><span class="line">                        if(classes[j]==classname)&#123;</span><br><span class="line">                            //存在此类名，将元素放入数组中</span><br><span class="line">                            arr.push(elems[i]);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                return arr;</span><br><span class="line">            &#125;</span><br><span class="line">            //调用</span><br><span class="line">            var tests = getByClass(&quot;test&quot;);</span><br><span class="line">            for(var k=0;k&lt;tests.length;k++)&#123;</span><br><span class="line">                tests[k].style.backgroundColor=&quot;red&quot;;   //结果就是两个变红，IE678测试没有问题</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;demo&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;demo test&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;test one&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>思路：根据getElementsByClassName判断是高级浏览器还是IE6/7/8,如果是高级浏览器则直接根据此方法返回，如果是IE6/7/8则遍历所有节点，再根据节点，获取节点里面的类，因为一个节点可能有多个类属性，中间是空格（比如demo test），所以再用空格分割，看是否包含这个类名，如果有则把当前节点（不是类名）放入数组中，最后返回。</p>
+<h4 id="4-3创建节点"><a href="#4-3创建节点" class="headerlink" title="4.3创建节点"></a>4.3创建节点</h4><p>使用creatElement()方法可以创建节点。<br>如：var div = document.creatElement(“div”);就生成了一个div标签。</p>
+<h4 id="4-4插入节点"><a href="#4-4插入节点" class="headerlink" title="4.4插入节点"></a>4.4插入节点</h4><ul>
+<li>appendChild();   添加子节点（ 字面意思添加孩子），放到盒子最后面。</li>
+<li>insertBefore(插入的节点，参照节点)  在参照节点之前插入节点，如果第二个参数不写则在盒子最后添加节点。<br>如：demo.insertBefore(test,childrens[0]);  在第一个孩子元素之前添加节点test。<br> demo.insertBefore(test,null);在盒子最后添加节点test。<h4 id="4-5删除节点"><a href="#4-5删除节点" class="headerlink" title="4.5删除节点"></a>4.5删除节点</h4>removeChild()  删除孩子节点<br>demo.removeChild(aa);  从demo节点移除孩子节点aa。<h4 id="4-6克隆（复制）节点"><a href="#4-6克隆（复制）节点" class="headerlink" title="4.6克隆（复制）节点"></a>4.6克隆（复制）节点</h4>cloneNode()  复制节点<br>括号里面可以跟参数，如果里面是true，则是深复制，除了复制盒子本身，还复制盒子子节点 ；如果是false则是浅复制，只复制该节点，不复制子节点。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;demo&quot;&gt;</span><br><span class="line">    &lt;div id=&quot;one&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;two&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var demo = document.getElementById(&quot;demo&quot;);</span><br><span class="line">    var one = document.getElementById(&quot;one&quot;);</span><br><span class="line">    //创建节点</span><br><span class="line">    var three = document.createElement(&quot;div&quot;);</span><br><span class="line">    //在后面添加节点</span><br><span class="line">    demo.appendChild(three);</span><br><span class="line">    //在前面插入节点</span><br><span class="line">    demo.insertBefore(three,null);</span><br><span class="line">    //删除节点</span><br><span class="line">    demo.removeChild(one);</span><br><span class="line">    //深克隆节点</span><br><span class="line">    var cloneNode = demo.cloneNode(true);</span><br><span class="line">    //克隆完要追加才能看到</span><br><span class="line">    demo.parentNode.appendChild(cloneNode);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="5-布尔类型的真假"><a href="#5-布尔类型的真假" class="headerlink" title="5.布尔类型的真假"></a>5.布尔类型的真假</h3><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>真假</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数字类型</td>
+<td>除0之外所有数字均为真，0是假</td>
+</tr>
+<tr>
+<td>字符串</td>
+<td>所有字符串都是真，’’是假</td>
+</tr>
+<tr>
+<td>对象</td>
+<td>所有对象均为真，null是假</td>
+</tr>
+<tr>
+<td>undefined</td>
+<td>Undefined类型只有undefined，是假</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-访问关系（重点）"><a href="#6-访问关系（重点）" class="headerlink" title="6.访问关系（重点）"></a>6.访问关系（重点）</h3><p>js中的访问关系有四种</p>
+<ul>
+<li>父节点<br>parentNode</li>
+<li>兄弟节点<br>nextSibling、nextElementSlibling、previousSibling、previousElementSibling</li>
+<li>子节点<br>firstChild、firstElementChild、lastChild、lastElementChild</li>
+<li>所有子节点<br>childNodes、children<h4 id="6-1父节点"><a href="#6-1父节点" class="headerlink" title="6.1父节点"></a>6.1父节点</h4>parentNode获取到的是元素的直接父节点（不包括爷爷），只有一个。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;06二维码&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .box&#123;</span><br><span class="line">            width:107px;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            position: relative;</span><br><span class="line">            border: 1px solid #cccccc;</span><br><span class="line">        &#125;</span><br><span class="line">        #close&#123;</span><br><span class="line">            width: 14px;</span><br><span class="line">            height: 14px;</span><br><span class="line">            font-size: 14px;</span><br><span class="line">            position: absolute;</span><br><span class="line">            line-height: 14px;</span><br><span class="line">            top:0;</span><br><span class="line">            left:-15px;</span><br><span class="line">            border: 1px;</span><br><span class="line">            cursor:pointer;</span><br><span class="line">            display: block;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            var close = document.getElementById(&quot;close&quot;);</span><br><span class="line">            close.onclick = function()&#123;</span><br><span class="line">                this.parentNode.style.display = &quot;none&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;</span><br><span class="line">    &lt;img src=&quot;images/taobao.jpg&quot;&gt;</span><br><span class="line">    &lt;span id=&quot;close&quot;&gt;x&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这个例子中当点击叉号时关闭页面，用到了parentNode,布局采用”子绝父相“，点击按钮时，根据当前节点，让它的父节点的display属性改为none即为隐藏。</p>
+<h4 id="6-2兄弟节点"><a href="#6-2兄弟节点" class="headerlink" title="6.2兄弟节点"></a>6.2兄弟节点</h4><ul>
+<li>nextSibling  下一个兄弟节点(不是所有的兄弟节点，只是当前节点的下一个兄弟)，IE6/7/8使用</li>
+<li>nextElementSibling   跟上面意思一样，供高版本浏览器使用的。</li>
+<li>previousSibling下一个兄弟节点(不是所有的兄弟节点，只是当前节点的下一个兄弟)，IE6/7/8使用</li>
+<li>previousElementSibling 跟上面意思一样，供高版本浏览器使用的。<br>基于以上的特点，我们在平时开发中一般用或(||)连接在一块使用，保证在IE6/7/8和高版本浏览器都是可用的。如：var div = one.nextElementSibling || one.nextSibling; 而且必须是高版本浏览器的在前，IE6/7/8的在后。<h4 id="6-3子节点"><a href="#6-3子节点" class="headerlink" title="6.3子节点"></a>6.3子节点</h4></li>
+<li>firstChild    第一个孩子节点，IE6/7/8使用</li>
+<li>firstElementChild   第一个孩子节点，供高版本浏览器使用的。</li>
+<li>lastChild  最后一个孩子节点，IE6/7/8使用（IE6/7/8大坑！！）</li>
+<li>previousElementSibling  最后一个孩子节点，供高版本浏览器使用的。<br>为保证兼容可以这样使用：var div = one.firstElementChild || one.firstChild; <h4 id="6-4孩子节点"><a href="#6-4孩子节点" class="headerlink" title="6.4孩子节点"></a>6.4孩子节点</h4></li>
+<li>childNodes    选出全部的孩子节点（亲的）。这个是js官方的，但是不太好用，因为在高版本浏览器中，会把换行也当做节点，还需要再根据nodeType判断一次（nodeType =1是元素节点）。</li>
+<li>children  选出所有的孩子节点（只有元素）。这个是民间大神弄的，但是更好用，一般使用这个。<br>需要注意一点的是，在IE678中会把注释也当做节点，计算节点个数的时候往往比正常浏览器多，避免的方法就是在要使用的元素代码里面不要写注释（第一次推荐不写注释）。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;孩子节点&lt;/title&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            var father = document.getElementsByTagName(&quot;ul&quot;)[0];</span><br><span class="line">            //如果使用第二种就不用判断了，方便alert(father.children.length);</span><br><span class="line">            var cs = father.childNodes;</span><br><span class="line">            for(var i=0;i&lt;cs.length;i++)&#123;</span><br><span class="line">                if(cs[i].nodeType==1)&#123;</span><br><span class="line">                    //不加nodeType判断，在高版本浏览器会报错</span><br><span class="line">                    cs[i].style.backgroundColor = &quot;pink&quot;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li&gt;123&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;123&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;123&lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>代码地址：<a href="https://git.oschina.net/catchu/web-study" target="_blank" rel="noopener">https://git.oschina.net/catchu/web-study</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/前端入门—js第三天/" rel="next" title="前端入门—js第三天">
+                <i class="fa fa-chevron-left"></i> 前端入门—js第三天
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/前端入门—js第五天/" rel="prev" title="前端入门—js第五天">
+                前端入门—js第五天 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">你只有非常努力，才能看起来毫不费力！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635?is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-升级tab栏切换"><span class="nav-text"><a href="#0-&#x5347;&#x7EA7;tab&#x680F;&#x5207;&#x6362;" class="headerlink" title="0.&#x5347;&#x7EA7;tab&#x680F;&#x5207;&#x6362;"></a>0.&#x5347;&#x7EA7;tab&#x680F;&#x5207;&#x6362;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-循环语句"><span class="nav-text"><a href="#1-&#x5FAA;&#x73AF;&#x8BED;&#x53E5;" class="headerlink" title="1.&#x5FAA;&#x73AF;&#x8BED;&#x53E5;"></a>1.&#x5FAA;&#x73AF;&#x8BED;&#x53E5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-switch分支语句"><span class="nav-text"><a href="#2-switch&#x5206;&#x652F;&#x8BED;&#x53E5;" class="headerlink" title="2.switch&#x5206;&#x652F;&#x8BED;&#x53E5;"></a>2.switch&#x5206;&#x652F;&#x8BED;&#x53E5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-数组常用方法"><span class="nav-text"><a href="#3-&#x6570;&#x7EC4;&#x5E38;&#x7528;&#x65B9;&#x6CD5;" class="headerlink" title="3.&#x6570;&#x7EC4;&#x5E38;&#x7528;&#x65B9;&#x6CD5;"></a>3.&#x6570;&#x7EC4;&#x5E38;&#x7528;&#x65B9;&#x6CD5;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1添加数组元素"><span class="nav-text"><a href="#3-1&#x6DFB;&#x52A0;&#x6570;&#x7EC4;&#x5143;&#x7D20;" class="headerlink" title="3.1&#x6DFB;&#x52A0;&#x6570;&#x7EC4;&#x5143;&#x7D20;"></a>3.1&#x6DFB;&#x52A0;&#x6570;&#x7EC4;&#x5143;&#x7D20;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2删除数组元素"><span class="nav-text"><a href="#3-2&#x5220;&#x9664;&#x6570;&#x7EC4;&#x5143;&#x7D20;" class="headerlink" title="3.2&#x5220;&#x9664;&#x6570;&#x7EC4;&#x5143;&#x7D20;"></a>3.2&#x5220;&#x9664;&#x6570;&#x7EC4;&#x5143;&#x7D20;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3连接数组元素"><span class="nav-text"><a href="#3-3&#x8FDE;&#x63A5;&#x6570;&#x7EC4;&#x5143;&#x7D20;" class="headerlink" title="3.3&#x8FDE;&#x63A5;&#x6570;&#x7EC4;&#x5143;&#x7D20;"></a>3.3&#x8FDE;&#x63A5;&#x6570;&#x7EC4;&#x5143;&#x7D20;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4把数组中的元素连接成字符串"><span class="nav-text"><a href="#3-4&#x628A;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x8FDE;&#x63A5;&#x6210;&#x5B57;&#x7B26;&#x4E32;" class="headerlink" title="3.4&#x628A;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x8FDE;&#x63A5;&#x6210;&#x5B57;&#x7B26;&#x4E32;"></a>3.4&#x628A;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x8FDE;&#x63A5;&#x6210;&#x5B57;&#x7B26;&#x4E32;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5把字符串分割成数组"><span class="nav-text"><a href="#3-5&#x628A;&#x5B57;&#x7B26;&#x4E32;&#x5206;&#x5272;&#x6210;&#x6570;&#x7EC4;" class="headerlink" title="3.5&#x628A;&#x5B57;&#x7B26;&#x4E32;&#x5206;&#x5272;&#x6210;&#x6570;&#x7EC4;"></a>3.5&#x628A;&#x5B57;&#x7B26;&#x4E32;&#x5206;&#x5272;&#x6210;&#x6570;&#x7EC4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-DOM操作"><span class="nav-text"><a href="#4-DOM&#x64CD;&#x4F5C;" class="headerlink" title="4.DOM&#x64CD;&#x4F5C;"></a>4.DOM&#x64CD;&#x4F5C;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1节点"><span class="nav-text"><a href="#4-1&#x8282;&#x70B9;" class="headerlink" title="4.1&#x8282;&#x70B9;"></a>4.1&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2访问节点"><span class="nav-text"><a href="#4-2&#x8BBF;&#x95EE;&#x8282;&#x70B9;" class="headerlink" title="4.2&#x8BBF;&#x95EE;&#x8282;&#x70B9;"></a>4.2&#x8BBF;&#x95EE;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3创建节点"><span class="nav-text"><a href="#4-3&#x521B;&#x5EFA;&#x8282;&#x70B9;" class="headerlink" title="4.3&#x521B;&#x5EFA;&#x8282;&#x70B9;"></a>4.3&#x521B;&#x5EFA;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4插入节点"><span class="nav-text"><a href="#4-4&#x63D2;&#x5165;&#x8282;&#x70B9;" class="headerlink" title="4.4&#x63D2;&#x5165;&#x8282;&#x70B9;"></a>4.4&#x63D2;&#x5165;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5删除节点"><span class="nav-text"><a href="#4-5&#x5220;&#x9664;&#x8282;&#x70B9;" class="headerlink" title="4.5&#x5220;&#x9664;&#x8282;&#x70B9;"></a>4.5&#x5220;&#x9664;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6克隆（复制）节点"><span class="nav-text"><a href="#4-6&#x514B;&#x9686;&#xFF08;&#x590D;&#x5236;&#xFF09;&#x8282;&#x70B9;" class="headerlink" title="4.6&#x514B;&#x9686;&#xFF08;&#x590D;&#x5236;&#xFF09;&#x8282;&#x70B9;"></a>4.6&#x514B;&#x9686;&#xFF08;&#x590D;&#x5236;&#xFF09;&#x8282;&#x70B9;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-布尔类型的真假"><span class="nav-text"><a href="#5-&#x5E03;&#x5C14;&#x7C7B;&#x578B;&#x7684;&#x771F;&#x5047;" class="headerlink" title="5.&#x5E03;&#x5C14;&#x7C7B;&#x578B;&#x7684;&#x771F;&#x5047;"></a>5.&#x5E03;&#x5C14;&#x7C7B;&#x578B;&#x7684;&#x771F;&#x5047;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-访问关系（重点）"><span class="nav-text"><a href="#6-&#x8BBF;&#x95EE;&#x5173;&#x7CFB;&#xFF08;&#x91CD;&#x70B9;&#xFF09;" class="headerlink" title="6.&#x8BBF;&#x95EE;&#x5173;&#x7CFB;&#xFF08;&#x91CD;&#x70B9;&#xFF09;"></a>6.&#x8BBF;&#x95EE;&#x5173;&#x7CFB;&#xFF08;&#x91CD;&#x70B9;&#xFF09;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1父节点"><span class="nav-text"><a href="#6-1&#x7236;&#x8282;&#x70B9;" class="headerlink" title="6.1&#x7236;&#x8282;&#x70B9;"></a>6.1&#x7236;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2兄弟节点"><span class="nav-text"><a href="#6-2&#x5144;&#x5F1F;&#x8282;&#x70B9;" class="headerlink" title="6.2&#x5144;&#x5F1F;&#x8282;&#x70B9;"></a>6.2&#x5144;&#x5F1F;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3子节点"><span class="nav-text"><a href="#6-3&#x5B50;&#x8282;&#x70B9;" class="headerlink" title="6.3&#x5B50;&#x8282;&#x70B9;"></a>6.3&#x5B50;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-4孩子节点"><span class="nav-text"><a href="#6-4&#x5B69;&#x5B50;&#x8282;&#x70B9;" class="headerlink" title="6.4&#x5B69;&#x5B50;&#x8282;&#x70B9;"></a>6.4&#x5B69;&#x5B50;&#x8282;&#x70B9;</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

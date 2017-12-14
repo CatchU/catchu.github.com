@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="spring,shiro," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0.数据库原型数据库原型如下图所示： 1.引入jar   除在入门中引入的jar包之外，在web项目中如果用到shiro，还需要引入以下jar：shiro-web-1.2.3.jarshiro-spring-1.2.3.jarshiro-quartz-1.2.3.jarquartz-1.6.1.jarehcache-core-2.5.0.jarshiro-ehcache-1.2.3.jar 2.在">
+<meta name="keywords" content="spring,shiro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shiro进阶—与项目整合">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/shiro进阶—与项目整合/index.html">
+<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:description" content="0.数据库原型数据库原型如下图所示： 1.引入jar   除在入门中引入的jar包之外，在web项目中如果用到shiro，还需要引入以下jar：shiro-web-1.2.3.jarshiro-spring-1.2.3.jarshiro-quartz-1.2.3.jarquartz-1.6.1.jarehcache-core-2.5.0.jarshiro-ehcache-1.2.3.jar 2.在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-14T10:08:45.558Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shiro进阶—与项目整合">
+<meta name="twitter:description" content="0.数据库原型数据库原型如下图所示： 1.引入jar   除在入门中引入的jar包之外，在web项目中如果用到shiro，还需要引入以下jar：shiro-web-1.2.3.jarshiro-spring-1.2.3.jarshiro-quartz-1.2.3.jarquartz-1.6.1.jarehcache-core-2.5.0.jarshiro-ehcache-1.2.3.jar 2.在">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/shiro进阶—与项目整合/"/>
+
+
+
+
+
+  <title>shiro进阶—与项目整合 | 一颗向上的草莓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一颗向上的草莓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/shiro进阶—与项目整合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shiro进阶—与项目整合</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T17:43:42+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台—shiro/" itemprop="url" rel="index">
+                    <span itemprop="name">后台—shiro</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0-数据库原型"><a href="#0-数据库原型" class="headerlink" title="0.数据库原型"></a>0.数据库原型</h3><p>数据库原型如下图所示：</p>
+<h3 id="1-引入jar"><a href="#1-引入jar" class="headerlink" title="1.引入jar"></a>1.引入jar</h3><p>   除在入门中引入的jar包之外，在web项目中如果用到shiro，还需要引入以下jar：<br>shiro-web-1.2.3.jar<br>shiro-spring-1.2.3.jar<br>shiro-quartz-1.2.3.jar<br>quartz-1.6.1.jar<br>ehcache-core-2.5.0.jar<br>shiro-ehcache-1.2.3.jar</p>
+<h3 id="2-在web-xml中配置shiro的filter"><a href="#2-在web-xml中配置shiro的filter" class="headerlink" title="2.在web.xml中配置shiro的filter"></a>2.在web.xml中配置shiro的filter</h3><p>   在web项目中也通过filter(过滤器)拦截shiro，filter拦截后将操作权交给在spring.xml中配置的过滤器链（fliterchain）处理，shiro中提供许多过滤器。在web.xml中配置shiro过滤器的web.xml完整代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xmlns:web=&quot;http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;</span><br><span class="line">  &lt;display-name&gt;permission1110&lt;/display-name&gt;</span><br><span class="line">  &lt;!-- 配置spring容器监听器 --&gt;</span><br><span class="line">	&lt;context-param&gt;</span><br><span class="line">		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">		&lt;param-value&gt;/WEB-INF/classes/spring/applicationContext-*.xml&lt;/param-value&gt;</span><br><span class="line">	&lt;/context-param&gt;</span><br><span class="line">	&lt;listener&gt;</span><br><span class="line">		&lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</span><br><span class="line">	&lt;/listener&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- 前端控制器 --&gt;</span><br><span class="line">	&lt;servlet&gt;</span><br><span class="line">		&lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</span><br><span class="line">		&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;</span><br><span class="line">		&lt;!-- 加载springmvc配置 --&gt;</span><br><span class="line">		&lt;init-param&gt;</span><br><span class="line">			&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</span><br><span class="line">			&lt;!-- 配置文件的地址 如果不配置contextConfigLocation， 默认查找的配置文件名称classpath下的：servlet名称+&quot;-serlvet.xml&quot;即：springmvc-serlvet.xml --&gt;</span><br><span class="line">			&lt;param-value&gt;classpath:spring/springmvc.xml&lt;/param-value&gt;</span><br><span class="line">		&lt;/init-param&gt;</span><br><span class="line"></span><br><span class="line">	&lt;/servlet&gt;</span><br><span class="line">	&lt;servlet-mapping&gt;</span><br><span class="line">		&lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;</span><br><span class="line">		&lt;!-- 可以配置/ ，此工程 所有请求全部由springmvc解析，此种方式可以实现 RESTful方式，需要特殊处理对静态文件的解析不能由springmvc解析 </span><br><span class="line">			可以配置*.do或*.action，所有请求的url扩展名为.do或.action由springmvc解析，此种方法常用 不可以/*，如果配置/*，返回jsp也由springmvc解析，这是不对的。 --&gt;</span><br><span class="line">		&lt;url-pattern&gt;*.action&lt;/url-pattern&gt;</span><br><span class="line">	&lt;/servlet-mapping&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!--这里就是配置的shiro过滤器--&gt;</span><br><span class="line">	&lt;!-- shiro的filter --&gt;</span><br><span class="line">	&lt;!-- shiro过虑器，DelegatingFilterProxy通过代理模式将spring容器中的bean和filter关联起来 --&gt;</span><br><span class="line">	&lt;filter&gt;</span><br><span class="line">		&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">		&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">		&lt;!-- 设置true由servlet容器控制filter的生命周期 --&gt;</span><br><span class="line">		&lt;init-param&gt;</span><br><span class="line">			&lt;param-name&gt;targetFilterLifecycle&lt;/param-name&gt;</span><br><span class="line">			&lt;param-value&gt;true&lt;/param-value&gt;</span><br><span class="line">		&lt;/init-param&gt;</span><br><span class="line">		&lt;!-- 设置spring容器filter的bean id，如果不设置则找与filter-name一致的bean--&gt;</span><br><span class="line">		&lt;init-param&gt;</span><br><span class="line">			&lt;param-name&gt;targetBeanName&lt;/param-name&gt;</span><br><span class="line">			&lt;param-value&gt;shiroFilter&lt;/param-value&gt;</span><br><span class="line">		&lt;/init-param&gt;</span><br><span class="line">	&lt;/filter&gt;</span><br><span class="line">	&lt;filter-mapping&gt;</span><br><span class="line">		&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">	&lt;/filter-mapping&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- post乱码处理 --&gt;</span><br><span class="line">	&lt;filter&gt;</span><br><span class="line">		&lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;</span><br><span class="line">		&lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;</span><br><span class="line">		&lt;init-param&gt;</span><br><span class="line">			&lt;param-name&gt;encoding&lt;/param-name&gt;</span><br><span class="line">			&lt;param-value&gt;utf-8&lt;/param-value&gt;</span><br><span class="line">		&lt;/init-param&gt;</span><br><span class="line">	&lt;/filter&gt;</span><br><span class="line">	&lt;filter-mapping&gt;</span><br><span class="line">		&lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;</span><br><span class="line">		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">	&lt;/filter-mapping&gt;</span><br><span class="line">  &lt;welcome-file-list&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.htm&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.jsp&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-在spring-shiro-xml中配置web-xml中过滤器对应spring容器中的bean"><a href="#3-在spring-shiro-xml中配置web-xml中过滤器对应spring容器中的bean" class="headerlink" title="3. 在spring-shiro.xml中配置web.xml中过滤器对应spring容器中的bean."></a>3. 在spring-shiro.xml中配置web.xml中过滤器对应spring容器中的bean.</h3><p> 配置代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</span><br><span class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">	xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd </span><br><span class="line">		http://www.springframework.org/schema/mvc </span><br><span class="line">		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd </span><br><span class="line">		http://www.springframework.org/schema/context </span><br><span class="line">		http://www.springframework.org/schema/context/spring-context-3.2.xsd </span><br><span class="line">		http://www.springframework.org/schema/aop </span><br><span class="line">		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd </span><br><span class="line">		http://www.springframework.org/schema/tx </span><br><span class="line">		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd &quot;&gt;</span><br><span class="line">	&lt;!-- web.xml中shiro的filter对应的bean --&gt;</span><br><span class="line">	&lt;!-- Shiro 的Web过滤器 --&gt;</span><br><span class="line">	&lt;bean id=&quot;shiroFilter&quot; class=&quot;org.apache.shiro.spring.web.ShiroFilterFactoryBean&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot; /&gt;</span><br><span class="line">		&lt;!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证 --&gt;</span><br><span class="line">		&lt;property name=&quot;loginUrl&quot; value=&quot;/login.action&quot; /&gt;</span><br><span class="line">		&lt;!-- 认证成功统一跳转到first.action，建议不配置，shiro会自动在认证成功后跳转到到上一个请求路径 --&gt;</span><br><span class="line">		&lt;property name=&quot;successUrl&quot; value=&quot;/first.action&quot;/&gt;</span><br><span class="line">		&lt;!-- 通过unauthorizedUrl指定没有权限操作时跳转页面--&gt;</span><br><span class="line">		&lt;property name=&quot;unauthorizedUrl&quot; value=&quot;/refuse.jsp&quot; /&gt;</span><br><span class="line">		&lt;!-- 过滤器链定义，从上向下顺序执行，一般将/**放在最下边 --&gt;</span><br><span class="line">		&lt;property name=&quot;filterChainDefinitions&quot;&gt;</span><br><span class="line">			&lt;value&gt;</span><br><span class="line">				&lt;!-- 对静态资源设置匿名访问 --&gt;</span><br><span class="line">				/images/** = anon</span><br><span class="line">				/js/** = anon</span><br><span class="line">				/styles/** = anon</span><br><span class="line">				&lt;!-- 验证码，可匿名访问 --&gt;</span><br><span class="line">				/validatecode.jsp = anon</span><br><span class="line">				</span><br><span class="line">				&lt;!-- 请求 logout.action地址，shiro去清除session--&gt;</span><br><span class="line">				/logout.action = logout</span><br><span class="line">				&lt;!-- 配置记住我或认证通过可以访问的地址 --&gt;</span><br><span class="line">				/index.jsp  = user</span><br><span class="line">				/first.action = user</span><br><span class="line">				/welcome.jsp = user</span><br><span class="line">				&lt;!-- /** = authc 所有url都必须认证通过才可以访问--&gt;</span><br><span class="line">				/** = authc</span><br><span class="line">				&lt;!-- /** = anon所有url都可以匿名访问 --&gt;</span><br><span class="line">				</span><br><span class="line">			&lt;/value&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- securityManager安全管理器 --&gt;</span><br><span class="line">	&lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;realm&quot; ref=&quot;customRealm&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 自定义realm --&gt;</span><br><span class="line">&lt;bean id=&quot;customRealm&quot; class=&quot;com.catchu.ssm.shiro.CustomRealm&quot;&gt;</span><br><span class="line">	&lt;!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 --&gt;</span><br><span class="line">	&lt;property name=&quot;credentialsMatcher&quot; ref=&quot;credentialsMatcher&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 凭证匹配器 --&gt;</span><br><span class="line"> &lt;bean id=&quot;credentialsMatcher&quot;</span><br><span class="line">	class=&quot;org.apache.shiro.authc.credential.HashedCredentialsMatcher&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;hashAlgorithmName&quot; value=&quot;md5&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;hashIterations&quot; value=&quot;1&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<p>我把自定义realm也放在了这一步进行配置</p>
+<h3 id="4-自定义realm进行认证"><a href="#4-自定义realm进行认证" class="headerlink" title="4.自定义realm进行认证"></a>4.自定义realm进行认证</h3><p>   我们在上一步spring-shiro.xml中配置了loginUrl，当用户没有登录时将会请求此地址进行登录，FormAuthenticationFilter会拦截到用户的请求，获取到username,password(默认，可以进行配置)，之后调用我们自定义的Realm进行认证。自定义realm代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @Description 用于认证</span><br><span class="line"> * @Author 刘俊重</span><br><span class="line"> * @date 2017年8月1日</span><br><span class="line"> */</span><br><span class="line">@Override</span><br><span class="line">protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException &#123;</span><br><span class="line">	//从token获取principal（身份信息）,token中存的是用户名和密码</span><br><span class="line">	String userCode = (String) token.getPrincipal();</span><br><span class="line">	</span><br><span class="line">	//根据用户名查询用户信息</span><br><span class="line">	SysUser sysUser = null;</span><br><span class="line">	try &#123;</span><br><span class="line">		sysUser = sysService.findSysUserByUserCode(userCode);</span><br><span class="line">	&#125; catch (Exception e1) &#123;</span><br><span class="line">		// TODO Auto-generated catch block</span><br><span class="line">		e1.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//用户不存在返回null</span><br><span class="line">	if(null== sysUser)&#123;</span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//用户存在，获取用户散列后的密码，盐</span><br><span class="line">	String password = sysUser.getPassword();</span><br><span class="line">	String salt = sysUser.getSalt();</span><br><span class="line">	</span><br><span class="line">	//activeUser就是用户的身份信息</span><br><span class="line">	ActiveUser activeUser = new ActiveUser();</span><br><span class="line">	activeUser.setUserid(&quot;zhangsan&quot;);</span><br><span class="line">	activeUser.setUsercode(&quot;zhangsan&quot;);</span><br><span class="line">	activeUser.setUsername(&quot;zhangsan&quot;);</span><br><span class="line">	//根据用户id查询菜单</span><br><span class="line">	List&lt;SysPermission&gt; menuList = null;</span><br><span class="line">	try &#123;</span><br><span class="line">		menuList = sysService.findMenuListByUserId(&quot;zhangsan&quot;);</span><br><span class="line">	&#125; catch (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	activeUser.setMenus(menuList);</span><br><span class="line">	</span><br><span class="line">	//将用户身份信息activeUser设置到SimpleAuthenticationInfo中</span><br><span class="line">	SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(activeUser,</span><br><span class="line">			password,ByteSource.Util.bytes(salt),getName());</span><br><span class="line">	return simpleAuthenticationInfo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>   在这里要注意的是：我们从token中获取到的是用户输入请求过来的用户名和密码，然后根据用户名查询数据库获得的用户信息并封装成ActiveUser，放在SimpleAuthenticationInfo中，之后ActiveUser就是主体的身份信息而不是username(你在SimpleAuthenticationInfo把谁放进去了，谁就是主体的身份信息)。</p>
+<h3 id="5-自定义Realm进行授权"><a href="#5-自定义Realm进行授权" class="headerlink" title="5.自定义Realm进行授权"></a>5.自定义Realm进行授权</h3><p>   直接入正题，我们这里采用注解进行springmvc的授权操作，注解中填权限标识符。首先需要在spring-mvc.xml中配置对shiro注解的支持。在原有spring-mvc.xml的代码中加入以下配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 开启aop，对类代理 --&gt;</span><br><span class="line">&lt;aop:config proxy-target-class=&quot;true&quot;&gt;&lt;/aop:config&gt;</span><br><span class="line">&lt;!-- 开启shiro注解支持 --&gt;</span><br><span class="line">&lt;bean</span><br><span class="line">	class=&quot;	org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>   在请求的Controller方法中配置@RequiresPermissions注解（里面填权限标识符），示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//商品信息方法</span><br><span class="line">@RequestMapping(&quot;/queryItem&quot;)</span><br><span class="line">@RequiresPermissions(&quot;item:query&quot;)  //表明请求这个queryItem时需要item:query权限，会调用自定义realm（调用数据库）查询主体拥有的权限，判断是否有访问本请求的权限</span><br><span class="line">public ModelAndView queryItems(HttpServletRequest request) throws Exception &#123;</span><br><span class="line">	System.out.println(request.getParameter(&quot;id&quot;));</span><br><span class="line">	//调用service查询商品列表</span><br><span class="line">	List&lt;ItemsCustom&gt; itemsList = itemsService.findItemsList(null);</span><br><span class="line">	ModelAndView modelAndView = new ModelAndView();</span><br><span class="line">	modelAndView.addObject(&quot;itemsList&quot;, itemsList);</span><br><span class="line">	// 指定逻辑视图名</span><br><span class="line">	modelAndView.setViewName(&quot;itemsList&quot;);</span><br><span class="line">	return modelAndView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>   比如当请求/queryItem过来时，看到有RequiresPermissions注解，表明本请求需要要权限才能访问，就会调用自定义的realm查询本主体（subject）所有的权限，看这个权限标识符是否在该主体拥有的权限标识符中，自定义realm进行授权代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @Description 用于授权</span><br><span class="line"> * @Author 刘俊重</span><br><span class="line"> * @date 2017年8月1日</span><br><span class="line"> */</span><br><span class="line">@Override</span><br><span class="line">protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) &#123;</span><br><span class="line">	//从principals中获取主身份信息。在上一步认证中把身份信息activeUser放进了SimpleAuthenticationInfo，这里再取出来。</span><br><span class="line">	ActiveUser activeUser = (ActiveUser) principals.getPrimaryPrincipal();</span><br><span class="line">	//从数据库中根据身份信息查询到的权限信息</span><br><span class="line">	List&lt;SysPermission&gt; permissionList = null;</span><br><span class="line">	try &#123;</span><br><span class="line">		permissionList = sysService.findPermissionListByUserId(activeUser.getUserid());</span><br><span class="line">	&#125; catch (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	List&lt;String&gt; permissions = new ArrayList&lt;String&gt;();</span><br><span class="line">	if(permissionList!=null &amp;&amp; permissionList.size()&gt;0)&#123;</span><br><span class="line">		for(SysPermission permission:permissionList)&#123;</span><br><span class="line">			//将用户权限标识符放在list之后填充到SimpleAuthorizationInfo并返回</span><br><span class="line">			permissions.add(permission.getPercode());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	//构建授权信息，并返回</span><br><span class="line">	SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();</span><br><span class="line">	simpleAuthorizationInfo.addStringPermissions(permissions);</span><br><span class="line">	return simpleAuthorizationInfo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="6-常用的shiro过滤器"><a href="#6-常用的shiro过滤器" class="headerlink" title="6.常用的shiro过滤器"></a>6.常用的shiro过滤器</h3><p>   常用的shiro过滤器如下，可以关联源码，在shiro-web包下查看源代码：<br>| 过滤器简称      | 对应的java类                                 |<br>| ———- | —————————————- |<br>| anon       | org.apache.shiro.web.filter.authc.AnonymousFilter |<br>| authc      | org.apache.shiro.web.filter.authc.<a href="">FormAuthenticationFilter</a> |<br>| authcBasic | org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter |<br>| perms      | org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter |<br>| port       | org.apache.shiro.web.filter.authz.PortFilter |<br>| rest       | org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter |<br>| roles      | org.apache.shiro.web.filter.authz.RolesAuthorizationFilter |<br>| ssl        | org.apache.shiro.web.filter.authz.SslFilter |<br>| user       | org.apache.shiro.web.filter.authc.UserFilter |<br>| logout     | org.apache.shiro.web.filter.authc.LogoutFilter |</p>
+<p>   anon:例子/admins/<strong>=anon 没有参数，表示可以匿名使用。<br>   authc:例如/admins/user/</strong>=authc表示需要认证(登录)才能使用，FormAuthenticationFilter是表单认证，没有参数<br>   perms：例子/admins/user/<em>*=perms[user:add:</em>],参数可以写多个，多个时必须加上引号，并且参数之间用逗号分割，例如/admins/user/=perms[“user:add:<em>,user:modify:</em>“]，当有多个参数时必须每个参数都通过才通过，想当于isPermitedAll()方法。</p>
+<p>   user:例如/admins/user/**=user没有参数表示必须存在用户, 身份认证通过或通过记住我认证通过的可以访问，当登入操作时不做检查</p>
+<h3 id="7-Jsp标签授权"><a href="#7-Jsp标签授权" class="headerlink" title="7.Jsp标签授权"></a>7.Jsp标签授权</h3><p>   在jsp或者html页面中，如果开发者想对项目控制的粒度更加精细，可以在页面中使用标签授权（类似于ifelse的判断形式），Jsp页面添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ tagliburi=&quot;http://shiro.apache.org/tags&quot; prefix=&quot;shiro&quot; %&gt;</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>标签名称</th>
+<th>标签条件（均是显示标签内容）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shiro:authenticated(左右两边的尖括号省略)</td>
+<td>登录之后</td>
+</tr>
+<tr>
+<td>shiro:notAuthenticated</td>
+<td>不在登录状态时</td>
+</tr>
+<tr>
+<td>shiro:guest</td>
+<td>用户在没有RememberMe时</td>
+</tr>
+<tr>
+<td>shiro:user</td>
+<td>用户在RememberMe时</td>
+</tr>
+<tr>
+<td>shiro:hasAnyRoles name=”abc,123”</td>
+<td>在有abc或者123角色时</td>
+</tr>
+<tr>
+<td>shiro:hasRole name=”abc”</td>
+<td>拥有角色abc</td>
+</tr>
+<tr>
+<td>shiro:lacksRole name=”abc”</td>
+<td>没有角色abc</td>
+</tr>
+<tr>
+<td>shiro:hasPermission name=”abc”</td>
+<td>拥有权限资源abc</td>
+</tr>
+<tr>
+<td>shiro:lacksPermission name=”abc”</td>
+<td>没有abc权限资源</td>
+</tr>
+<tr>
+<td>shiro:principal</td>
+<td>显示用户身份()名称</td>
+</tr>
+</tbody>
+</table>
+<p>   到这里其实shiro跟web项目的整合已经配置完成了，正常使用是没有问题的，下面涉及到的都是优化的操作</p>
+<h3 id="8-shiro缓存"><a href="#8-shiro缓存" class="headerlink" title="8.shiro缓存"></a>8.shiro缓存</h3><p>   通过上一步打断点我们会看出，只要用户发请求了，而且controller中有RequiresPermissions注解了，都会重复调用自定义realm的授权方法，重复的查询数据库，我们就想到了用缓存来提高速度。<br>   shiro中提供了对认证信息和授权信息的缓存。shiro默认是关闭认证信息缓存的，对于授权信息的缓存shiro默认开启的。主要研究授权信息缓存，因为授权的数据量大。<br>   用户认证通过。<br>   该用户第一次授权：调用realm查询数据库<br>   该用户第二次授权：不调用realm查询数据库，直接从缓存中取出授权信息（权限标识符）。</p>
+<ul>
+<li><p>添加ehcache的jar，并且配置shiro-ehcache.xml,代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;ehcache xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:noNamespaceSchemaLocation=&quot;../config/ehcache.xsd&quot;&gt;</span><br><span class="line">	&lt;!--diskStore：缓存数据持久化的目录 地址  --&gt;</span><br><span class="line">	&lt;diskStore path=&quot;F:\develop\ehcache&quot; /&gt;</span><br><span class="line">	&lt;defaultCache </span><br><span class="line">		maxElementsInMemory=&quot;1000&quot; </span><br><span class="line">		maxElementsOnDisk=&quot;10000000&quot;</span><br><span class="line">		eternal=&quot;false&quot; </span><br><span class="line">		overflowToDisk=&quot;false&quot; </span><br><span class="line">		diskPersistent=&quot;false&quot;</span><br><span class="line">		timeToIdleSeconds=&quot;120&quot;</span><br><span class="line">		timeToLiveSeconds=&quot;120&quot; </span><br><span class="line">		diskExpiryThreadIntervalSeconds=&quot;120&quot;</span><br><span class="line">		memoryStoreEvictionPolicy=&quot;LRU&quot;&gt;</span><br><span class="line">	&lt;/defaultCache&gt;</span><br><span class="line">&lt;/ehcache&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在spring-shiro.xml配置文件中，配置安全管理器（securityManger）中引入shiro-ehcache.xml:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">	&lt;!-- securityManager安全管理器 --&gt;</span><br><span class="line">	&lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;realm&quot; ref=&quot;customRealm&quot; /&gt;</span><br><span class="line">		&lt;!-- 注入缓存管理器 --&gt;</span><br><span class="line">		&lt;property name=&quot;cacheManager&quot; ref=&quot;cacheManager&quot;/&gt;	</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 缓存管理器 --&gt;</span><br><span class="line"> &lt;bean id=&quot;cacheManager&quot; class=&quot;org.apache.shiro.cache.ehcache.EhCacheManager&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;cacheManagerConfigFile&quot; value=&quot;classpath:shiro-ehcache.xml&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>清空缓存：<br>如果用户正常退出，缓存自动清空。<br>如果用户非正常退出，缓存自动清空。<br>如果修改了用户的权限，而用户不退出系统，修改的权限无法立即生效。<br>需要手动进行编程实现：在权限修改后调用自定义realm的clearCache方法清除缓存。<br>在自定义Realm定义的清空缓存的方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//清除缓存</span><br><span class="line">public void clearCached() &#123;</span><br><span class="line">	PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();</span><br><span class="line">	super.clearCache(principals);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在修改完用户的权限之后的serviceImpl层中可以直接调用清除缓存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//注入realm</span><br><span class="line">@Autowired</span><br><span class="line">private CustomRealm customRealm;</span><br><span class="line"></span><br><span class="line">@RequestMapping(&quot;/clearShiroCache&quot;)</span><br><span class="line">public String clearShiroCache()&#123;</span><br><span class="line">	//清除缓存，将来正常开发要在service调用customRealm.clearCached()</span><br><span class="line">	customRealm.clearCached();</span><br><span class="line">	return &quot;success&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="9-自定义表单认证过滤器"><a href="#9-自定义表单认证过滤器" class="headerlink" title="9.自定义表单认证过滤器"></a>9.自定义表单认证过滤器</h3><p>   现在有一个需求，就是用户登录时不止提交有用户名，密码，还有验证码。那么原有的表单验证拦截器只验证用户名和密码就不行了。我们继承FormAuthenticationFilter拦截器实现自己的拦截器即可。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">package com.catchu.ssm.shiro;</span><br><span class="line">import javax.servlet.ServletRequest;</span><br><span class="line">import javax.servlet.ServletResponse;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpSession;</span><br><span class="line">import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;</span><br><span class="line">/**</span><br><span class="line"> * @author 刘俊重</span><br><span class="line"> * @Description 自定义FormAuthenticationFilter，认证之前实现 验证码校验</span><br><span class="line"> * @date 2017年8月4日</span><br><span class="line"> */</span><br><span class="line">public class CustomFormAuthenticationFilter extends FormAuthenticationFilter &#123;</span><br><span class="line">	//原FormAuthenticationFilter的认证方法</span><br><span class="line">	@Override</span><br><span class="line">	protected boolean onAccessDenied(ServletRequest request,</span><br><span class="line">			ServletResponse response) throws Exception &#123;</span><br><span class="line">		//在这里进行验证码的校验</span><br><span class="line">		</span><br><span class="line">		//从session获取正确验证码</span><br><span class="line">		HttpServletRequest httpServletRequest = (HttpServletRequest) request;</span><br><span class="line">		HttpSession session =httpServletRequest.getSession();</span><br><span class="line">		//取出session的验证码（正确的验证码）</span><br><span class="line">		String validateCode = (String) session.getAttribute(&quot;validateCode&quot;);</span><br><span class="line">		</span><br><span class="line">		//取出页面的验证码</span><br><span class="line">		//输入的验证和session中的验证进行对比 </span><br><span class="line">		String randomcode = httpServletRequest.getParameter(&quot;randomcode&quot;);</span><br><span class="line">		if(randomcode!=null &amp;&amp; validateCode!=null &amp;&amp; !randomcode.equals(validateCode))&#123;</span><br><span class="line">			//如果校验失败，将验证码错误失败信息，通过shiroLoginFailure设置到request中</span><br><span class="line">			httpServletRequest.setAttribute(&quot;shiroLoginFailure&quot;, &quot;randomCodeError&quot;);</span><br><span class="line">			//拒绝访问，不再校验账号和密码 </span><br><span class="line">			return true; </span><br><span class="line">		&#125;</span><br><span class="line">		return super.onAccessDenied(request, response);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在spring-shiro.xml中配置代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 自定义form认证过虑器 --&gt;</span><br><span class="line">&lt;!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置 --&gt;</span><br><span class="line">&lt;bean id=&quot;formAuthenticationFilter&quot; </span><br><span class="line">	class=&quot;com.catchu.ssm.shiro.CustomFormAuthenticationFilter &quot;&gt;</span><br><span class="line">		&lt;!-- 表单中账号的input名称 --&gt;</span><br><span class="line">		&lt;property name=&quot;usernameParam&quot; value=&quot;username&quot; /&gt;</span><br><span class="line">		&lt;!-- 表单中密码的input名称 --&gt;</span><br><span class="line">		&lt;property name=&quot;passwordParam&quot; value=&quot;password&quot; /&gt;</span><br><span class="line">		&lt;!-- 记住我input的名称 --&gt;</span><br><span class="line">		&lt;property name=&quot;rememberMeParam&quot; value=&quot;rememberMe&quot;/&gt;</span><br><span class="line"> &lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p>注入到安全管理器（securitymanager）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 自定义filter配置 --&gt;</span><br><span class="line">&lt;property name=&quot;filters&quot;&gt;</span><br><span class="line">	&lt;map&gt;</span><br><span class="line">		&lt;!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中 --&gt;</span><br><span class="line">		&lt;entry key=&quot;authc&quot; value-ref=&quot;formAuthenticationFilter&quot; /&gt;</span><br><span class="line">	&lt;/map&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="10-配置rememberMe"><a href="#10-配置rememberMe" class="headerlink" title="10.配置rememberMe"></a>10.配置rememberMe</h3><p>有时用户登录之后需要记住用户名和密码，保存在cookie中，下次登录可以直接访问。</p>
+<ul>
+<li><p>jsp中页面代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;TD&gt;&lt;/TD&gt;</span><br><span class="line">&lt;td&gt;&lt;input type=&quot;checkbox&quot; name=&quot;rememberMe&quot; /&gt;自动登陆&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ActiveUser类要实现序列化（用户身份信息，存入session 由于tomcat将session会序列化在本地硬盘上，所以使用Serializable接口）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class ActiveUser implements java.io.Serializable &#123;</span><br><span class="line">	private String userid;//用户id（主键）</span><br><span class="line">	private String usercode;// 用户账号</span><br><span class="line">	private String username;// 用户名称</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>spring-shiro.xml中配置rememberMeManager管理器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- rememberMeManager管理器，写cookie，取出cookie生成用户信息 --&gt;</span><br><span class="line"> 	&lt;bean id=&quot;rememberMeManager&quot; class=&quot;org.apache.shiro.web.mgt.CookieRememberMeManager&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;cookie&quot; ref=&quot;rememberMeCookie&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;!-- 记住我cookie --&gt;</span><br><span class="line">	&lt;bean id=&quot;rememberMeCookie&quot; class=&quot;org.apache.shiro.web.servlet.SimpleCookie&quot;&gt;</span><br><span class="line">		&lt;!-- rememberMe是cookie的名字 --&gt;</span><br><span class="line">		&lt;constructor-arg value=&quot;rememberMe&quot; /&gt;</span><br><span class="line">		&lt;!-- 记住我cookie生效时间30天 --&gt;</span><br><span class="line">		&lt;property name=&quot;maxAge&quot; value=&quot;2592000&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用UserFilter<br>如果设置记住我，下次访问某些url时可以不用登陆。将记住我即可访问的地址配置让UserFilter拦截。在spring-shiro.xml中配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 配置记住我或认证通过可以访问的地址 --&gt;</span><br><span class="line">				/index.jsp  = user</span><br><span class="line">				/first.action = user</span><br><span class="line">				/welcome.jsp = user</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>都配置完成之后，在浏览器的cookie中查看即可看到cookie信息。<br>附：spring-shiro.xml中所有配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</span><br><span class="line">	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">	xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd </span><br><span class="line">		http://www.springframework.org/schema/mvc </span><br><span class="line">		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd </span><br><span class="line">		http://www.springframework.org/schema/context </span><br><span class="line">		http://www.springframework.org/schema/context/spring-context-3.2.xsd </span><br><span class="line">		http://www.springframework.org/schema/aop </span><br><span class="line">		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd </span><br><span class="line">		http://www.springframework.org/schema/tx </span><br><span class="line">		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd &quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- web.xml中shiro的filter对应的bean --&gt;</span><br><span class="line">	&lt;!-- Shiro 的Web过滤器 --&gt;</span><br><span class="line">	&lt;bean id=&quot;shiroFilter&quot; class=&quot;org.apache.shiro.spring.web.ShiroFilterFactoryBean&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot; /&gt;</span><br><span class="line">		&lt;!-- loginUrl认证提交地址，如果没有认证将会请求此地址进行认证，请求此地址将由formAuthenticationFilter进行表单认证 --&gt;</span><br><span class="line">		&lt;property name=&quot;loginUrl&quot; value=&quot;/login.action&quot; /&gt;</span><br><span class="line">		&lt;!-- 认证成功统一跳转到first.action，建议不配置，shiro会自动在认证成功后跳转到到上一个请求路径 --&gt;</span><br><span class="line">		&lt;property name=&quot;successUrl&quot; value=&quot;/first.action&quot;/&gt;</span><br><span class="line">		&lt;!-- 通过unauthorizedUrl指定没有权限操作时跳转页面--&gt;</span><br><span class="line">		&lt;property name=&quot;unauthorizedUrl&quot; value=&quot;/refuse.jsp&quot; /&gt;</span><br><span class="line">		&lt;!-- 自定义filter配置 --&gt;</span><br><span class="line">		&lt;property name=&quot;filters&quot;&gt;</span><br><span class="line">			&lt;map&gt;</span><br><span class="line">				&lt;!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中 --&gt;</span><br><span class="line">				&lt;entry key=&quot;authc&quot; value-ref=&quot;formAuthenticationFilter&quot; /&gt;</span><br><span class="line">			&lt;/map&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">		</span><br><span class="line">		&lt;!-- 过滤器链定义，从上向下顺序执行，一般将/**放在最下边 --&gt;</span><br><span class="line">		&lt;property name=&quot;filterChainDefinitions&quot;&gt;</span><br><span class="line">			&lt;value&gt;</span><br><span class="line">				&lt;!-- 对静态资源设置匿名访问 --&gt;</span><br><span class="line">				/images/** = anon</span><br><span class="line">				/js/** = anon</span><br><span class="line">				/styles/** = anon</span><br><span class="line">				&lt;!-- 验证码，可匿名访问 --&gt;</span><br><span class="line">				/validatecode.jsp = anon</span><br><span class="line">				</span><br><span class="line">				&lt;!-- 请求 logout.action地址，shiro去清除session--&gt;</span><br><span class="line">				/logout.action = logout</span><br><span class="line">				&lt;!--商品查询需要商品查询权限 ，取消url拦截配置，使用注解授权方式 --&gt;</span><br><span class="line">				&lt;!-- /item/queryItem.action = perms[item:query]</span><br><span class="line">				/items/editItems.action = perms[item:edit] --&gt;</span><br><span class="line">				&lt;!-- 配置记住我或认证通过可以访问的地址 --&gt;</span><br><span class="line">				/index.jsp  = user</span><br><span class="line">				/first.action = user</span><br><span class="line">				/welcome.jsp = user</span><br><span class="line">				&lt;!-- /** = authc 所有url都必须认证通过才可以访问--&gt;</span><br><span class="line">				/** = authc</span><br><span class="line">				&lt;!-- /** = anon所有url都可以匿名访问 --&gt;</span><br><span class="line">				</span><br><span class="line">			&lt;/value&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- securityManager安全管理器 --&gt;</span><br><span class="line">	&lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;realm&quot; ref=&quot;customRealm&quot; /&gt;</span><br><span class="line">		&lt;!-- 注入缓存管理器 --&gt;</span><br><span class="line">		&lt;property name=&quot;cacheManager&quot; ref=&quot;cacheManager&quot;/&gt;</span><br><span class="line">		&lt;!-- 注入session管理器 --&gt;</span><br><span class="line">		&lt;property name=&quot;sessionManager&quot; ref=&quot;sessionManager&quot; /&gt;</span><br><span class="line">		&lt;!-- 记住我 --&gt;</span><br><span class="line"> 		&lt;property name=&quot;rememberMeManager&quot; ref=&quot;rememberMeManager&quot;/&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 自定义realm --&gt;</span><br><span class="line">&lt;bean id=&quot;customRealm&quot; class=&quot;com.catchu.ssm.shiro.CustomRealm&quot;&gt;</span><br><span class="line">	&lt;!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 --&gt;</span><br><span class="line">	&lt;property name=&quot;credentialsMatcher&quot; ref=&quot;credentialsMatcher&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 凭证匹配器 --&gt;</span><br><span class="line"> &lt;bean id=&quot;credentialsMatcher&quot;</span><br><span class="line">	class=&quot;org.apache.shiro.authc.credential.HashedCredentialsMatcher&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;hashAlgorithmName&quot; value=&quot;md5&quot; /&gt;</span><br><span class="line">	&lt;property name=&quot;hashIterations&quot; value=&quot;1&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 缓存管理器 --&gt;</span><br><span class="line"> &lt;bean id=&quot;cacheManager&quot; class=&quot;org.apache.shiro.cache.ehcache.EhCacheManager&quot;&gt;</span><br><span class="line">    &lt;property name=&quot;cacheManagerConfigFile&quot; value=&quot;classpath:shiro-ehcache.xml&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 会话管理器 --&gt;</span><br><span class="line">&lt;bean id=&quot;sessionManager&quot; class=&quot;org.apache.shiro.web.session.mgt.DefaultWebSessionManager&quot;&gt;</span><br><span class="line">   	&lt;!-- session的失效时长，单位毫秒 --&gt;</span><br><span class="line">   	&lt;property name=&quot;globalSessionTimeout&quot; value=&quot;5000&quot;/&gt;</span><br><span class="line">  	&lt;!--  删除失效的session --&gt;</span><br><span class="line">    &lt;property name=&quot;deleteInvalidSessions&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 自定义form认证过虑器 --&gt;</span><br><span class="line">&lt;!-- 基于Form表单的身份验证过滤器，不配置将也会注册此过虑器，表单中的用户账号、密码及loginurl将采用默认值，建议配置 --&gt;</span><br><span class="line">&lt;bean id=&quot;formAuthenticationFilter&quot; </span><br><span class="line">	class=&quot;com.catchu.ssm.shiro.CustomFormAuthenticationFilter &quot;&gt;</span><br><span class="line">		&lt;!-- 表单中账号的input名称 --&gt;</span><br><span class="line">		&lt;property name=&quot;usernameParam&quot; value=&quot;username&quot; /&gt;</span><br><span class="line">		&lt;!-- 表单中密码的input名称 --&gt;</span><br><span class="line">		&lt;property name=&quot;passwordParam&quot; value=&quot;password&quot; /&gt;</span><br><span class="line">		&lt;!-- 记住我input的名称 --&gt;</span><br><span class="line">		&lt;property name=&quot;rememberMeParam&quot; value=&quot;rememberMe&quot;/&gt;</span><br><span class="line"> &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- rememberMeManager管理器，写cookie，取出cookie生成用户信息 --&gt;</span><br><span class="line"> 	&lt;bean id=&quot;rememberMeManager&quot; class=&quot;org.apache.shiro.web.mgt.CookieRememberMeManager&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;cookie&quot; ref=&quot;rememberMeCookie&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;!-- 记住我cookie --&gt;</span><br><span class="line">	&lt;bean id=&quot;rememberMeCookie&quot; class=&quot;org.apache.shiro.web.servlet.SimpleCookie&quot;&gt;</span><br><span class="line">		&lt;!-- rememberMe是cookie的名字 --&gt;</span><br><span class="line">		&lt;constructor-arg value=&quot;rememberMe&quot; /&gt;</span><br><span class="line">		&lt;!-- 记住我cookie生效时间30天 --&gt;</span><br><span class="line">		&lt;property name=&quot;maxAge&quot; value=&quot;2592000&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<p>代码地址：<a href="http://git.oschina.net/catchu/permission-shiro" target="_blank" rel="noopener">http://git.oschina.net/catchu/permission-shiro</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spring/" rel="tag"># spring</a>
+          
+            <a href="/tags/shiro/" rel="tag"># shiro</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/Shiro入门—授权/" rel="next" title="Shiro入门—授权">
+                <i class="fa fa-chevron-left"></i> Shiro入门—授权
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/spring-xml中配置文件使用占位符/" rel="prev" title="spring.xm中配置文件使用占位符">
+                spring.xm中配置文件使用占位符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">你只有非常努力，才能看起来毫不费力！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635?is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-数据库原型"><span class="nav-text"><a href="#0-&#x6570;&#x636E;&#x5E93;&#x539F;&#x578B;" class="headerlink" title="0.&#x6570;&#x636E;&#x5E93;&#x539F;&#x578B;"></a>0.&#x6570;&#x636E;&#x5E93;&#x539F;&#x578B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-引入jar"><span class="nav-text"><a href="#1-&#x5F15;&#x5165;jar" class="headerlink" title="1.&#x5F15;&#x5165;jar"></a>1.&#x5F15;&#x5165;jar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在web-xml中配置shiro的filter"><span class="nav-text"><a href="#2-&#x5728;web-xml&#x4E2D;&#x914D;&#x7F6E;shiro&#x7684;filter" class="headerlink" title="2.&#x5728;web.xml&#x4E2D;&#x914D;&#x7F6E;shiro&#x7684;filter"></a>2.&#x5728;web.xml&#x4E2D;&#x914D;&#x7F6E;shiro&#x7684;filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-在spring-shiro-xml中配置web-xml中过滤器对应spring容器中的bean"><span class="nav-text"><a href="#3-&#x5728;spring-shiro-xml&#x4E2D;&#x914D;&#x7F6E;web-xml&#x4E2D;&#x8FC7;&#x6EE4;&#x5668;&#x5BF9;&#x5E94;spring&#x5BB9;&#x5668;&#x4E2D;&#x7684;bean" class="headerlink" title="3. &#x5728;spring-shiro.xml&#x4E2D;&#x914D;&#x7F6E;web.xml&#x4E2D;&#x8FC7;&#x6EE4;&#x5668;&#x5BF9;&#x5E94;spring&#x5BB9;&#x5668;&#x4E2D;&#x7684;bean."></a>3. &#x5728;spring-shiro.xml&#x4E2D;&#x914D;&#x7F6E;web.xml&#x4E2D;&#x8FC7;&#x6EE4;&#x5668;&#x5BF9;&#x5E94;spring&#x5BB9;&#x5668;&#x4E2D;&#x7684;bean.</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-自定义realm进行认证"><span class="nav-text"><a href="#4-&#x81EA;&#x5B9A;&#x4E49;realm&#x8FDB;&#x884C;&#x8BA4;&#x8BC1;" class="headerlink" title="4.&#x81EA;&#x5B9A;&#x4E49;realm&#x8FDB;&#x884C;&#x8BA4;&#x8BC1;"></a>4.&#x81EA;&#x5B9A;&#x4E49;realm&#x8FDB;&#x884C;&#x8BA4;&#x8BC1;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-自定义Realm进行授权"><span class="nav-text"><a href="#5-&#x81EA;&#x5B9A;&#x4E49;Realm&#x8FDB;&#x884C;&#x6388;&#x6743;" class="headerlink" title="5.&#x81EA;&#x5B9A;&#x4E49;Realm&#x8FDB;&#x884C;&#x6388;&#x6743;"></a>5.&#x81EA;&#x5B9A;&#x4E49;Realm&#x8FDB;&#x884C;&#x6388;&#x6743;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-常用的shiro过滤器"><span class="nav-text"><a href="#6-&#x5E38;&#x7528;&#x7684;shiro&#x8FC7;&#x6EE4;&#x5668;" class="headerlink" title="6.&#x5E38;&#x7528;&#x7684;shiro&#x8FC7;&#x6EE4;&#x5668;"></a>6.&#x5E38;&#x7528;&#x7684;shiro&#x8FC7;&#x6EE4;&#x5668;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Jsp标签授权"><span class="nav-text"><a href="#7-Jsp&#x6807;&#x7B7E;&#x6388;&#x6743;" class="headerlink" title="7.Jsp&#x6807;&#x7B7E;&#x6388;&#x6743;"></a>7.Jsp&#x6807;&#x7B7E;&#x6388;&#x6743;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-shiro缓存"><span class="nav-text"><a href="#8-shiro&#x7F13;&#x5B58;" class="headerlink" title="8.shiro&#x7F13;&#x5B58;"></a>8.shiro&#x7F13;&#x5B58;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-自定义表单认证过滤器"><span class="nav-text"><a href="#9-&#x81EA;&#x5B9A;&#x4E49;&#x8868;&#x5355;&#x8BA4;&#x8BC1;&#x8FC7;&#x6EE4;&#x5668;" class="headerlink" title="9.&#x81EA;&#x5B9A;&#x4E49;&#x8868;&#x5355;&#x8BA4;&#x8BC1;&#x8FC7;&#x6EE4;&#x5668;"></a>9.&#x81EA;&#x5B9A;&#x4E49;&#x8868;&#x5355;&#x8BA4;&#x8BC1;&#x8FC7;&#x6EE4;&#x5668;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-配置rememberMe"><span class="nav-text"><a href="#10-&#x914D;&#x7F6E;rememberMe" class="headerlink" title="10.&#x914D;&#x7F6E;rememberMe"></a>10.&#x914D;&#x7F6E;rememberMe</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

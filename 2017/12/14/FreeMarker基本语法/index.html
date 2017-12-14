@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="模板引擎,FreeMarker," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.FreeMarker介绍FreeMarker是一种模板引擎，通过定义的模板和数据来生成文本（包括但不局限于html，js，java等文本格式），通俗的讲就是先定义一下模板，然后传入不同的数据，动态的生成不同的文本，但它不是面向用户的，而是面向程序员的，可以直接自动的生成代码，减少程序员重复的劳动。FreeMarker最重要的两部分是模板和数据：模板：FreeMarker Template La">
+<meta name="keywords" content="模板引擎,FreeMarker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FreeMarker基本语法">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/FreeMarker基本语法/index.html">
+<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:description" content="1.FreeMarker介绍FreeMarker是一种模板引擎，通过定义的模板和数据来生成文本（包括但不局限于html，js，java等文本格式），通俗的讲就是先定义一下模板，然后传入不同的数据，动态的生成不同的文本，但它不是面向用户的，而是面向程序员的，可以直接自动的生成代码，减少程序员重复的劳动。FreeMarker最重要的两部分是模板和数据：模板：FreeMarker Template La">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-14T10:49:29.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FreeMarker基本语法">
+<meta name="twitter:description" content="1.FreeMarker介绍FreeMarker是一种模板引擎，通过定义的模板和数据来生成文本（包括但不局限于html，js，java等文本格式），通俗的讲就是先定义一下模板，然后传入不同的数据，动态的生成不同的文本，但它不是面向用户的，而是面向程序员的，可以直接自动的生成代码，减少程序员重复的劳动。FreeMarker最重要的两部分是模板和数据：模板：FreeMarker Template La">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/FreeMarker基本语法/"/>
+
+
+
+
+
+  <title>FreeMarker基本语法 | 一颗向上的草莓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一颗向上的草莓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/FreeMarker基本语法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FreeMarker基本语法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T18:48:06+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台—模板引擎/" itemprop="url" rel="index">
+                    <span itemprop="name">后台—模板引擎</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-FreeMarker介绍"><a href="#1-FreeMarker介绍" class="headerlink" title="1.FreeMarker介绍"></a>1.FreeMarker介绍</h3><p>FreeMarker是一种模板引擎，通过定义的模板和数据来生成文本（包括但不局限于html，js，java等文本格式），通俗的讲就是先定义一下模板，然后传入不同的数据，动态的生成不同的文本，但它不是面向用户的，而是面向程序员的，可以直接自动的生成代码，减少程序员重复的劳动。<br>FreeMarker最重要的两部分是模板和数据：<br>模板：FreeMarker Template Language，简称FTL，模板文件以ftl为后缀，组成：</p>
+<ul>
+<li>文本，包括HTML标签与静态文本等静态内容，会原样输出；</li>
+<li>插值：这部分的输出会被计算的数据来替换，使用${}这种语法；</li>
+<li>标签：给FreeMarker的指示，可以简单与指令等同，不会打印在内容中；</li>
+<li><p>注释：由&lt;#–和–&gt;表示，不会被freemarker处理<br>数据结构：<br>树状结构：HashMap，Scalar，Sequence</p>
+<h3 id="2-基本使用"><a href="#2-基本使用" class="headerlink" title="2.基本使用"></a>2.基本使用</h3><p>从<a href="http://freemarker.org/" target="_blank" rel="noopener">http://freemarker.org/</a> 下载FreeMarker的压缩包，将其中的freemarker.jar加到项目的构建路径下<br>从maven仓库中引入maven依赖的jar包，注意两个核心类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.freemarker&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;freemarker&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.3.24-atlassian-2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Configuration：读取模板文件</p>
+</li>
+<li>Template：模板<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Configuration cfg = new Configuration(Configuration.VERSION_2_3_21);</span><br><span class="line">Map&lt;String,String&gt; root= new HashMap&lt;String,String&gt;();</span><br><span class="line">root.put(&quot;name&quot;, &quot;Java开发日记&quot;);</span><br><span class="line">	try &#123;</span><br><span class="line">		cfg.setDirectoryForTemplateLoading(new File(&quot;src/ftl&quot;));</span><br><span class="line">		Template template = cfg.getTemplate(&quot;helloworld.ftl&quot;);</span><br><span class="line">		Writer writer = new FileWriter(new File(&quot;src/finish/helloworld.html&quot;));</span><br><span class="line">		template.process(root, writer);</span><br><span class="line">	&#125; catch (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用Configuration读取配置文件，使用Map填充数据，给配置文件配置模板文件夹路径，读取模板文件，设置输出文件路径helloworld.html，执行输出文件，执行完之后就会在src目录下的finish文件夹中生成一个helloworld的html文件。<br>模板文件如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;$&#123;name&#125;&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">这是我的第一个程序,$&#123;name&#125;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-模板"><a href="#3-模板" class="headerlink" title="3.模板"></a>3.模板</h3><h4 id="3-1-数据类型与变量"><a href="#3-1-数据类型与变量" class="headerlink" title="3.1 数据类型与变量"></a>3.1 数据类型与变量</h4><p>模板中的数据类型：</p>
+<ul>
+<li>标量：字符串，数字，布尔值，日期；</li>
+<li>容器：哈希表，序列；</li>
+<li>子程序：方法和函数，用户自定义指令；<br>模板中的变量：<br>简单变量，局部变量，循环变量，使用赋值指令：assign<br>示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;#assign num=10&gt;</span><br><span class="line">$&#123;num&#125;</span><br><span class="line"></span><br><span class="line">&lt;#assign name=&quot;Java开发日记&quot;&gt;</span><br><span class="line">$&#123;name&#125;</span><br><span class="line"></span><br><span class="line">&lt;#assign b=true&gt;</span><br><span class="line">$&#123;b?c&#125;</span><br><span class="line"></span><br><span class="line">&lt;#assign map=&#123;&quot;name&quot;:&quot;张三&quot;,&quot;age&quot;:15&#125;&gt;</span><br><span class="line">$&#123;map.name&#125;</span><br><span class="line"></span><br><span class="line">&lt;#assign list = [1,3,5]&gt;</span><br><span class="line">$&#123;list[2]&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>freemarker中使用指令时必须要在指令前面用#（如果是自定义指令用@,后面说），assign指令是用来声明变量的，注意：如果是布尔值，输出时一定要带?c，表示定义的变量是布尔值，不然会报错。</p>
+<h4 id="3-2运算符"><a href="#3-2运算符" class="headerlink" title="3.2运算符"></a>3.2运算符</h4><p>模板中支持运算符：</p>
+<ul>
+<li>算术运算符</li>
+<li>比较运算符</li>
+<li>逻辑运算符</li>
+<li>空值处理运算符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;#assign b=1==2&gt;</span><br><span class="line">$&#123;b?c&#125;</span><br><span class="line"></span><br><span class="line">&lt;#assign b=1 gt 2&gt;</span><br><span class="line">$&#123;b?c&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>均输出false，gt表示大于。</p>
+<h4 id="3-3-插值"><a href="#3-3-插值" class="headerlink" title="3.3 插值"></a>3.3 插值</h4><p>插值是用来给插入具体值然后转换为文本，说白了，插值就是使用${}在那占个坑。<br>使用位置：</p>
+<ul>
+<li>文本区（如<h1>Hello ${name}!</h1>）</li>
+<li>字符串表达式（如&lt;#include “/footer/${company}.html”&gt;）<br>语法：${表达式}<br>注意：插值表达式的结果必须是字符串，数字或日期类型。<h4 id="3-4指令"><a href="#3-4指令" class="headerlink" title="3.4指令"></a>3.4指令</h4></li>
+<li>条件指令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;#assign score=50&gt;</span><br><span class="line">&lt;#if score gt 90&gt;</span><br><span class="line">优秀</span><br><span class="line">&lt;#elseif score gt 70&gt;</span><br><span class="line">良好</span><br><span class="line">&lt;#elseif score gt 60&gt;</span><br><span class="line">及格</span><br><span class="line">&lt;#else&gt;</span><br><span class="line">渣渣</span><br><span class="line">&lt;/#if&gt;</span><br><span class="line"></span><br><span class="line">&lt;#assign level=&quot;B&quot;&gt;</span><br><span class="line">&lt;#switch level&gt;</span><br><span class="line">    &lt;#case &quot;A&quot;&gt;</span><br><span class="line">    优秀</span><br><span class="line">        &lt;#break &gt;</span><br><span class="line">    &lt;#case &quot;B&quot;&gt;</span><br><span class="line">    良好</span><br><span class="line">        &lt;#break &gt;</span><br><span class="line">    &lt;#case &quot;C&quot;&gt;</span><br><span class="line">    soso</span><br><span class="line">        &lt;#break &gt;</span><br><span class="line">    &lt;#default&gt;</span><br><span class="line">    渣渣</span><br><span class="line">&lt;/#switch&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>需要注意的是switch语句需要有break，不然一直往下执行。</p>
+<ul>
+<li>循环指令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;#assign nums=[1,2,3,4,5]&gt;</span><br><span class="line">&lt;#list nums as num&gt;</span><br><span class="line">    $&#123;num_index&#125;,$&#123;num&#125;,$&#123;num_has_next?c&#125;</span><br><span class="line">&lt;/#list&gt;</span><br><span class="line"></span><br><span class="line">&lt;#list nums as num&gt;</span><br><span class="line">    $&#123;num&#125;&lt;#if num_has_next&gt;,&lt;/#if&gt;</span><br><span class="line">&lt;/#list&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>定义一个集合nums，使用list指令遍历，${别名_index}获取遍历的索引值，${别名_has_next}判断后面是否还有值，根据这个特性，可以结合if指令拼接不同的值（自动生成mybatis的配置文件时，不同字段最后一个后面不要逗号，用这个特性很好用）。</p>
+<ul>
+<li>包含指令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;#include &quot;condition.ftl&quot;&gt;</span><br><span class="line">从这里开始是自己的内容</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用include引入指令可以引入其它的模板页面。如果页面路径写不好可以用通配符，&lt;#include “*/condition.ftl”&gt;</p>
+<ul>
+<li><p>其它<br>原样输出指令noparse：它里面的内容是原样输出的；<br>压缩指令compress：压缩所有的空格；<br>设置指令setting：设置影响FreeMarker的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;#noparse&gt;</span><br><span class="line">	&lt;#assign num=1&gt;</span><br><span class="line">	$&#123;num&#125;</span><br><span class="line">&lt;/#noparse&gt;</span><br><span class="line"></span><br><span class="line">&lt;#assign s=&quot;   test    \n\n&quot;&gt;</span><br><span class="line">&lt;#compress&gt;</span><br><span class="line">	$&#123;s&#125;</span><br><span class="line">	Compress</span><br><span class="line">&lt;/#compress&gt;</span><br><span class="line"></span><br><span class="line">&lt;#setting locale=&quot;hu&quot;&gt;</span><br><span class="line">$&#123;1.2&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义指令<br>可以将模版中重复的内容进行复用<br>定义：<br>使用macro指令定义或者使用Java实现。<br>参数的声明：直接跟在指令名后，可以指定默认值<br>嵌套内容：使用nested指令<br>调用：<br>使用&lt;@指令&gt;来调用（调用freemarker自带的指令用#命令）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;#macro mydirect name age=20&gt;</span><br><span class="line">    你好，$&#123;name&#125;,你今年$&#123;age&#125;</span><br><span class="line">&lt;/#macro&gt;</span><br><span class="line">&lt;@mydirect name=&quot;Java开发日记&quot; age=1/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>自定义一个指令名为mydirect，它有两个参数name和age，其中age有默认值20，使用自定义指令时用@+自定义指令，同时为参数赋值即可。注意自定义指令是闭口的，不要漏掉最后的斜杠。</p>
+<h4 id="3-5-空处理"><a href="#3-5-空处理" class="headerlink" title="3.5 空处理"></a>3.5 空处理</h4><p>有时候对象是空的，不进行判断就贸然进行处理会报错，所以要提前进行判空处理。</p>
+<ul>
+<li>null对象的处理方式:使用!，只会做最后一个属性的判断；</li>
+<li>变量不存在的处理方式:使用!或??做判断。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$&#123;user.name!&#125;</span><br><span class="line">&lt;#if user.name??&gt;</span><br><span class="line">    名称存在</span><br><span class="line">    &lt;#else&gt;</span><br><span class="line">      名称不存在</span><br><span class="line">&lt;/#if&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>我认为是在插值时使用!，在其它指令内使用??。</p>
+<h4 id="3-6名称空间"><a href="#3-6名称空间" class="headerlink" title="3.6名称空间"></a>3.6名称空间</h4><p>在编写可重复使用的模板时为了避免命名冲突，使用import指令导入命名空间。命名空间有点类似于java的包，即使类名相同，只要位于不同的包下，也是可以的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">test.ftl模板：</span><br><span class="line">&lt;#macro mydirective name&gt;</span><br><span class="line">    你好，$&#123;name&#125;</span><br><span class="line">&lt;/#macro&gt;</span><br><span class="line">namespace.ftl模板</span><br><span class="line">&lt;#import &quot;test.ftl&quot; as ns&gt;</span><br><span class="line">&lt;@ns.mydirective name=&quot;Java开发日记&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在这里我定义两个模板，在namespace.ftl中使用import指令导入test.ftl模板并为它起一个名为ns的命名空间，调用时我使用命令空间调用，即使namespace.ftl模板中有其它同名的也不至于混淆。另外在test.ftl中使用的是自定义指令定义了名为mydirective的指令，并为其制定一个参数name。</p>
+<h4 id="3-7函数"><a href="#3-7函数" class="headerlink" title="3.7函数"></a>3.7函数</h4><p>FreeMarker中函数有如下几种：</p>
+<ul>
+<li>字符串函数；</li>
+<li>数字，日期布尔类型的函数；</li>
+<li>序列（list，set）与哈希的函数；</li>
+<li>自定义函数<br>而且FreeMarker中的函数与java中函数调用有个很大的区别，在java中调用函数使用点号(.),而在FreeMarker中使用问号(?),这一点一定要记清。下面分别说上面提到的几种函数：<h5 id="3-7-1字符串函数"><a href="#3-7-1字符串函数" class="headerlink" title="3.7.1字符串函数"></a>3.7.1字符串函数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$&#123;&quot;abcdef&quot;?substring(2)&#125;       &lt;#--从角标是2的位置开始截取到字符串结束--&gt;</span><br><span class="line">$&#123;&quot;abcdef&quot;?substring(2,4)&#125;     &lt;#--从角标是2的位置开始截取到角标是4的位置，包括2不包括4（包前不包后）--&gt;</span><br><span class="line">$&#123;&quot;abcd mn&quot;?cap_first&#125;         &lt;#--将整个字符串的首字母转大写--&gt;</span><br><span class="line">$&#123;&quot;Abcd&quot;?uncap_first&#125;          &lt;#--将整个字符串的首字母转小写--&gt;</span><br><span class="line">$&#123;&quot;fden eb&quot;?capitalize&#125;        &lt;#--将字符串的每个单词首字母转大写--&gt;</span><br><span class="line">$&#123;&quot;abcd&quot;?ends_with(&quot;d&quot;)?c&#125;     &lt;#--是否以字符d结尾，这个结果是布尔值，不能直接输出，不然会报错，用?c转化成字符串--&gt;</span><br><span class="line">$&#123;&quot;abcd&quot;?starts_with(&quot;d&quot;)?c&#125;   &lt;#--是否以字符d开头--&gt;</span><br><span class="line">$&#123;&quot;abac&quot;?index_of(&quot;a&quot;)&#125;        &lt;#--字符a首次出现的位置--&gt;</span><br><span class="line">$&#123;&quot;abac&quot;?last_index_of(&quot;a&quot;)&#125;   &lt;#--字符a最后一次出现的位置--&gt;</span><br><span class="line">$&#123;&quot;ab&quot;?left_pad(15,&quot;xy&quot;)&#125;      &lt;#--将字符串ab填充成15位，如果不够15位，则左边循环填充xy--&gt;</span><br><span class="line">$&#123;&quot;ab&quot;?right_pad(15,&quot;xy&quot;)&#125;     &lt;#--将字符串ab填充成15位，如果不够15位，则右边循环填充xy--&gt;</span><br><span class="line">$&#123;&quot;abac&quot;?contains(&quot;ab&quot;)?c&#125;     &lt;#--判断字符串abac是否包含ab--&gt;</span><br><span class="line">$&#123;&quot;abac&quot;?replace(&quot;ab&quot;,&quot;AB&quot;)&#125;   &lt;#--将ab替换成AB--&gt;</span><br><span class="line">&lt;#list &quot;abcabcabc&quot;?split(&quot;c&quot;) as s&gt;</span><br><span class="line">    $&#123;s&#125;                       &lt;#--将字符串以c字符进行分割，结果是个数组，进行遍历--&gt;</span><br><span class="line">&lt;/#list&gt;</span><br><span class="line">$&#123;&quot;    abc    &quot;?trim&#125;          &lt;#--去掉字符串空格--&gt;</span><br><span class="line">&lt;#list &quot; Hello  FreeMarker  Yes&quot;?word_list as s&gt;</span><br><span class="line">$&#123;s&#125;                           &lt;#--将字符串分割成一个个的单词，存在多个空格时，这个跟上面的split分割有一点区别--&gt;</span><br><span class="line">&lt;/#list&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="3-7-2数字，日期布尔类型的函数"><a href="#3-7-2数字，日期布尔类型的函数" class="headerlink" title="3.7.2数字，日期布尔类型的函数"></a>3.7.2数字，日期布尔类型的函数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$&#123;4.2?c&#125;                &lt;#--以字符串的形式输出，上面说的布尔类型不能直接输出只能转化成字符串这种--&gt;</span><br><span class="line">$&#123;4.2?string&#125;           &lt;#--与?c一样--&gt;</span><br><span class="line">$&#123;0.42?string.percent&#125;  &lt;#--以百分号输出42%--&gt;</span><br><span class="line">$&#123;4.2?string.currency&#125;  &lt;#--以货币形式输出￥4.20--&gt;</span><br><span class="line">$&#123;4.7?round&#125;            &lt;#--四舍五入 --&gt;</span><br><span class="line">$&#123;4.7?floor&#125;            &lt;#--向下取整，floor地板 --&gt;</span><br><span class="line">$&#123;4.7?ceiling&#125;          &lt;#--向上取整，ceiling天花板--&gt;</span><br><span class="line"></span><br><span class="line">$&#123;date?string(&quot;yyyy-MM-dd&quot;)&#125;    &lt;#--传入日期date，以yyyy-MM-dd形式输出，2017-11-18--&gt;</span><br><span class="line">$&#123;date?date&#125;            &lt;#--输出年月日2017-11-18--&gt;</span><br><span class="line">$&#123;date?time&#125;            &lt;#-- 输出时分秒20:41:49--&gt;</span><br><span class="line">$&#123;date?datetime&#125;        &lt;#--输出年月日时分秒--&gt;</span><br><span class="line"></span><br><span class="line">$&#123;false?string(&quot;yes&quot;,&quot;no&quot;)&#125;   &lt;#--条件如果成功输出yes,否则输出no--&gt;</span><br><span class="line">$&#123;4.2355?string(&quot;0.##&quot;)&#125;       &lt;#--保留小数点后两位--&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="3-7-3-序列（list，set）与哈希的函数"><a href="#3-7-3-序列（list，set）与哈希的函数" class="headerlink" title="3.7.3 序列（list，set）与哈希的函数"></a>3.7.3 序列（list，set）与哈希的函数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;#assign seq=[1,2,3,4,5,3,10]&gt;</span><br><span class="line">$&#123;seq?first&#125;              &lt;#-- 输出序列seq的第一个--&gt;</span><br><span class="line">$&#123;seq?last&#125;               &lt;#-- 输出序列seq的最后一个--&gt;</span><br><span class="line">$&#123;seq?seq_contains(6)?c&#125;  &lt;#--判断序列是否包含6--&gt;</span><br><span class="line">$&#123;seq?seq_index_of(3)&#125;     &lt;#--3在序列中首次出现的位置--&gt;</span><br><span class="line">$&#123;seq?seq_last_index_of(3)&#125; &lt;#--3在序列中最后一次出现的位置--&gt;</span><br><span class="line">&lt;#list seq?reverse as num&gt;   &lt;#--翻转序列seq，结果还是一个序列，进行遍历--&gt;</span><br><span class="line">$&#123;num&#125;</span><br><span class="line">&lt;/#list&gt;</span><br><span class="line">$&#123;seq?size&#125;                 &lt;#--序列seq的长度--&gt;</span><br><span class="line">&lt;#list seq?sort as num&gt;    &lt;#--对序列进行排序--&gt;</span><br><span class="line">$&#123;num&#125;</span><br><span class="line">&lt;/#list&gt;</span><br><span class="line"></span><br><span class="line">&lt;#assign seq1=[</span><br><span class="line">&#123;&quot;name&quot;:&quot;Tom&quot;,&quot;age&quot;:23&#125;,</span><br><span class="line">&#123;&quot;name&quot;:&quot;Jack&quot;,&quot;age&quot;:22&#125;,</span><br><span class="line">&#123;&quot;name&quot;:&quot;Rose&quot;,&quot;age&quot;:21&#125;,</span><br><span class="line">&#123;&quot;name&quot;:&quot;Tim&quot;,&quot;age&quot;:24&#125;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;#list seq1?sort_by(&quot;age&quot;) as u&gt; &lt;#--以age对哈希seq1进行排序并遍历--&gt;</span><br><span class="line">$&#123;u.name&#125;+&quot;,&quot;+$&#123;u.age&#125;</span><br><span class="line">&lt;/#list&gt;</span><br><span class="line"></span><br><span class="line">&lt;#assign users=&#123;</span><br><span class="line">&quot;name&quot;:&quot;Tim&quot;,&quot;age&quot;:24</span><br><span class="line">&#125;&gt;</span><br><span class="line">&lt;#list users?keys as key&gt;   &lt;#--获取到哈希users所有的键--&gt;</span><br><span class="line">$&#123;key&#125;</span><br><span class="line">&lt;/#list&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="3-7-4-自定义函数"><a href="#3-7-4-自定义函数" class="headerlink" title="3.7.4 自定义函数"></a>3.7.4 自定义函数</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;#function add num1 num2&gt;</span><br><span class="line">    &lt;#return num1+num2&gt;</span><br><span class="line">&lt;/#function&gt;</span><br><span class="line"></span><br><span class="line">&lt;#function addAll nums...&gt;</span><br><span class="line">    &lt;#local total=0&gt;</span><br><span class="line">    &lt;#list nums as num&gt;</span><br><span class="line">        &lt;#local total=total+num&gt;</span><br><span class="line">    &lt;/#list&gt;</span><br><span class="line">    &lt;#return total&gt;</span><br><span class="line">&lt;/#function&gt;</span><br><span class="line"></span><br><span class="line">&lt;#--使用function指令定义函数add，有两个参数num1和num2，使用return返回计算之后的结果，使用$&#123;add(1,3)&#125;调用函数 --&gt;</span><br><span class="line">$&#123;add(1,3)&#125;</span><br><span class="line"></span><br><span class="line">&lt;#--使用function指令定义函数addAll，参数个数不固定，定义局部变量total来存储临时计算的结果，</span><br><span class="line">遍历所有的参数并进行运算，使用return返回计算之后的结果，使用$&#123;addAll(1,2,3,4,5)&#125;调用函数 --&gt;</span><br><span class="line">$&#123;addAll(1,2,3,4,5)&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-数据模型"><a href="#4-数据模型" class="headerlink" title="4.数据模型"></a>4.数据模型</h3><h4 id="4-1数据类型"><a href="#4-1数据类型" class="headerlink" title="4.1数据类型"></a>4.1数据类型</h4><p>使用基本数据类型来派生数字类型<br>使用java.lang.String来构建字符串。<br>使用java.lang.Number来派生数字类型。<br>使用java.lang.Boolean来构建布尔值。<br>使用java.util.List，java.util.Set或Java数组来构建序列。<br>使用java.util.Map来构建哈希表。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Map root=new HashMap();</span><br><span class="line">root.put(&quot;d1&quot;, 100);</span><br><span class="line">root.put(&quot;d2&quot;, 100.99);</span><br><span class="line">root.put(&quot;d3&quot;, &apos;a&apos;);</span><br><span class="line">root.put(&quot;d4&quot;, true);</span><br><span class="line">root.put(&quot;d5&quot;, new Integer(200));</span><br><span class="line">root.put(&quot;d6&quot;, new Boolean(false));</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; names= Arrays.asList(&quot;abc&quot;,&quot;def&quot;,&quot;ghi&quot;);</span><br><span class="line">root.put(&quot;d7&quot;, names);</span><br><span class="line"></span><br><span class="line">Set&lt;String&gt; names1=new HashSet&lt;&gt;();</span><br><span class="line">names1.add(&quot;ABC&quot;);</span><br><span class="line">names1.add(&quot;DEF&quot;);</span><br><span class="line">names1.add(&quot;GHI&quot;);</span><br><span class="line">root.put(&quot;d8&quot;, names1);</span><br><span class="line"></span><br><span class="line">root.put(&quot;d9&quot;, new String[]&#123;&quot;a&quot;,&quot;b&quot;,&quot;c&quot;&#125;);</span><br><span class="line"></span><br><span class="line">Map map=new HashMap();</span><br><span class="line">map.put(&quot;name&quot;, &quot;Java开发日记&quot;);</span><br><span class="line">map.put(&quot;age&quot;, 18);</span><br><span class="line"></span><br><span class="line">root.put(&quot;map&quot;, map);</span><br></pre></td></tr></table></figure></p>
+<p>就是java中常见的整型，浮点型，布尔型，字符，数组，list，set，map，不再多说</p>
+<h4 id="4-2-加载模板"><a href="#4-2-加载模板" class="headerlink" title="4.2 加载模板"></a>4.2 加载模板</h4><p>使用Configuration的方法加载模版：<br>1,void setDirectoryForTemplateLoading(File dir);<br>2,void setClassForTemplateLoading(Class cl, String prefix);<br>3,void setServletContextForTemplateLoading(Object servletContext, String path);<br>加载多个位置的模版：<br>1,FileTemplateLoader<br>2,ClassTemplateLoader<br>3,TemplateLoader<br>4,MultiTemplateLoader<br>5,setTemplateLoader(MultiTemplateLoader mtl);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);</span><br><span class="line">//cfg.setClassForTemplateLoading(TemplateLoad.class, &quot;../../../ftl&quot;);</span><br><span class="line"></span><br><span class="line">FileTemplateLoader ftl1=new FileTemplateLoader(new File(&quot;src/ftl&quot;));</span><br><span class="line">FileTemplateLoader ftl2=new FileTemplateLoader(new File(&quot;src/ftl2&quot;));</span><br><span class="line">ClassTemplateLoader ctl=new ClassTemplateLoader(TemplateLoad.class, &quot;../../../ftl3&quot;);</span><br><span class="line">TemplateLoader[] loaders=&#123;ctl,ftl2&#125;;</span><br><span class="line">MultiTemplateLoader mtl=new MultiTemplateLoader(loaders);</span><br><span class="line">cfg.setTemplateLoader(mtl);</span><br><span class="line"></span><br><span class="line">Template template=cfg.getTemplate(&quot;ftl2.ftl&quot;);</span><br><span class="line">System.out.println(template);</span><br></pre></td></tr></table></figure></p>
+<p>javase项目中使用setDirectoryForTemplateLoading来加载模板所在文件夹，javaee项目中使用setClassForTemplateLoading路径，servlet中可以使用setServletContextForTemplateLoading来加载模板路径。</p>
+<h4 id="4-3其它配置"><a href="#4-3其它配置" class="headerlink" title="4.3其它配置"></a>4.3其它配置</h4><p>配置就是在对象中存储常用的设置和定义某些想在所有模板中可用的变量，配置对象是freemarker.template.Configuration的实例，可以通过构造方法来创建它。而且一个应用程序通常只使用一个共享的Configuration实例。</p>
+<ul>
+<li>设置共享变量：setSharedVariable()</li>
+<li>国家地区：setLocale();</li>
+<li>数字格式：setNumberFormat(“0.##”);</li>
+<li>通用设置：setSetting(String name, String value)方法</li>
+<li>缓存：设置缓存：setCacheStorage(new freemarker.cache.MruCacheStorage(20, 250))<br>或setSetting(Configuration.CACHE_STORAGE_KEY, “strong:20, soft:250”);</li>
+<li>清空缓存：clearTemplateCache</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Configuration cfg=new Configuration(Configuration.VERSION_2_3_22);</span><br><span class="line">		cfg.setDirectoryForTemplateLoading(new File(&quot;src/ftl&quot;));</span><br><span class="line">		//设置共享便令</span><br><span class="line">		cfg.setSharedVariable(&quot;site&quot;, &quot;Java开发日记&quot;);</span><br><span class="line">		//设置小数点后保留两位</span><br><span class="line">		cfg.setNumberFormat(&quot;0.##&quot;);、</span><br><span class="line">		//设置缓存，一级缓存20个，2级缓存250个</span><br><span class="line">		cfg. setCacheStorage(new freemarker.cache.MruCacheStorage(20, 250));</span><br><span class="line">		//cfg.setSetting(Configuration.CACHE_STORAGE_KEY, &quot;strong:20, soft:250&quot;);</span><br><span class="line">		//cfg.clearTemplateCache();   //清楚缓存</span><br><span class="line">		Template template = cfg.getTemplate(&quot;config.ftl&quot;);</span><br><span class="line">		Writer writer = new FileWriter(new File(&quot;src/finish/config.html&quot;));</span><br></pre></td></tr></table></figure>
+<p>总结：上面这些就是FreeMarker模板引擎的基本操作，首先需要进入jar包，之后设置模板所在的路径并引入模板，然后组装数据（实际操作中通过jdbc连接数据库来操作），所以主要学的就两方面内容：模板和数据，而模板又与这许许多多的指令相关，所以必须要掌握这些指令。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/模板引擎/" rel="tag"># 模板引擎</a>
+          
+            <a href="/tags/FreeMarker/" rel="tag"># FreeMarker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/html5学习笔记/" rel="next" title="html5学习笔记">
+                <i class="fa fa-chevron-left"></i> html5学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/FreeMarker与Java框架整合/" rel="prev" title="FreeMarker与Java框架整合">
+                FreeMarker与Java框架整合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">你只有非常努力，才能看起来毫不费力！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635?is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-FreeMarker介绍"><span class="nav-text"><a href="#1-FreeMarker&#x4ECB;&#x7ECD;" class="headerlink" title="1.FreeMarker&#x4ECB;&#x7ECD;"></a>1.FreeMarker&#x4ECB;&#x7ECD;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-基本使用"><span class="nav-text"><a href="#2-&#x57FA;&#x672C;&#x4F7F;&#x7528;" class="headerlink" title="2.&#x57FA;&#x672C;&#x4F7F;&#x7528;"></a>2.&#x57FA;&#x672C;&#x4F7F;&#x7528;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-模板"><span class="nav-text"><a href="#3-&#x6A21;&#x677F;" class="headerlink" title="3.&#x6A21;&#x677F;"></a>3.&#x6A21;&#x677F;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-数据类型与变量"><span class="nav-text"><a href="#3-1-&#x6570;&#x636E;&#x7C7B;&#x578B;&#x4E0E;&#x53D8;&#x91CF;" class="headerlink" title="3.1 &#x6570;&#x636E;&#x7C7B;&#x578B;&#x4E0E;&#x53D8;&#x91CF;"></a>3.1 &#x6570;&#x636E;&#x7C7B;&#x578B;&#x4E0E;&#x53D8;&#x91CF;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2运算符"><span class="nav-text"><a href="#3-2&#x8FD0;&#x7B97;&#x7B26;" class="headerlink" title="3.2&#x8FD0;&#x7B97;&#x7B26;"></a>3.2&#x8FD0;&#x7B97;&#x7B26;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-插值"><span class="nav-text"><a href="#3-3-&#x63D2;&#x503C;" class="headerlink" title="3.3 &#x63D2;&#x503C;"></a>3.3 &#x63D2;&#x503C;</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-text">Hello ${name}!</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4指令"><span class="nav-text"><a href="#3-4&#x6307;&#x4EE4;" class="headerlink" title="3.4&#x6307;&#x4EE4;"></a>3.4&#x6307;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-空处理"><span class="nav-text"><a href="#3-5-&#x7A7A;&#x5904;&#x7406;" class="headerlink" title="3.5 &#x7A7A;&#x5904;&#x7406;"></a>3.5 &#x7A7A;&#x5904;&#x7406;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6名称空间"><span class="nav-text"><a href="#3-6&#x540D;&#x79F0;&#x7A7A;&#x95F4;" class="headerlink" title="3.6&#x540D;&#x79F0;&#x7A7A;&#x95F4;"></a>3.6&#x540D;&#x79F0;&#x7A7A;&#x95F4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7函数"><span class="nav-text"><a href="#3-7&#x51FD;&#x6570;" class="headerlink" title="3.7&#x51FD;&#x6570;"></a>3.7&#x51FD;&#x6570;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-7-1字符串函数"><span class="nav-text"><a href="#3-7-1&#x5B57;&#x7B26;&#x4E32;&#x51FD;&#x6570;" class="headerlink" title="3.7.1&#x5B57;&#x7B26;&#x4E32;&#x51FD;&#x6570;"></a>3.7.1&#x5B57;&#x7B26;&#x4E32;&#x51FD;&#x6570;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-7-2数字，日期布尔类型的函数"><span class="nav-text"><a href="#3-7-2&#x6570;&#x5B57;&#xFF0C;&#x65E5;&#x671F;&#x5E03;&#x5C14;&#x7C7B;&#x578B;&#x7684;&#x51FD;&#x6570;" class="headerlink" title="3.7.2&#x6570;&#x5B57;&#xFF0C;&#x65E5;&#x671F;&#x5E03;&#x5C14;&#x7C7B;&#x578B;&#x7684;&#x51FD;&#x6570;"></a>3.7.2&#x6570;&#x5B57;&#xFF0C;&#x65E5;&#x671F;&#x5E03;&#x5C14;&#x7C7B;&#x578B;&#x7684;&#x51FD;&#x6570;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-7-3-序列（list，set）与哈希的函数"><span class="nav-text"><a href="#3-7-3-&#x5E8F;&#x5217;&#xFF08;list&#xFF0C;set&#xFF09;&#x4E0E;&#x54C8;&#x5E0C;&#x7684;&#x51FD;&#x6570;" class="headerlink" title="3.7.3 &#x5E8F;&#x5217;&#xFF08;list&#xFF0C;set&#xFF09;&#x4E0E;&#x54C8;&#x5E0C;&#x7684;&#x51FD;&#x6570;"></a>3.7.3 &#x5E8F;&#x5217;&#xFF08;list&#xFF0C;set&#xFF09;&#x4E0E;&#x54C8;&#x5E0C;&#x7684;&#x51FD;&#x6570;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-7-4-自定义函数"><span class="nav-text"><a href="#3-7-4-&#x81EA;&#x5B9A;&#x4E49;&#x51FD;&#x6570;" class="headerlink" title="3.7.4 &#x81EA;&#x5B9A;&#x4E49;&#x51FD;&#x6570;"></a>3.7.4 &#x81EA;&#x5B9A;&#x4E49;&#x51FD;&#x6570;</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-数据模型"><span class="nav-text"><a href="#4-&#x6570;&#x636E;&#x6A21;&#x578B;" class="headerlink" title="4.&#x6570;&#x636E;&#x6A21;&#x578B;"></a>4.&#x6570;&#x636E;&#x6A21;&#x578B;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1数据类型"><span class="nav-text"><a href="#4-1&#x6570;&#x636E;&#x7C7B;&#x578B;" class="headerlink" title="4.1&#x6570;&#x636E;&#x7C7B;&#x578B;"></a>4.1&#x6570;&#x636E;&#x7C7B;&#x578B;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-加载模板"><span class="nav-text"><a href="#4-2-&#x52A0;&#x8F7D;&#x6A21;&#x677F;" class="headerlink" title="4.2 &#x52A0;&#x8F7D;&#x6A21;&#x677F;"></a>4.2 &#x52A0;&#x8F7D;&#x6A21;&#x677F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3其它配置"><span class="nav-text"><a href="#4-3&#x5176;&#x5B83;&#x914D;&#x7F6E;" class="headerlink" title="4.3&#x5176;&#x5B83;&#x914D;&#x7F6E;"></a>4.3&#x5176;&#x5B83;&#x914D;&#x7F6E;</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

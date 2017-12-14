@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="maven," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="项目部署上线时需要打包，我们的项目是采用maven工程，打包时碰到过两个问题，做下记录： 1.Maven如何打入本地jar包使用支付宝API时发现有些jar没有在中央仓库中，只能从支付宝下载jar，然后引入到项目中，这种情况下再使用平时的打包方式存在问题，需要做如下处理：  我在与src并列的目录下新建一个lib的文件夹，将支付宝的alipay-sdk-java-ALL20171128134549">
+<meta name="keywords" content="maven">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven项目打包遇到的两个问题">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/Maven项目打包遇到的两个问题/index.html">
+<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:description" content="项目部署上线时需要打包，我们的项目是采用maven工程，打包时碰到过两个问题，做下记录： 1.Maven如何打入本地jar包使用支付宝API时发现有些jar没有在中央仓库中，只能从支付宝下载jar，然后引入到项目中，这种情况下再使用平时的打包方式存在问题，需要做如下处理：  我在与src并列的目录下新建一个lib的文件夹，将支付宝的alipay-sdk-java-ALL20171128134549">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20171202173647968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-12-14T11:08:47.041Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Maven项目打包遇到的两个问题">
+<meta name="twitter:description" content="项目部署上线时需要打包，我们的项目是采用maven工程，打包时碰到过两个问题，做下记录： 1.Maven如何打入本地jar包使用支付宝API时发现有些jar没有在中央仓库中，只能从支付宝下载jar，然后引入到项目中，这种情况下再使用平时的打包方式存在问题，需要做如下处理：  我在与src并列的目录下新建一个lib的文件夹，将支付宝的alipay-sdk-java-ALL20171128134549">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171202173647968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/Maven项目打包遇到的两个问题/"/>
+
+
+
+
+
+  <title>Maven项目打包遇到的两个问题 | 一颗向上的草莓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一颗向上的草莓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/Maven项目打包遇到的两个问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Maven项目打包遇到的两个问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T19:07:57+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工作—后台/" itemprop="url" rel="index">
+                    <span itemprop="name">工作—后台</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目部署上线时需要打包，我们的项目是采用maven工程，打包时碰到过两个问题，做下记录：</p>
+<h3 id="1-Maven如何打入本地jar包"><a href="#1-Maven如何打入本地jar包" class="headerlink" title="1.Maven如何打入本地jar包"></a>1.Maven如何打入本地jar包</h3><p>使用支付宝API时发现有些jar没有在中央仓库中，只能从支付宝下载jar，然后引入到项目中，这种情况下再使用平时的打包方式存在问题，需要做如下处理：</p>
+<ul>
+<li>我在与src并列的目录下新建一个lib的文件夹，将支付宝的alipay-sdk-java-ALL20171128134549.jar包放在这个文件夹里面。</li>
+<li><p>pom的依赖中这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    &lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;com.aliyun&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;alipay-sdk-java&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;ALL20171128134549&lt;/version&gt;</span><br><span class="line">	&lt;scope&gt;system&lt;/scope&gt;</span><br><span class="line">          &lt;systemPath&gt;$&#123;basedir&#125;/lib/alipay-sdk-java-ALL20171128134549.jar&lt;/systemPath&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pom的引入插件中这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugins&gt;</span><br><span class="line">	&lt;!--打包war,引入lib下的jar--&gt;</span><br><span class="line">	&lt;plugin&gt;</span><br><span class="line">		&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;</span><br><span class="line">		&lt;version&gt;2.2&lt;/version&gt;</span><br><span class="line">		&lt;configuration&gt;</span><br><span class="line">			&lt;warName&gt;$&#123;project.artifactId&#125;&lt;/warName&gt;</span><br><span class="line">			&lt;webResources&gt;</span><br><span class="line">				&lt;resource&gt;</span><br><span class="line">					&lt;directory&gt;lib/&lt;/directory&gt;</span><br><span class="line">					&lt;targetPath&gt;WEB-INF/lib&lt;/targetPath&gt;</span><br><span class="line">					&lt;includes&gt;</span><br><span class="line">						&lt;include&gt;**/*.jar&lt;/include&gt;</span><br><span class="line">					&lt;/includes&gt;</span><br><span class="line">				&lt;/resource&gt;</span><br><span class="line">			&lt;/webResources&gt;</span><br><span class="line">		&lt;/configuration&gt;</span><br><span class="line">	&lt;/plugin&gt;</span><br><span class="line">&lt;/plugins&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样就可以在部署时将本地jar包打入war包中了。</p>
+<h3 id="2-使用maven的profiles动态选择配置文件"><a href="#2-使用maven的profiles动态选择配置文件" class="headerlink" title="2.使用maven的profiles动态选择配置文件"></a>2.使用maven的profiles动态选择配置文件</h3><p>日常开发中通常会有开发环境和生产环境，配置文件一般都是在xxx.properties中配置着，如果变动比较少还尚可采用注释掉不用的配置，放开需要的配置，但是如果生产和开发好多配置文件都不一样，每次打包之前都要不停的改动，不紧浪费时间，而且顾此失彼容易出错，maven的profiles可以解决这个问题，我们只需要勾选需要的环境，就可以动态的打包出不同的配置了。如下图：<br><img src="http://img.blog.csdn.net/20171202173647968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<ul>
+<li><p>pom.xml中的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">     &lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;com.aliyun&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;alipay-sdk-java&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;ALL20171128134549&lt;/version&gt;</span><br><span class="line">			&lt;scope&gt;system&lt;/scope&gt;</span><br><span class="line">            &lt;systemPath&gt;$&#123;basedir&#125;/lib/alipay-sdk-java-ALL20171128134549.jar&lt;/systemPath&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">	&lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">	&lt;profiles&gt;</span><br><span class="line">		&lt;profile&gt;</span><br><span class="line">			&lt;id&gt;dev&lt;/id&gt;</span><br><span class="line">			&lt;properties&gt;</span><br><span class="line">				&lt;env&gt;dev&lt;/env&gt;</span><br><span class="line">			&lt;/properties&gt;</span><br><span class="line">			&lt;activation&gt;</span><br><span class="line">				&lt;activeByDefault&gt;true&lt;/activeByDefault&gt;</span><br><span class="line">			&lt;/activation&gt;</span><br><span class="line">		&lt;/profile&gt;</span><br><span class="line">		&lt;profile&gt;</span><br><span class="line">			&lt;id&gt;prod&lt;/id&gt;</span><br><span class="line">			&lt;properties&gt;</span><br><span class="line">				&lt;env&gt;prod&lt;/env&gt;</span><br><span class="line">			&lt;/properties&gt;</span><br><span class="line">		&lt;/profile&gt;</span><br><span class="line">	&lt;/profiles&gt;</span><br><span class="line"></span><br><span class="line">	&lt;build&gt;</span><br><span class="line">		&lt;finalName&gt;scm&lt;/finalName&gt;</span><br><span class="line"></span><br><span class="line">		&lt;filters&gt;</span><br><span class="line">			&lt;filter&gt;src/main/resources/profiles/$&#123;env&#125;.properties&lt;/filter&gt;</span><br><span class="line">		&lt;/filters&gt;</span><br><span class="line">		&lt;resources&gt;</span><br><span class="line">			&lt;resource&gt;</span><br><span class="line">				&lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">				&lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">			&lt;/resource&gt;</span><br><span class="line">		&lt;/resources&gt;</span><br><span class="line"></span><br><span class="line">		&lt;plugins&gt;</span><br><span class="line">			&lt;!--打包war,引入lib下的jar--&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;</span><br><span class="line">				&lt;version&gt;2.2&lt;/version&gt;</span><br><span class="line">				&lt;configuration&gt;</span><br><span class="line">					&lt;warName&gt;$&#123;project.artifactId&#125;&lt;/warName&gt;</span><br><span class="line">					&lt;webResources&gt;</span><br><span class="line">						&lt;resource&gt;</span><br><span class="line">							&lt;directory&gt;lib/&lt;/directory&gt;</span><br><span class="line">							&lt;targetPath&gt;WEB-INF/lib&lt;/targetPath&gt;</span><br><span class="line">							&lt;includes&gt;</span><br><span class="line">								&lt;include&gt;**/*.jar&lt;/include&gt;</span><br><span class="line">							&lt;/includes&gt;</span><br><span class="line">						&lt;/resource&gt;</span><br><span class="line">					&lt;/webResources&gt;</span><br><span class="line">				&lt;/configuration&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line"></span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;maven-resources-plugin&lt;/artifactId&gt;</span><br><span class="line">				&lt;version&gt;2.7&lt;/version&gt;</span><br><span class="line">				&lt;configuration&gt;</span><br><span class="line">					&lt;encoding&gt;UTF-8&lt;/encoding&gt;</span><br><span class="line">				&lt;/configuration&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">			&lt;!-- java编译插件 --&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">				&lt;version&gt;3.2&lt;/version&gt;</span><br><span class="line">				&lt;configuration&gt;</span><br><span class="line">					&lt;source&gt;1.7&lt;/source&gt;</span><br><span class="line">					&lt;target&gt;1.7&lt;/target&gt;</span><br><span class="line">					&lt;encoding&gt;UTF-8&lt;/encoding&gt;</span><br><span class="line">				&lt;/configuration&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</span><br><span class="line">				&lt;version&gt;2.4.2&lt;/version&gt;</span><br><span class="line">				&lt;configuration&gt;</span><br><span class="line">					&lt;skipTests&gt;true&lt;/skipTests&gt;</span><br><span class="line">				&lt;/configuration&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">			&lt;!-- 配置Tomcat插件 --&gt;</span><br><span class="line">			&lt;plugin&gt;</span><br><span class="line">				&lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;</span><br><span class="line">				&lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">				&lt;version&gt;2.2&lt;/version&gt;</span><br><span class="line">				&lt;configuration&gt;</span><br><span class="line">					&lt;port&gt;80&lt;/port&gt;</span><br><span class="line">					&lt;path&gt;/&lt;/path&gt;</span><br><span class="line">					&lt;!-- &lt;url&gt;http://192.168.25.138:8080/manager/text&lt;/url&gt; &lt;username&gt;tomcat&lt;/username&gt; </span><br><span class="line">						&lt;password&gt;tomcat&lt;/password&gt; --&gt;</span><br><span class="line">				&lt;/configuration&gt;</span><br><span class="line">			&lt;/plugin&gt;</span><br><span class="line">		&lt;/plugins&gt;</span><br><span class="line">	&lt;/build&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dev.properties的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">profile.env=dev</span><br><span class="line">#支付宝网关</span><br><span class="line">alipay.gateway =  https://openapi.alipaydev.com/gateway.do</span><br><span class="line">#支付宝appid</span><br><span class="line">alipay.app.id = appid</span><br><span class="line">#私钥</span><br><span class="line">alipay.private.key = 私钥</span><br><span class="line">#公钥</span><br><span class="line">alipay.public.key =公钥</span><br><span class="line">#支付宝授权登录页</span><br><span class="line">alipay.url = https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm</span><br><span class="line">#支付宝授权成功之后的回调地址</span><br><span class="line">redirect.url = 回调地址</span><br><span class="line">#我们自己网站的域名,用于重定向至错误页面</span><br><span class="line">web.site = www.baidu.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>prod.properties的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">profile.env=prod</span><br><span class="line">#支付宝网关</span><br><span class="line">alipay.gateway =  https://openapi.alipaydev.com/gateway.do</span><br><span class="line">#支付宝appid</span><br><span class="line">alipay.app.id = appid</span><br><span class="line">#私钥</span><br><span class="line">alipay.private.key = 私钥</span><br><span class="line">#公钥</span><br><span class="line">alipay.public.key =公钥</span><br><span class="line">#支付宝授权登录页</span><br><span class="line">alipay.url = https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm</span><br><span class="line">#支付宝授权成功之后的回调地址</span><br><span class="line">redirect.url = 回调地址</span><br><span class="line">#我们自己网站的域名,用于重定向至错误页面</span><br><span class="line">web.site = www.baidu.com</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>通过profile.env指定不同的环境</p>
+<ul>
+<li>sys-config.properties核心文件的配置（看你spring中引入的是哪个配置文件了）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">env=$&#123;profile.env&#125;</span><br><span class="line">alipay.gateway=$&#123;alipay.gateway&#125;</span><br><span class="line">alipay.app.id=$&#123;alipay.app.id&#125;</span><br><span class="line">alipay.private.key=$&#123;alipay.private.key&#125;</span><br><span class="line">alipay.public.key=$&#123;alipay.public.key&#125;</span><br><span class="line">alipay.url=$&#123;alipay.url&#125;</span><br><span class="line">redirect.url=$&#123;redirect.url&#125;</span><br><span class="line">web.site=$&#123;web.site&#125;</span><br><span class="line"></span><br><span class="line">#endpoint = http://oss-cn-qingdao.aliyuncs.com</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果没有特别的需要是不用再这里在写alipay.gateway=${alipay.gateway}，我这里因为java类中用到了读配置文件的value值来生成实例，我就让java类来读这个sys-config.properties，而不去读dev.properties，所以这里用占位符的方式指定不确定的值。</p>
+<ul>
+<li>打包时如果用的是idea（eclipse我没试）直接在右上角的位置选定你需要的环境打就可以了，比较方便。<h3 id="3-补充之前知识："><a href="#3-补充之前知识：" class="headerlink" title="3.补充之前知识："></a>3.补充之前知识：</h3>我之前写过一篇【spring.xm中配置文件使用占位符】，再次贴出来，可以结合着一块来看，全文如下：<br>在spring中，可以使用PropertyPlaceholderConfigurer引入properties的配置文件，在配置文件中定义key，value形式的键值对，之后在xml中读取${key}的值，可以灵活的配置常用参数。<h3 id="1-定义-properties的配置文件"><a href="#1-定义-properties的配置文件" class="headerlink" title="1.定义.properties的配置文件"></a>1.定义.properties的配置文件</h3>这里用一个mysql数据库连接的配置文件做测试。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driverClassName=com.mysql.jdbc.Driver</span><br><span class="line">jdbc.url=jdbc\:mysql\://192.168.49.127\:3306/test?useUnicode\=true&amp;characterEncoding\=UTF-8&amp;useSSL=true</span><br><span class="line">jdbc.username=root</span><br><span class="line">jdbc.password=root</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="2-在-xml中引入-properties配置文件"><a href="#2-在-xml中引入-properties配置文件" class="headerlink" title="2.在.xml中引入.properties配置文件"></a>2.在.xml中引入.properties配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;propertyConfigurer&quot; class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;locations&quot;&gt;</span><br><span class="line">		&lt;list&gt;</span><br><span class="line">			&lt;value&gt;classpath*:jdbc.properties&lt;/value&gt;</span><br><span class="line">			&lt;value&gt;/WEB-INF/mail.properties&lt;/value&gt;</span><br><span class="line">		&lt;/list&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<p>注意上面一种classpath是引用src目录下的文件写法，下面一种是引入在WEB-INF下面的文件。<br>如果引入单个文件，还可以不用list。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;propertyConfigurerForProject1&quot; class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;  </span><br><span class="line">    &lt;property name=&quot;order&quot; value=&quot;1&quot; /&gt;  </span><br><span class="line">    &lt;property name=&quot;ignoreUnresolvablePlaceholders&quot; value=&quot;true&quot; /&gt;  </span><br><span class="line">    &lt;property name=&quot;location&quot;&gt;  </span><br><span class="line">       &lt;value&gt;classpath:/com/catchu/me/jdbc.properties&lt;/value&gt;  </span><br><span class="line">    &lt;/property&gt;  </span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-使用配置文件"><a href="#3-使用配置文件" class="headerlink" title="3.使用配置文件"></a>3.使用配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot; destroy-method=&quot;close&quot;&gt;  </span><br><span class="line">   &lt;property name=&quot;driverClassName&quot; value=&quot;$&#123;jdbc.driverClassName&#125;&quot; /&gt;  </span><br><span class="line">   &lt;property name=&quot;url&quot; value=&quot;$&#123;jdbc.url&#125;&quot; /&gt;  </span><br><span class="line">   &lt;property name=&quot;username&quot; value=&quot;$&#123;jdbc.username&#125;&quot; /&gt;  </span><br><span class="line">   &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.password&#125;&quot; /&gt;  </span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<p>使用时直接使用${}就可以了，类似于EL表达式。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/maven/" rel="tag"># maven</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/如何使用支付宝账号授权登录网站/" rel="next" title="如何使用支付宝账号授权登录网站">
+                <i class="fa fa-chevron-left"></i> 如何使用支付宝账号授权登录网站
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/使用SpringCloud构建简单的服务者和消费者/" rel="prev" title="使用SpringCloud构建简单的服务者和消费者">
+                使用SpringCloud构建简单的服务者和消费者 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">你只有非常努力，才能看起来毫不费力！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635?is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Maven如何打入本地jar包"><span class="nav-text"><a href="#1-Maven&#x5982;&#x4F55;&#x6253;&#x5165;&#x672C;&#x5730;jar&#x5305;" class="headerlink" title="1.Maven&#x5982;&#x4F55;&#x6253;&#x5165;&#x672C;&#x5730;jar&#x5305;"></a>1.Maven&#x5982;&#x4F55;&#x6253;&#x5165;&#x672C;&#x5730;jar&#x5305;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用maven的profiles动态选择配置文件"><span class="nav-text"><a href="#2-&#x4F7F;&#x7528;maven&#x7684;profiles&#x52A8;&#x6001;&#x9009;&#x62E9;&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="2.&#x4F7F;&#x7528;maven&#x7684;profiles&#x52A8;&#x6001;&#x9009;&#x62E9;&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>2.&#x4F7F;&#x7528;maven&#x7684;profiles&#x52A8;&#x6001;&#x9009;&#x62E9;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-补充之前知识："><span class="nav-text"><a href="#3-&#x8865;&#x5145;&#x4E4B;&#x524D;&#x77E5;&#x8BC6;&#xFF1A;" class="headerlink" title="3.&#x8865;&#x5145;&#x4E4B;&#x524D;&#x77E5;&#x8BC6;&#xFF1A;"></a>3.&#x8865;&#x5145;&#x4E4B;&#x524D;&#x77E5;&#x8BC6;&#xFF1A;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-定义-properties的配置文件"><span class="nav-text"><a href="#1-&#x5B9A;&#x4E49;-properties&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="1.&#x5B9A;&#x4E49;.properties&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>1.&#x5B9A;&#x4E49;.properties&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在-xml中引入-properties配置文件"><span class="nav-text"><a href="#2-&#x5728;-xml&#x4E2D;&#x5F15;&#x5165;-properties&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="2.&#x5728;.xml&#x4E2D;&#x5F15;&#x5165;.properties&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>2.&#x5728;.xml&#x4E2D;&#x5F15;&#x5165;.properties&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用配置文件"><span class="nav-text"><a href="#3-&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="3.&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>3.&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

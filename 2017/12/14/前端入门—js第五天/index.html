@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0.操作节点复习上一节的节点操作，append添加子节点，而且子节点在最后一个位置，cloneNode()，克隆节点，括号里面可以加参数，如果是true则是深克隆（克隆当前节点及其子节点），如果是false则是浅克隆，只可能当前选中的节点；parentNode父节点，给我的父节点增加子节点其实相当于给我增加了一个兄弟节。window.onload是入口函数,代表页面加载完毕之后执行（一个页面只能有">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端入门—js第五天">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/前端入门—js第五天/index.html">
+<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:description" content="0.操作节点复习上一节的节点操作，append添加子节点，而且子节点在最后一个位置，cloneNode()，克隆节点，括号里面可以加参数，如果是true则是深克隆（克隆当前节点及其子节点），如果是false则是浅克隆，只可能当前选中的节点；parentNode父节点，给我的父节点增加子节点其实相当于给我增加了一个兄弟节。window.onload是入口函数,代表页面加载完毕之后执行（一个页面只能有">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-14T10:43:14.421Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端入门—js第五天">
+<meta name="twitter:description" content="0.操作节点复习上一节的节点操作，append添加子节点，而且子节点在最后一个位置，cloneNode()，克隆节点，括号里面可以加参数，如果是true则是深克隆（克隆当前节点及其子节点），如果是false则是浅克隆，只可能当前选中的节点；parentNode父节点，给我的父节点增加子节点其实相当于给我增加了一个兄弟节。window.onload是入口函数,代表页面加载完毕之后执行（一个页面只能有">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/前端入门—js第五天/"/>
+
+
+
+
+
+  <title>前端入门—js第五天 | 一颗向上的草莓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一颗向上的草莓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/前端入门—js第五天/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端入门—js第五天</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T18:42:30+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端—javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">前端—javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="0-操作节点"><a href="#0-操作节点" class="headerlink" title="0.操作节点"></a>0.操作节点</h3><p>复习上一节的节点操作，append添加子节点，而且子节点在最后一个位置，cloneNode()，克隆节点，括号里面可以加参数，如果是true则是深克隆（克隆当前节点及其子节点），如果是false则是浅克隆，只可能当前选中的节点；parentNode父节点，给我的父节点增加子节点其实相当于给我增加了一个兄弟节。window.onload是入口函数,代表页面加载完毕之后执行（一个页面只能有一个window.onload，因为即使有多个，后面的也会覆盖前面的，导致前面的不生效）。需要注意的是添加元素时我们有时候使用append(),有时候使用appendChild()，他们两个是有点区别的，前者是jq里的写法，后者是js里的写法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;01节点操作&lt;/title&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            var demo = document.getElementById(&quot;demo&quot;);</span><br><span class="line">            var btn = document.getElementsByTagName(&quot;button&quot;)[0];</span><br><span class="line">            btn.onclick = function()&#123;</span><br><span class="line">                //创建标签</span><br><span class="line">                var newLi = document.createElement(&quot;li&quot;);</span><br><span class="line">                newLi.innerHTML = &quot;测试创建节点&quot;</span><br><span class="line">                demo.appendChild(newLi);</span><br><span class="line">                demo.parentNode.appendChild(demo.cloneNode(true));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;button&gt;点击&lt;/button&gt;</span><br><span class="line">&lt;ul id=&quot;demo&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="1-操作属性"><a href="#1-操作属性" class="headerlink" title="1.操作属性"></a>1.操作属性</h3><p>节点的属性操作中我们常用的是获取属性，设置属性，删除属性，分别使用以下方法：</p>
+<ul>
+<li>getAttribute(“属性名”)  根据属性名获取属性值</li>
+<li>setAttribute(“属性名”,”属性值”) 给节点的某个属性设置属性值</li>
+<li>removeAttribute(“属性名”) 删除节点的某个属性<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div id=&quot;demo&quot; class=&quot;test&quot; title=&quot;测试&quot;&gt;测试&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var demo = document.getElementById(&quot;demo&quot;);</span><br><span class="line">    console.log(demo.getAttribute(&quot;class&quot;));//获取属性</span><br><span class="line">    demo.setAttribute(&quot;class&quot;,&quot;show&quot;);  //设置节点</span><br><span class="line">    demo.removeAttribute(&quot;title&quot;);  //删除节点</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>写的还有另外一个动态生成小圆点的示例，不再这里贴代码了，感兴趣的可以到文末代码地址中看。<br>需要指出一点的是，我们好多时候写前端，都是先把基本的样式写好，某些需要动态生成，或通过后台取数据的再抽取出来，放在js里面，不要一上来就把想着全写出来，可能会有点吃力。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;04发微博&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        *&#123;</span><br><span class="line">            margin: 0;</span><br><span class="line">            padding: 0;</span><br><span class="line">        &#125;</span><br><span class="line">        ul&#123;</span><br><span class="line">            list-style-type: none;</span><br><span class="line">        &#125;</span><br><span class="line">        .box&#123;</span><br><span class="line">            width: 600px;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            border:1px solid #ccc;</span><br><span class="line">            padding: 20px;</span><br><span class="line">            height: auto;</span><br><span class="line">        &#125;</span><br><span class="line">        textarea&#123;</span><br><span class="line">            width: 450px;</span><br><span class="line">            resize: none;  /*固定使其不可拖拉*/</span><br><span class="line">        &#125;</span><br><span class="line">        .box li&#123;</span><br><span class="line">            line-height: 30px;</span><br><span class="line">            border-bottom: 1px dashed #ccc;</span><br><span class="line">            padding-left: 80px;</span><br><span class="line">            width: 450px;</span><br><span class="line">        &#125;</span><br><span class="line">        .box ul a&#123;</span><br><span class="line">            float: right;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            var btn = document.getElementsByTagName(&quot;button&quot;)[0];</span><br><span class="line">            var txt = document.getElementsByTagName(&quot;textarea&quot;)[0];</span><br><span class="line">            //创建ul并追加</span><br><span class="line">            var ulEle = document.createElement(&quot;ul&quot;);</span><br><span class="line">            btn.parentNode.appendChild(ulEle);</span><br><span class="line">            btn.onclick = function()&#123;</span><br><span class="line">                if(txt.value==&quot;&quot;)&#123;</span><br><span class="line">                    alert(&quot;内容不能为空&quot;);</span><br><span class="line">                    return;  //停止代码执行</span><br><span class="line">                &#125;</span><br><span class="line">                //创建li</span><br><span class="line">                var liEle = document.createElement(&quot;li&quot;);</span><br><span class="line">                liEle.innerHTML = txt.value+&quot;&lt;a href =&apos;javascript:;&apos;&gt;删除&lt;/a&gt;&quot;;</span><br><span class="line">                txt.value=&quot;&quot;;  //清空</span><br><span class="line">                //判断有无li，把新添加的li放在最前面</span><br><span class="line">                var lis = ulEle.children;</span><br><span class="line">                if(lis.length==0)&#123;</span><br><span class="line">                    ulEle.appendChild(liEle)</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    ulEle.insertBefore(liEle,lis[0]);</span><br><span class="line">                &#125;</span><br><span class="line">                //点击删除按钮时进行删除</span><br><span class="line">                var as = document.getElementsByTagName(&quot;ul&quot;)[0].getElementsByTagName(&quot;a&quot;);</span><br><span class="line">                for(var i=0;i&lt;as.length;i++)&#123;</span><br><span class="line">                    as[i].onclick = function()&#123;</span><br><span class="line">                        ulEle.removeChild(this.parentNode);  //从ul中移除当前的li</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;</span><br><span class="line">    微博发布：&lt;textarea id=&quot;&quot; name=&quot;&quot; cols=&quot;40&quot; rows=&quot;10&quot; &gt;&lt;/textarea&gt;&lt;button&gt;发布&lt;/button&gt;</span><br><span class="line">    &lt;!--&lt;ul&gt;--&gt;</span><br><span class="line">        &lt;!--&lt;li&gt;合法你考虑到发交话费拉克丝发挥到了开始&lt;a href=&quot;javascript:;&quot;&gt;删除&lt;/a&gt;&lt;/li&gt;--&gt;</span><br><span class="line">    &lt;!--&lt;/ul&gt;--&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p>resize: none可以设置textarea不可拖拉，textarea这里是双标签，有开始标签和结束标签，不能写成单标签，而且上面这个我就是先把样式写好，再把ul注释掉从js中动态生成的。</p>
+<h3 id="2-日期函数"><a href="#2-日期函数" class="headerlink" title="2.日期函数"></a>2.日期函数</h3><p>Date是js中的内置对象，使用它可以创建日期，获取当前的时间。<br>var date = new Date();  可以创建一个日期对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var date = new Date();</span><br><span class="line">console.log(date);   //Wed Aug 30 2017 13:26:51 GMT+0800 (中国标准时间)</span><br><span class="line">console.log(date.getTime());  //1504070843457   从1970年至现在的毫秒数</span><br><span class="line">console.log(date.valueOf());  //1504070843457   跟上面的一样，但是没有上面的常用</span><br><span class="line">//直接使用的</span><br><span class="line">console.log(Date.now());  //1504070966613</span><br><span class="line">console.log(+new Date());  //1504070966613</span><br><span class="line">console.log(typeof (+&quot;123456&quot;));  //number</span><br></pre></td></tr></table></figure></p>
+<p>js中，在某个值前使用”+”可以将这个变量转换成Number类型，如果转换失败，将得到NaN。所以上面的+new Date()跟其它值一样。</p>
+<h4 id="3-1日期函数常用方法"><a href="#3-1日期函数常用方法" class="headerlink" title="3.1日期函数常用方法"></a>3.1日期函数常用方法</h4><p>日期函数中常用的方法如下：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getFullYear()</td>
+<td>获取年（所有浏览器均支持）</td>
+</tr>
+<tr>
+<td>getYear()</td>
+<td>获取年（从ECMAscriptv3开始停止使用了） 所以慎用！</td>
+</tr>
+<tr>
+<td>getMonth()</td>
+<td>获取月0-11</td>
+</tr>
+<tr>
+<td>getDate()</td>
+<td>获取日1-31</td>
+</tr>
+<tr>
+<td>getDay()</td>
+<td>获取星期0-6（跟上面获取日的要分清）</td>
+</tr>
+<tr>
+<td>getHours()</td>
+<td>获取小时  （获取时分秒单词需要用复数）</td>
+</tr>
+<tr>
+<td>getMinutes()</td>
+<td>获取分钟</td>
+</tr>
+<tr>
+<td>getSeconds()</td>
+<td>获取秒</td>
+</tr>
+<tr>
+<td>getMilliseconds()</td>
+<td>获取毫秒</td>
+</tr>
+<tr>
+<td>getTime()</td>
+<td>获取从1970年至今的累计毫秒数</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    var date = new Date();</span><br><span class="line"></span><br><span class="line">    console.log(date.getFullYear());  //2017</span><br><span class="line">    console.log(date.getYear());  //117</span><br><span class="line">    console.log(date.getMonth());  //7</span><br><span class="line">    console.log(date.getDate());  //30</span><br><span class="line">    console.log(date.getDay())   //3</span><br><span class="line">    console.log(date.getHours())  //14</span><br><span class="line">    console.log(date.getMinutes()) //5</span><br><span class="line">    console.log(date.getSeconds()) //16</span><br><span class="line">    console.log(date.getMilliseconds()) //728</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>下面这一个是根据日历函数生成一个日历，其中定义一个数组来装星期的思路不错。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;06日历&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .box&#123;</span><br><span class="line">            width: 150px;</span><br><span class="line">            height: 180px;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            background-color: #336699;</span><br><span class="line">            text-align: center;</span><br><span class="line">        &#125;</span><br><span class="line">        .box p&#123;</span><br><span class="line">            line-height: 60px;</span><br><span class="line">            color: #FFFFFF;</span><br><span class="line">            font-size: 12px;</span><br><span class="line">        &#125;</span><br><span class="line">        .box span&#123;</span><br><span class="line">            display: block;</span><br><span class="line">            width: 75px;</span><br><span class="line">            height: 75px;</span><br><span class="line">            background-color:#9ACD32 ;</span><br><span class="line">            margin: 0 auto;</span><br><span class="line">            line-height: 75px;</span><br><span class="line">            font-size: 50px;</span><br><span class="line">            color: #000000;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            var box = document.getElementById(&quot;box&quot;);</span><br><span class="line">            var arr = [&quot;星期日&quot;,&quot;星期一&quot;,&quot;星期二&quot;,&quot;星期三&quot;,&quot;星期四&quot;,&quot;星期五&quot;,&quot;星期六&quot;];</span><br><span class="line">            var childrens = box.children;</span><br><span class="line">            var date = new Date();</span><br><span class="line">            childrens[0].innerHTML = date.getFullYear()+&quot;年&quot;+(date.getMonth()+1)+&quot;月&quot;+date.getDate()+&quot;日&quot;+</span><br><span class="line">                arr[date.getDay()];</span><br><span class="line">            childrens[1].innerHTML = date.getDate();</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;box&quot; id=&quot;box&quot;&gt;</span><br><span class="line">        &lt;p&gt;432431&lt;/p&gt;</span><br><span class="line">        &lt;span&gt;3&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-2自定义时间"><a href="#3-2自定义时间" class="headerlink" title="3.2自定义时间"></a>3.2自定义时间</h4><p>有时我们自己需要自己指定时间，那么在创建时间时传一个时间参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var date = new Date(&quot;2016/09/11&quot;);</span><br><span class="line">console.log(date.getFullYear());</span><br></pre></td></tr></table></figure></p>
+<p>所以new Date()里面如果有参数，生成指定日期，如果没有参数，生成当前日期。</p>
+<h3 id="4-定时器"><a href="#4-定时器" class="headerlink" title="4.定时器"></a>4.定时器</h3><p>通过设定定时器可以让某个函数或动作持续的执行下去，定时器通过setInterval()函数来设定。<br>window.setInterval(“函数名”,”时间间隔”)；每隔指定的时间间隔去执行函数。<br>下面这几种写法都是可以的：</p>
+<ul>
+<li>window.setInterval(fun,1000);  其中fun是已经定义好的函数名</li>
+<li>window.setInterval(function(){//函数体},1000);<br>下面这两种会报错</li>
+<li>window.setInterval(fun(),1000);</li>
+<li>window.setInterval(“fun()”,1000);网上有说这种方式也可以的，但是我试了试不行（不知道是不是姿势不对）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    window.onload = function ()&#123;</span><br><span class="line">        var demo = document.getElementById(&quot;demo&quot;);</span><br><span class="line">        var num=1;</span><br><span class="line">        function myInterval()&#123;</span><br><span class="line">            num++;</span><br><span class="line">            demo.innerHTML = num;</span><br><span class="line">        &#125;</span><br><span class="line">        window.setInterval(myInterval,1000);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>下面的例子是一个活动的倒计时，定时器每秒执行一次，根据截至时间和当前时间算出中间相隔的毫秒数(getTime()获取1970年到指定时间的毫秒数)，再利用毫秒数计算运算转换。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">    &lt;style&gt;</span><br><span class="line">        span&#123;</span><br><span class="line">            display: block;</span><br><span class="line">            font-size: 30px;</span><br><span class="line">            color: red;</span><br><span class="line">            text-align: center;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            var endTime = new Date(&quot;2017-08-31 24:00:00&quot;);</span><br><span class="line">            var spanEle = document.getElementsByTagName(&quot;span&quot;)[0];</span><br><span class="line">            setInterval(clock,1000);  //开启定时器，每秒执行一次</span><br><span class="line">            function clock()&#123;</span><br><span class="line">                var startTime = new Date();</span><br><span class="line">                var minSecond = endTime.getTime()-startTime.getTime(); //得到距离截止时间还有多少毫秒</span><br><span class="line">                var second = parseInt(minSecond/1000);  //得到秒数</span><br><span class="line">                var d = parseInt(second/24/3600);  //得到天数</span><br><span class="line">                var h = parseInt(second/3600%24);  //得到小时</span><br><span class="line">                var m = parseInt(second/60%60);  //得到分钟</span><br><span class="line">                var s = parseInt(second%60);  //得到秒数</span><br><span class="line">                d&lt;10?d=&quot;0&quot;+d:d;</span><br><span class="line">                h&lt;10?h=&quot;0&quot;+h:h;</span><br><span class="line">                m&lt;10?m=&quot;0&quot;+m:m;</span><br><span class="line">                s&lt;10?s=&quot;0&quot;+s:s;</span><br><span class="line">                spanEle.innerHTML = &quot;距离活动结束还有&quot;+d+&quot;天&quot;+h+&quot;小时&quot;+m+&quot;分钟&quot;+s+&quot;秒&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;span&gt;</span><br><span class="line">        5634298</span><br><span class="line">    &lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p>代码地址：<a href="https://git.oschina.net/catchu/web-study" target="_blank" rel="noopener">https://git.oschina.net/catchu/web-study</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/前端入门—js第四天/" rel="next" title="前端入门—js第四天">
+                <i class="fa fa-chevron-left"></i> 前端入门—js第四天
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/html5学习笔记/" rel="prev" title="html5学习笔记">
+                html5学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">你只有非常努力，才能看起来毫不费力！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635?is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-操作节点"><span class="nav-text"><a href="#0-&#x64CD;&#x4F5C;&#x8282;&#x70B9;" class="headerlink" title="0.&#x64CD;&#x4F5C;&#x8282;&#x70B9;"></a>0.&#x64CD;&#x4F5C;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-操作属性"><span class="nav-text"><a href="#1-&#x64CD;&#x4F5C;&#x5C5E;&#x6027;" class="headerlink" title="1.&#x64CD;&#x4F5C;&#x5C5E;&#x6027;"></a>1.&#x64CD;&#x4F5C;&#x5C5E;&#x6027;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-日期函数"><span class="nav-text"><a href="#2-&#x65E5;&#x671F;&#x51FD;&#x6570;" class="headerlink" title="2.&#x65E5;&#x671F;&#x51FD;&#x6570;"></a>2.&#x65E5;&#x671F;&#x51FD;&#x6570;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1日期函数常用方法"><span class="nav-text"><a href="#3-1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;" class="headerlink" title="3.1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;"></a>3.1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2自定义时间"><span class="nav-text"><a href="#3-2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;" class="headerlink" title="3.2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;"></a>3.2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-定时器"><span class="nav-text"><a href="#4-&#x5B9A;&#x65F6;&#x5668;" class="headerlink" title="4.&#x5B9A;&#x65F6;&#x5668;"></a>4.&#x5B9A;&#x65F6;&#x5668;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

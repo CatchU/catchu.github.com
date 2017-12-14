@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="springcloud," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="你只有非常努力，才能看起来毫不费力！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta name="description" content="0.SpringCloud的特点Springcloud具有下列特点：  约定优于配置； 开箱即用，快速启动（springboot可以以jar或war的方式启动） 适用于多种环境（Pc Server、Docker） 组件轻量，选型中立（例如注册中心可以是Eureka、Consul、Zookeeper） 组件丰富，功能齐全（注册中心，配置中心，智能路由，负载均衡，熔断机制）1.创建springboot">
+<meta name="keywords" content="springcloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用SpringCloud构建简单的服务者和消费者">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/使用SpringCloud构建简单的服务者和消费者/index.html">
 <meta property="og:site_name" content="一颗向上的草莓">
-<meta property="og:description" content="你只有非常努力，才能看起来毫不费力！">
+<meta property="og:description" content="0.SpringCloud的特点Springcloud具有下列特点：  约定优于配置； 开箱即用，快速启动（springboot可以以jar或war的方式启动） 适用于多种环境（Pc Server、Docker） 组件轻量，选型中立（例如注册中心可以是Eureka、Consul、Zookeeper） 组件丰富，功能齐全（注册中心，配置中心，智能路由，负载均衡，熔断机制）1.创建springboot">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-14T09:06:23.456Z">
+<meta property="og:updated_time" content="2017-12-14T11:22:55.632Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
-<meta name="twitter:description" content="你只有非常努力，才能看起来毫不费力！">
+<meta name="twitter:title" content="使用SpringCloud构建简单的服务者和消费者">
+<meta name="twitter:description" content="0.SpringCloud的特点Springcloud具有下列特点：  约定优于配置； 开箱即用，快速启动（springboot可以以jar或war的方式启动） 适用于多种环境（Pc Server、Docker） 组件轻量，选型中立（例如注册中心可以是Eureka、Consul、Zookeeper） 组件丰富，功能齐全（注册中心，配置中心，智能路由，负载均衡，熔断机制）1.创建springboot">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/使用SpringCloud构建简单的服务者和消费者/"/>
 
 
 
 
 
-  <title>标签 | 一颗向上的草莓</title>
+  <title>使用SpringCloud构建简单的服务者和消费者 | 一颗向上的草莓</title>
   
 
 
@@ -294,40 +295,245 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/使用SpringCloud构建简单的服务者和消费者/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">标签</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                目前共计 13 个标签
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/FreeMarker/" style="font-size: 16.5px; color: #9d9d9d">FreeMarker</a> <a href="/tags/gradle/" style="font-size: 12px; color: #ccc">gradle</a> <a href="/tags/html5/" style="font-size: 12px; color: #ccc">html5</a> <a href="/tags/javascript/" style="font-size: 30px; color: #111">javascript</a> <a href="/tags/maven/" style="font-size: 21px; color: #6f6f6f">maven</a> <a href="/tags/mybatis/" style="font-size: 12px; color: #ccc">mybatis</a> <a href="/tags/shiro/" style="font-size: 21px; color: #6f6f6f">shiro</a> <a href="/tags/spring/" style="font-size: 25.5px; color: #404040">spring</a> <a href="/tags/springcloud/" style="font-size: 25.5px; color: #404040">springcloud</a> <a href="/tags/支付宝登录/" style="font-size: 12px; color: #ccc">支付宝登录</a> <a href="/tags/模板引擎/" style="font-size: 16.5px; color: #9d9d9d">模板引擎</a> <a href="/tags/百度统计/" style="font-size: 12px; color: #ccc">百度统计</a> <a href="/tags/配置文件/" style="font-size: 12px; color: #ccc">配置文件</a>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">使用SpringCloud构建简单的服务者和消费者</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T19:10:38+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台—springcloud/" itemprop="url" rel="index">
+                    <span itemprop="name">后台—springcloud</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h3 id="0-SpringCloud的特点"><a href="#0-SpringCloud的特点" class="headerlink" title="0.SpringCloud的特点"></a>0.SpringCloud的特点</h3><p>Springcloud具有下列特点：</p>
+<ul>
+<li>约定优于配置；</li>
+<li>开箱即用，快速启动（springboot可以以jar或war的方式启动）</li>
+<li>适用于多种环境（Pc Server、Docker）</li>
+<li>组件轻量，选型中立（例如注册中心可以是Eureka、Consul、Zookeeper）</li>
+<li>组件丰富，功能齐全（注册中心，配置中心，智能路由，负载均衡，熔断机制）<h3 id="1-创建springboot的项目"><a href="#1-创建springboot的项目" class="headerlink" title="1.创建springboot的项目"></a>1.创建springboot的项目</h3>springcloud分布式项目里面的每个小项目都是springboot项目，所以首先搭建springboot项目（这里不主要讲），有两种方法，我使用的编辑器是inteiilij idea.</li>
+<li>方法一：<br>File—— new Project ——左侧选择Spring Initializr（如果没有这个选项，在插件里面搜索spring boot并安装，之后重启idea），右侧选择jdk版本，default选项不用管，之后接着下一步下一步选择依赖（具体方法网上写的有，可以参考：<a href="http://blog.csdn.net/yxl8359026/article/details/51464041）" target="_blank" rel="noopener">http://blog.csdn.net/yxl8359026/article/details/51464041）</a></li>
+<li>方法二：<br>直接到<a href="http://start.spring.io/" target="_blank" rel="noopener">http://start.spring.io/</a> 填写项目信息和依赖的服务，之后生成一个压缩包，解压缩就是一个maven类的项目，直接导入编辑工具即可。<br>至此服务者microservice-simple-provider-user和消费者microservice-simple-consumer-movie创建完毕。<h3 id="2-配置springboot的application-yml配置文件"><a href="#2-配置springboot的application-yml配置文件" class="headerlink" title="2.配置springboot的application.yml配置文件"></a>2.配置springboot的application.yml配置文件</h3>默认生成之后是application.properties格式的文件，直接把后缀名改为yml结尾的即可，yml格式的是类似于树型结构的配置文件，示例如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 7900</span><br><span class="line">spring:</span><br><span class="line">  jpa:</span><br><span class="line">    generate-ddl: false</span><br><span class="line">    show-sql: true</span><br><span class="line">    hibernate:</span><br><span class="line">      ddl-auto: none</span><br><span class="line">  datasource:</span><br><span class="line">    platform: h2</span><br><span class="line">    schema: classpath:schema.sql</span><br><span class="line">    data: classpath:data.sql</span><br><span class="line">logging:</span><br><span class="line">  level:</span><br><span class="line">    root: INFO</span><br><span class="line">    org.hibernate: INFO</span><br><span class="line">    org.hibernate.type.descriptor.sql.BasicBinder: TRACE</span><br><span class="line">    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE</span><br><span class="line">    com.catchu: DEBUG</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这种yml的配置文件首先需要idea识别你的maven工程，才会给出提示，不然不会提示，自己写的话容易出错（yml对格式要求比较严），树型配置文件，与我们熟悉的properties的差不多，比如server:port:7900就相当于server.port=7900。上面配置的意思是配置端口为7900，配置jpa和数据源（为模拟简便使用h2数据库），配置日志级别。</p>
+<h3 id="3-开发服务提供者"><a href="#3-开发服务提供者" class="headerlink" title="3.开发服务提供者"></a>3.开发服务提供者</h3><p>为模拟简单，这里直接用controller调用dao，不在写业务层，dao直接继承JpaRepository。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.catchu.microservice.dao;</span><br><span class="line">import com.catchu.microservice.entity.User;</span><br><span class="line">import org.springframework.data.jpa.repository.JpaRepository;</span><br><span class="line">import org.springframework.stereotype.Repository;</span><br><span class="line">/**</span><br><span class="line"> * @author 刘俊重</span><br><span class="line"> * @Description 用户数据访问层</span><br><span class="line"> * @date 18:06</span><br><span class="line"> */</span><br><span class="line">@Repository</span><br><span class="line">public interface UserDao extends JpaRepository&lt;User,Long&gt;&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>controller代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package com.catchu.microservice.controller;</span><br><span class="line">import com.catchu.microservice.dao.UserDao;</span><br><span class="line">import com.catchu.microservice.entity.User;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.PathVariable;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">/**</span><br><span class="line"> * @author 刘俊重</span><br><span class="line"> * @Description</span><br><span class="line"> * @date 18:09</span><br><span class="line"> */</span><br><span class="line">@RestController</span><br><span class="line">public class UserController &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private UserDao userDao;</span><br><span class="line">    @GetMapping(&quot;/simple/&#123;id&#125;&quot;)</span><br><span class="line">    public User findUserbyId(@PathVariable Long id)&#123;</span><br><span class="line">        return userDao.findOne(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至此提供者写完了，直接运行根包下面的main项目即可，不用单独配置tomcat，浏览器访问<a href="http://localhost:7900/simple/3" target="_blank" rel="noopener">http://localhost:7900/simple/3</a> 接收到返回的数据。</p>
+<h3 id="4-开发服务消费者"><a href="#4-开发服务消费者" class="headerlink" title="4.开发服务消费者"></a>4.开发服务消费者</h3><p>同样是先配置application.yml文件，本例中配置一下端口即可，随后在main方法中创建RestTemplate示例对象，来调用服务者的接口。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">public class MicroserviceSimpleConsumerMovieApplication &#123;</span><br><span class="line">	/**</span><br><span class="line">	 * @Description 在这里创建RestTemplate实例供其他调用者调用消费者</span><br><span class="line">	 * @Author 刘俊重</span><br><span class="line">	 * @Date 2017/10/30</span><br><span class="line">	 */</span><br><span class="line">	@Bean</span><br><span class="line">	public RestTemplate restTemplate()&#123;</span><br><span class="line">		return  new RestTemplate();</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;	SpringApplication.run(MicroserviceSimpleConsumerMovieApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在消费者的控制层中调用服务者的控制层。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 刘俊重</span><br><span class="line"> * @Description 电影服务控制层</span><br><span class="line"> * @date 18:29</span><br><span class="line"> */</span><br><span class="line">@RestController</span><br><span class="line">public class MovieController &#123;</span><br><span class="line">    /**</span><br><span class="line">     * @Description restTemplate名字与MicroserviceSimpleConsumerMovieApplication里面@bean创建的对象名要一样</span><br><span class="line">     */</span><br><span class="line">    @Autowired</span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line">    </span><br><span class="line">    @Value(&quot;$&#123;user.userServicePath&#125;&quot;)</span><br><span class="line">    private String userServicePath;</span><br><span class="line">    /**</span><br><span class="line">     * @Description 使用restTemplate对象调用服务者——用户模块</span><br><span class="line">     */</span><br><span class="line">    @GetMapping(&quot;/simple/&#123;id&#125;&quot;)</span><br><span class="line">    public User findUserById(@PathVariable Long id)&#123;</span><br><span class="line">        return restTemplate.getForObject(userServicePath+id, User.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>到这里消费者已经写好了，直接启动main方法，访问<a href="http://localhost:7901/simple/3" target="_blank" rel="noopener">http://localhost:7901/simple/3</a>  就可以看到调用了7900端口下的服务。<br>总结：首先创建服务的提供者和消费者两个项目，之后修改配置文件，编写服务者和消费者。两个项目是独立的单元，都有自己的控制层，业务层，可以独立部署运行，但它们之前的服务又互相调用；同时服务依赖太严重又会导致不稳定，之后介绍使用注册中心的服务注册和发现。<br>代码地址：<a href="https://gitee.com/catchu/springcloud-study" target="_blank" rel="noopener">https://gitee.com/catchu/springcloud-study</a></p>
+
       
     </div>
     
     
     
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/springcloud/" rel="tag"># springcloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/Maven项目打包遇到的两个问题/" rel="next" title="Maven项目打包遇到的两个问题">
+                <i class="fa fa-chevron-left"></i> Maven项目打包遇到的两个问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/springcloud将服务者和消费者注册到注册中心-Eureka/" rel="prev" title="springcloud将服务者和消费者注册到注册中心(Eureka)">
+                springcloud将服务者和消费者注册到注册中心(Eureka) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
   </div>
 
 
@@ -360,8 +566,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -441,6 +656,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-SpringCloud的特点"><span class="nav-text"><a href="#0-SpringCloud&#x7684;&#x7279;&#x70B9;" class="headerlink" title="0.SpringCloud&#x7684;&#x7279;&#x70B9;"></a>0.SpringCloud&#x7684;&#x7279;&#x70B9;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建springboot的项目"><span class="nav-text"><a href="#1-&#x521B;&#x5EFA;springboot&#x7684;&#x9879;&#x76EE;" class="headerlink" title="1.&#x521B;&#x5EFA;springboot&#x7684;&#x9879;&#x76EE;"></a>1.&#x521B;&#x5EFA;springboot&#x7684;&#x9879;&#x76EE;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-配置springboot的application-yml配置文件"><span class="nav-text"><a href="#2-&#x914D;&#x7F6E;springboot&#x7684;application-yml&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="2.&#x914D;&#x7F6E;springboot&#x7684;application.yml&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>2.&#x914D;&#x7F6E;springboot&#x7684;application.yml&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-开发服务提供者"><span class="nav-text"><a href="#3-&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;" class="headerlink" title="3.&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;"></a>3.&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x8005;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-开发服务消费者"><span class="nav-text"><a href="#4-&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;" class="headerlink" title="4.&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;"></a>4.&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x6D88;&#x8D39;&#x8005;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

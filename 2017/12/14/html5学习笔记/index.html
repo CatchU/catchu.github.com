@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="html5," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.应用程序标签 DataList(数据列表) Progress(进度条) Meter(数值显示器)示例:1234567891011121314151617181920212223&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;    &amp;lt;title&amp;gt;应用程序标签&amp;">
+<meta name="keywords" content="html5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html5学习笔记">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/html5学习笔记/index.html">
+<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:description" content="1.应用程序标签 DataList(数据列表) Progress(进度条) Meter(数值显示器)示例:1234567891011121314151617181920212223&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;    &amp;lt;title&amp;gt;应用程序标签&amp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-14T10:46:57.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="html5学习笔记">
+<meta name="twitter:description" content="1.应用程序标签 DataList(数据列表) Progress(进度条) Meter(数值显示器)示例:1234567891011121314151617181920212223&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;&amp;lt;head&amp;gt;    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;    &amp;lt;title&amp;gt;应用程序标签&amp;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/html5学习笔记/"/>
+
+
+
+
+
+  <title>html5学习笔记 | 一颗向上的草莓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一颗向上的草莓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/html5学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">html5学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T18:45:16+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端—html5/" itemprop="url" rel="index">
+                    <span itemprop="name">前端—html5</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-应用程序标签"><a href="#1-应用程序标签" class="headerlink" title="1.应用程序标签"></a>1.应用程序标签</h3><ul>
+<li>DataList(数据列表)</li>
+<li>Progress(进度条)</li>
+<li>Meter(数值显示器)<br>示例:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;应用程序标签&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .my-progress&#123;</span><br><span class="line">            -webkit-appearance: none;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;!--数据列表，呈现需要载体--&gt;</span><br><span class="line">&lt;input type=&quot;text&quot; list=&quot;data-list&quot;&gt;</span><br><span class="line">&lt;datalist id=&quot;data-list&quot;&gt;</span><br><span class="line">    &lt;option value=&quot;张三&quot;&gt;&lt;/option&gt;</span><br><span class="line">    &lt;option value=&quot;李四&quot;&gt;&lt;/option&gt;</span><br><span class="line">&lt;/datalist&gt;</span><br><span class="line">&lt;!--进度条--&gt;</span><br><span class="line">&lt;progress&gt;&lt;/progress&gt;</span><br><span class="line">&lt;!--progress默认最大值是1，可以设定自己想要的值--&gt;</span><br><span class="line">&lt;progress class=&quot;my-progress&quot; value=&quot;30&quot; max=&quot;100&quot;&gt;&lt;/progress&gt;</span><br><span class="line">&lt;meter min=&quot;0&quot; max=&quot;100&quot; low=&quot;40&quot; high=&quot;90&quot; optimum=&quot;100&quot; value=&quot;91&quot;&gt;A+&lt;/meter&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以利用数据列表（data-list）做一个那种带下拉框的输入框，可以根据用户输入的内容匹配下拉框的内容（select2也可以实现这种需求，而且最低可以兼容到IE8，推荐用select2）,后面的progress和meter样式不好控制，用的不太多。</p>
+<h3 id="2-自定义属性（data-）"><a href="#2-自定义属性（data-）" class="headerlink" title="2.自定义属性（data-*）"></a>2.自定义属性（data-*）</h3><p>在html5中可以自定义数据，以data开头，利用这个自定义标签我们可以把属性暂时存储到页面中，在js中可以使用，例子如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;data属性&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;ul id=&quot;list&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    // 键是ID 值是信息</span><br><span class="line">    var data = &#123;</span><br><span class="line">        01: &#123;</span><br><span class="line">            name: &quot;张三1&quot;,</span><br><span class="line">            age: 18</span><br><span class="line">        &#125;,</span><br><span class="line">        02: &#123;</span><br><span class="line">            name: &quot;张三2&quot;,</span><br><span class="line">            age: 19</span><br><span class="line">        &#125;,</span><br><span class="line">        03: &#123;</span><br><span class="line">            name: &quot;张三3&quot;,</span><br><span class="line">            age: 20</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    var list = document.getElementById(&quot;list&quot;);</span><br><span class="line">    for(var id in data)&#123;</span><br><span class="line">        var item = data[id];</span><br><span class="line">        var liem = document.createElement(&quot;li&quot;);</span><br><span class="line">        liem.innerHTML = item.name;</span><br><span class="line">        //自定义data-*属性</span><br><span class="line">        liem.setAttribute(&quot;data-name&quot;,item.name);</span><br><span class="line">        liem.setAttribute(&quot;data-age&quot;,item.age);</span><br><span class="line">        list.appendChild(liem);</span><br><span class="line">        //点击获取dataset属性</span><br><span class="line">        liem.addEventListener(&quot;click&quot;,function()&#123;</span><br><span class="line">            //下面这两种方式均可以，都不带data-</span><br><span class="line">            alert(this.dataset[&apos;name&apos;]);</span><br><span class="line">            alert(this.dataset.name);</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>下面这篇文章总结的很好，可以参考：<a href="http://blog.csdn.net/qq_31851435/article/details/53100691" target="_blank" rel="noopener">http://blog.csdn.net/qq_31851435/article/details/53100691</a></p>
+<h3 id="3-新的表单提交方式"><a href="#3-新的表单提交方式" class="headerlink" title="3.新的表单提交方式"></a>3.新的表单提交方式</h3><p>传统的一共有9中表单提交方式，html5新增了几种，目前只用在移动端，pc端兼容性有问题，而且在输入的时候并没有进行验证，比如类型是email的，并没有校验邮箱格式，还是需要我们自己手动写正则表达式验证的，只是在手机端当唤起输入法的时候会自动切换到英文输入法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;新的表单提交方式&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h3&gt;传统的表单提交方式（9种）&lt;/h3&gt;</span><br><span class="line">用户名：&lt;input type=&quot;text&quot;&gt; &lt;br&gt;</span><br><span class="line">密码：&lt;input type=&quot;password&quot;&gt;&lt;br&gt;</span><br><span class="line">性别：&lt;input type=&quot;radio&quot;&gt;&lt;br&gt;</span><br><span class="line">课程:&lt;input type=&quot;checkbox&quot;&gt;&lt;br&gt;</span><br><span class="line">隐藏：&lt;input type=&quot;hidden&quot;&gt;</span><br><span class="line">文件：&lt;input type=&quot;file&quot;&gt;&lt;br&gt;</span><br><span class="line">按钮：&lt;input type=&quot;button&quot; value=&quot;按钮&quot;&gt;&lt;br&gt;</span><br><span class="line">表单:&lt;input type=&quot;submit&quot;&gt;&lt;br&gt;</span><br><span class="line">重置：&lt;input type=&quot;reset&quot;&gt;&lt;br&gt;&lt;hr&gt;</span><br><span class="line">&lt;h3&gt;新的表单提交方式（目前只用在移动端）&lt;/h3&gt;</span><br><span class="line">颜色：&lt;input type=&quot;color&quot;&gt;&lt;br&gt;</span><br><span class="line">网址：&lt;input type=&quot;url&quot;&gt;&lt;br&gt;</span><br><span class="line">搜索：&lt;input type=&quot;search&quot; results=&quot;10&quot; placeholder=&quot;Search...&quot;&gt;&lt;br&gt;</span><br><span class="line">邮箱：&lt;input type=&quot;email&quot; pattern=&quot;^\*.com&quot;&gt;&lt;br&gt;</span><br><span class="line">日期：&lt;input type=&quot;date&quot; min=&quot;2015-09-01&quot; max=&quot;2018-09-01&quot;&gt;&lt;br&gt;</span><br><span class="line">图片：&lt;input type=&quot;image&quot;&gt;&lt;br&gt;</span><br><span class="line">范围：&lt;input type=&quot;range&quot; min=&quot;0&quot; max=&quot;50&quot; value=&quot;10&quot;&gt;&lt;br&gt;</span><br><span class="line">数字：&lt;input type=&quot;number&quot;&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-新的选择器"><a href="#4-新的选择器" class="headerlink" title="4.新的选择器"></a>4.新的选择器</h3><p>html5提供新的选择器，querySelector选择单个的元素，返回满足条件的第一个元素，是一个dom元素，querySelectorAll选择全部的元素，返回满足条件的全部元素，是一个dom数组，里面可以是id，标签或class类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;新选择器&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h3&gt;新选择器&lt;/h3&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item1&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item2&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item3&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item4&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item5&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item6&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item7&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item8&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item9&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;item&quot;&gt;item10&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    //匿名函数，可以将作用域分隔开</span><br><span class="line">    (function()&#123;</span><br><span class="line">        var liem = document.querySelector(&quot;.item&quot;);  //只选择第一个</span><br><span class="line">        console.log(liem.innerHTML);</span><br><span class="line">        var lis = document.querySelectorAll(&quot;ul&gt;li&quot;);  //选择全部</span><br><span class="line">        for(var i=0;i&lt;lis.length;i++)&#123;</span><br><span class="line">            console.log(lis[i]);</span><br><span class="line">            lis[i].addEventListener(&quot;click&quot;,function()&#123;</span><br><span class="line">                debugger;  //可以调试代码。类似于浏览器打断点</span><br><span class="line">                console.log(this.innerHTML);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="5-元素类列表（Element-classList）"><a href="#5-元素类列表（Element-classList）" class="headerlink" title="5.元素类列表（Element.classList）"></a>5.元素类列表（Element.classList）</h3><p>新H5中DOM对象多了一个classList属性，是一个数组:</p>
+<ul>
+<li>add 添加一个新的类名</li>
+<li>remove 删除一个类名</li>
+<li>contains 判断是否包含一个指定的类名 </li>
+<li>toggle 切换一个类名。 element.toggle(‘class-name’,[add_or_remove])，第一个参数是类名，第二个参数是布尔值，如果是true，则添加类名，如果是false,则去掉类名。示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;元素类列表&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;collapse navbar-collapse&quot;&gt;</span><br><span class="line">        &lt;nav class=&quot;navbar navbar-default&quot;&gt;</span><br><span class="line">            &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Brand&lt;/a&gt;</span><br><span class="line">            &lt;ul class=&quot;nav navbar-nav&quot;&gt;</span><br><span class="line">                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Link&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Link&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">            &lt;/ul&gt;</span><br><span class="line">        &lt;/nav&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    //匿名函数</span><br><span class="line">    (function()&#123;</span><br><span class="line">        /** 点击时添加和删除类名**/</span><br><span class="line">        var lis = document.querySelectorAll(&quot;.nav li&quot;);</span><br><span class="line">        for(var i=0;i&lt;lis.length;i++)&#123;</span><br><span class="line">            lis[i].addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">                //去掉原先所有的样式</span><br><span class="line">                for(var j=0;j&lt;lis.length;j++)&#123;</span><br><span class="line">                    lis[j].classList.remove(&quot;active&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">                //添加点击样式</span><br><span class="line">                this.classList.add(&quot;active&quot;);</span><br><span class="line">                e.preventDefault();  //取消事件的默认操作</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /** 点击时存在类名则删除，不存在类名则添加**/</span><br><span class="line">        var elem = document.querySelector(&quot;.navbar-brand&quot;);</span><br><span class="line">        //点击时如果存在active这个属性则去掉，如果不存在这个属性则加上</span><br><span class="line">        elem.addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">            //判断是否包含active这个类名</span><br><span class="line">            var isExist = elem.classList.contains(&quot;active&quot;);</span><br><span class="line">            this.classList.toggle(&quot;active&quot;,!isExist);</span><br><span class="line">            e.preventDefault();</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="6-访问历史Api"><a href="#6-访问历史Api" class="headerlink" title="6.访问历史Api"></a>6.访问历史Api</h3><p>在HTML5中可以通过window.history操作访问历史状态，让一个页面可以有多个历史状态</p>
+<ul>
+<li>window.history.forward(); // 前进</li>
+<li>window.history.back(); // 后退</li>
+<li>window.history.go(); // 刷新</li>
+<li>history.pushState(放入历史中的状态数据, 设置title(现在浏览器不支持)， 改变历史状态)，通过JS可以加入一个访问状态<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;历史记录&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;input type=&quot;button&quot; value=&quot;测试历史记录&quot; onclick=&quot;addHistory()&quot;&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    //添加历史记录</span><br><span class="line">    function addHistory()&#123;</span><br><span class="line">        //判断浏览器是否支持历史记录，毕竟是h5的新特性，低版本浏览器不支持</span><br><span class="line">        if(window.history &amp;&amp; history.pushState)&#123;</span><br><span class="line">            //支持</span><br><span class="line">            history.pushState(new Date().toLocaleDateString(),&quot;设置历史记录的标签，但是目前浏览器还不支持&quot;,&quot;?demo=&quot;+new Date().toLocaleTimeString());</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            console.log(&quot;抱歉，浏览器不支持历史记录&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //下面这个事件是点击浏览器中的前进或后退时触发</span><br><span class="line">    window.addEventListener(&quot;popstate&quot;,function(e)&#123;</span><br><span class="line">        console.log(&quot;点击了历史按钮&quot;+e.state);</span><br><span class="line">    &#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="7-全屏Api"><a href="#7-全屏Api" class="headerlink" title="7.全屏Api"></a>7.全屏Api</h3><p>H5中可以用requestFullScreen()方法实现指定元素的全屏显示（类似于浏览器中按F11）。<br>首先需要获取需要全屏显示的元素，然后判断浏览器是属于谷歌内核还是火狐内核或者其它浏览器，然后调用响应方法即可。(注意：目前这个特性浏览器兼容性还比较差，谷歌和火狐可以)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var elem = 需要全屏的元素;</span><br><span class="line">if (elem.webkitRequestFullScreen) &#123;</span><br><span class="line">  elem.webkitRequestFullScreen();</span><br><span class="line">&#125; else if (elem.mozRequestFullScreen) &#123;</span><br><span class="line">  elem.mozRequestFullScreen();</span><br><span class="line">&#125; else if (elem.requestFullScreen)&#123;</span><br><span class="line">  elem.requestFullScreen();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;全屏显示&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h3 style=&quot;cursor: pointer&quot;&gt;点我全屏显示&lt;/h3&gt;</span><br><span class="line">&lt;p&gt;测试全屏显示测试全屏显示测试全屏显示测试全屏显示测试全屏显示测试全屏显示</span><br><span class="line">    测试全屏显示测试全屏显示测试&lt;br&gt;</span><br><span class="line">    全屏显示测试全屏显示测试全屏显示测试全屏显示测试全屏显示&lt;/p&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    //匿名函数</span><br><span class="line">    (function () &#123;</span><br><span class="line">        //获取事件源和要全屏显示的元素</span><br><span class="line">        var elem = document.querySelector(&quot;p&quot;);</span><br><span class="line">        document.querySelector(&quot;h3&quot;).addEventListener(&quot;click&quot;,function(e)&#123;</span><br><span class="line">           //判断浏览器是否支持全屏显示</span><br><span class="line">            if (elem.webkitRequestFullScreen) &#123;</span><br><span class="line">                elem.webkitRequestFullScreen();</span><br><span class="line">            &#125; else if (elem.mozRequestFullScreen) &#123;</span><br><span class="line">                elem.mozRequestFullScreen();</span><br><span class="line">            &#125; else if (elem.requestFullScreen)&#123;</span><br><span class="line">                elem.requestFullScreen();</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                console.log(&quot;浏览器不支持全屏显示&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="8-Application-Cache离线访问技术"><a href="#8-Application-Cache离线访问技术" class="headerlink" title="8.Application Cache离线访问技术"></a>8.Application Cache离线访问技术</h3><p>在H5中可以利用Application Cache实现离线访问技术，测试时可以通过谷歌浏览器——NetWork——No throttling(Disable cache后面的那个下拉框)——下拉选择Offline(模拟未联网的情形)。<br>示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">html代码：</span><br><span class="line">&lt;html lang=&quot;en&quot; manifest=&quot;cache.manifest&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;离线访问&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;这是html页面中的内容&lt;/p&gt;</span><br><span class="line">&lt;script src=&quot;script.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">style.css文件代码</span><br><span class="line">body::before&#123;</span><br><span class="line">    content: &quot;这是Css中引入的内容&quot;;</span><br><span class="line">    font-size: 40px;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">script.js文件代码：</span><br><span class="line">document.write(&quot;这是js中引入的内容&quot;)</span><br><span class="line"></span><br><span class="line">cache.manifest文件代码：</span><br><span class="line">CACHE MANIFEST</span><br><span class="line"># version 1.0.1</span><br><span class="line"></span><br><span class="line">CACHE:</span><br><span class="line">  08离线访问.html</span><br><span class="line">  script.js</span><br><span class="line">  style.css</span><br><span class="line"></span><br><span class="line">NETWORK:</span><br><span class="line">  *</span><br></pre></td></tr></table></figure></p>
+<p>解释：在html代码中通过css的伪类和js的document.write函数分别输出两句话，模拟请求其它文件，然后在manifest（缓存清单）中定义了一个cache.manifest的缓存清单文件，文件里首先定义了当前软件的版本，下面的CACHE，代表断网情况下，从下面定义的文件中读取文件，NETWORK代表联网时候要读取的文件，星号代表全部。即断网时从我定义的文件中读取文件，联网时，读取全部文件，这样便可实现离线访问。</p>
+<h3 id="9-web网页存储"><a href="#9-web网页存储" class="headerlink" title="9.web网页存储"></a>9.web网页存储</h3><p>h5中提供sessionStorage和localStorage两种数据存储方式，前者存储的内容只在本次会话中存储，浏览器关闭数据消失，后者是可以永久存储在浏览器中，除非手动或通过程序删除。这两种存储方式比cookie存储的数据量大，而且可以存储对象数据（cookie只能存储字符串数据）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;网页存储&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;textarea rows=&quot;5&quot; cols=&quot;30&quot; id=&quot;txt-data&quot;&gt;&lt;/textarea&gt;</span><br><span class="line">&lt;input type=&quot;button&quot; value=&quot;设置数据&quot; id=&quot;set-data&quot;&gt;</span><br><span class="line">&lt;input type=&quot;button&quot; value=&quot;获取数据&quot; id=&quot;get-data&quot;&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    (function()&#123;</span><br><span class="line">        var txtValue = document.querySelector(&quot;#txt-data&quot;);</span><br><span class="line">        console.log(txtValue.value);</span><br><span class="line">        //设置数据</span><br><span class="line">        document.querySelector(&quot;#set-data&quot;).addEventListener(&quot;click&quot;,function (e) &#123;</span><br><span class="line">            //判断是否支持存储</span><br><span class="line">            if(window.sessionStorage)&#123;</span><br><span class="line">                sessionStorage.setItem(&quot;key&quot;,txtValue.value);</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                console.log(&quot;还在用渣渣IE吗？升级吧。。。&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        //获取数据</span><br><span class="line">        document.querySelector(&quot;#get-data&quot;).addEventListener(&quot;click&quot;,function (e) &#123;</span><br><span class="line">            //判断是否支持存储</span><br><span class="line">            if(window.sessionStorage)&#123;</span><br><span class="line">                txtValue.value = sessionStorage.getItem(&quot;key&quot;);</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                console.log(&quot;还在用渣渣IE吗？升级吧。。。&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="10-操作文件Api"><a href="#10-操作文件Api" class="headerlink" title="10.操作文件Api"></a>10.操作文件Api</h3><p>通过file表单选择文件，之后利用h5提供的文件api可以获取文件名，大小，类型，最后修改时间等文件信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;操作文件&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;</span><br><span class="line">        &lt;form&gt;</span><br><span class="line">            &lt;input type=&quot;file&quot; class=&quot;form-control hidden&quot; id=&quot;btn_file&quot; multiple&gt;</span><br><span class="line">            &lt;input type=&quot;button&quot; value=&quot;选择文件&quot; class=&quot;btn btn-success&quot; id=&quot;btn_select&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;list-group&quot; id=&quot;ul_list&quot;&gt;</span><br><span class="line">                &lt;!--待追加数据位置--&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    (function()&#123;</span><br><span class="line">        var btn_file = document.querySelector(&quot;#btn_file&quot;);</span><br><span class="line">        var btn_select = document.querySelector(&quot;#btn_select&quot;);</span><br><span class="line">        var ul_list = document.querySelector(&quot;#ul_list&quot;);</span><br><span class="line">        //利用“hidden”类将文件输入框隐藏，当点击“选择文件按钮时”，调用选择文件按钮，选择文件，</span><br><span class="line">        // 因为input type=&quot;file&quot;这个无法修改样式，把它隐藏，点击其它按钮时，在其它按钮中调用点击上传文件</span><br><span class="line">        btn_select.addEventListener(&quot;click&quot;,function()&#123;</span><br><span class="line">           btn_file.click();</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        //选择文件完成后（即文件内容发生改变后）</span><br><span class="line">        btn_file.addEventListener(&quot;change&quot;,function(e)&#123;</span><br><span class="line">            var files = btn_file.files;  //获取所有文件，并遍历</span><br><span class="line">            for(var i=0;i&lt;files.length;i++)&#123;</span><br><span class="line">                console.log(files[i]);</span><br><span class="line">                var liem = document.createElement(&quot;li&quot;);</span><br><span class="line">                liem.setAttribute(&quot;class&quot;,&quot;list-group-item&quot;);</span><br><span class="line">                liem.innerHTML = &apos; &lt;h4 class=&quot;list-group-item-heading&quot;&gt;&apos;+files[i].name+&apos;&lt;/h4&gt;&apos;+</span><br><span class="line">                    &apos;&lt;p class=&quot;list-group-item-text&quot;&gt;&apos;+files[i].lastModifiedDate.toLocaleTimeString()+&apos; &apos;+(files[i].size/1024).toFixed(2)+&apos;kb&lt;/p&gt;&apos;</span><br><span class="line">                ul_list.appendChild(liem);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这里是用到了bootstrap的样式，因为file表单比较丑，而且无法改变样式，所以我们可以把文件表单隐藏（用hidden隐藏样式），提供一个按钮，当点击这个按钮时去雕砌选文件的弹框，multiple属性支持一次选择多个文件。</p>
+<h3 id="11-拖拽文件"><a href="#11-拖拽文件" class="headerlink" title="11.拖拽文件"></a>11.拖拽文件</h3><p>拖拽文件时需要依次注册以下事件：</p>
+<ul>
+<li>dragenter 注册拖拽进入事件</li>
+<li>dragleave 注册拖拽离开事件</li>
+<li>dragover 注册滑动事件（在这里面阻止默认事件）</li>
+<li>drop 注册松手落地事件。<br>在拖动松手落地事件中判断拖进来的是文件还是图片地址还是文字，分别进行处理。e.dataTransfer获取拖动进来的信息。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;拖拽文件&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap.css&quot;&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        #target&#123;</span><br><span class="line">            height: 200px;</span><br><span class="line">            border: 5px dashed #c0c0c0;</span><br><span class="line">            color: #505050;</span><br><span class="line">            padding: 20px;</span><br><span class="line">            font-size: 40px;</span><br><span class="line">            cursor: pointer;</span><br><span class="line">            text-align: center;</span><br><span class="line">            -webkit-user-select: none;</span><br><span class="line">        &#125;</span><br><span class="line">        #target.actived&#123;</span><br><span class="line">            border-color: #888;</span><br><span class="line">            color: #080808;</span><br><span class="line">            box-shadow: 0 0 80px #e0e0e0 inset;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;page-header&quot;&gt;</span><br><span class="line">        &lt;h3&gt;拖拽文件&lt;/h3&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;jumbotron&quot;&gt;</span><br><span class="line">        &lt;p&gt;我们这里测试拖拽文件&lt;/p&gt;</span><br><span class="line">        &lt;img src=&quot;test.png&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div id=&quot;target&quot;&gt;</span><br><span class="line">        拖拽文件进来</span><br><span class="line">        &lt;ul id=&quot;result&quot; class=&quot;list-group&quot;&gt;&lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    (function()&#123;</span><br><span class="line">        var target = document.querySelector(&quot;#target&quot;);</span><br><span class="line">        var fileList = document.querySelector(&apos;#result&apos;);</span><br><span class="line">        //注册拖拽进入事件</span><br><span class="line">        target.addEventListener(&quot;dragenter&quot;,function()&#123;</span><br><span class="line">            this.classList.add(&quot;actived&quot;);  //添加样式</span><br><span class="line">        &#125;)</span><br><span class="line">        //注册拖拽文件离开事件</span><br><span class="line">        target.addEventListener(&quot;dragleave&quot;,function()&#123;</span><br><span class="line">            this.classList.remove(&quot;actived&quot;);  //添加样式</span><br><span class="line">        &#125;)</span><br><span class="line">        //注册落地事件之前必须要先阻止默认事件，这里在滑动里面阻止默认事件</span><br><span class="line">        target.addEventListener(&quot;dragover&quot;,function(e)&#123;</span><br><span class="line">            e.preventDefault(); //阻止默认事件</span><br><span class="line">            e.stopPropagation();</span><br><span class="line">        &#125;)</span><br><span class="line">        //注册松手落地事件</span><br><span class="line">        target.addEventListener(&quot;drop&quot;,function(e)&#123;</span><br><span class="line">            //判断拖入进来的是文件，图片还是文字，分别处理</span><br><span class="line">            if(e.dataTransfer.files.length)&#123;</span><br><span class="line">                //拖入的是文件</span><br><span class="line">                var files = e.dataTransfer.files;</span><br><span class="line">                for (var i = 0; i &lt; files.length; i++) &#123;</span><br><span class="line">                    var li = document.createElement(&apos;li&apos;);</span><br><span class="line">                    li.setAttribute(&apos;class&apos;, &apos;list-group-item&apos;);</span><br><span class="line">                    // 创建信息的子节点</span><br><span class="line">                    li.innerHTML = &apos;&lt;h5 class=&quot;list-group-item-heading&quot;&gt;&apos; + files[i].name + &apos;&lt;/h5&gt;&lt;p class=&quot;list-group-item-text&quot;&gt;&apos; + files[i].lastModifiedDate.toLocaleDateString() + &apos; &apos; + files[i].lastModifiedDate.toLocaleTimeString() + &apos; &apos; + (files[i].size / 1024).toFixed(2) + &apos;KB&lt;/p&gt;&apos;;</span><br><span class="line">                    fileList.appendChild(li);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                //不是文件</span><br><span class="line">                var data = e.dataTransfer.getData(&apos;text/plain&apos;); //判断拖入的是文本还是图片</span><br><span class="line">                if(data)&#123;</span><br><span class="line">                    //拖入的是文本,直接置换</span><br><span class="line">                    target.innerHTML = data;</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    //拖入的是图片</span><br><span class="line">                    var imgElem = document.createElement(&quot;img&quot;);</span><br><span class="line">                    imgElem.src = data;</span><br><span class="line">                    target.appendChild(imgElem);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="12-访问设备信息"><a href="#12-访问设备信息" class="headerlink" title="12.访问设备信息"></a>12.访问设备信息</h3><p>h5提供了许多可以访问设备的Api，但是目前基本都应用在手机端，pc端使用非常有限。</p>
+<ul>
+<li><p>获取网络状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// × 所有PC浏览器现在都不支持 只有手机端的Firefox</span><br><span class="line">var connectionInfo = navigator.connection;</span><br><span class="line">或者下面这个方法：</span><br><span class="line">if (navigator.onLine)&#123;</span><br><span class="line">    console.log(&apos;online&apos;);</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    console.log(&apos;offline&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取重力感应方向</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&apos;deviceorientation&apos;, function(event) &#123;</span><br><span class="line">  var a = event.alpha; // Y轴 上下方向</span><br><span class="line">  var b = event.beta; // Z轴 东西方向</span><br><span class="line">  var g = event.gamma; // X轴 南北方向</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>加速度计</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">window.addEventListener(&apos;devicemotion&apos;, function(e) &#123;</span><br><span class="line">  // 获取加速计数据 &#123;x,y,z&#125;</span><br><span class="line">  var acceleration = e.accelerationIncludingGravity;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>地理坐标</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">navigator.geolocation.getCurrentPosition(function(e) &#123;</span><br><span class="line">  // e.coords.longitude : 经度, e.coords.latitude : 纬度</span><br><span class="line">  document.querySelector(&apos;#result&apos;).innerHTML = JSON.stringify(e.coords);</span><br><span class="line">&#125;, function(e) &#123;</span><br><span class="line">  document.querySelector(&apos;#result&apos;).innerHTML = JSON.stringify(e);</span><br><span class="line">&#125;);</span><br><span class="line">navigator.geolocation.watchPosition(success, error);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>H5还有其它的一些特性，包括语义化标签，ARIA无障碍互联网应用，多媒体（包括音频，视频）等等，真正使用的时候再详细研究。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/html5/" rel="tag"># html5</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/前端入门—js第五天/" rel="next" title="前端入门—js第五天">
+                <i class="fa fa-chevron-left"></i> 前端入门—js第五天
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/FreeMarker基本语法/" rel="prev" title="FreeMarker基本语法">
+                FreeMarker基本语法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">你只有非常努力，才能看起来毫不费力！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635?is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-应用程序标签"><span class="nav-text"><a href="#1-&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6807;&#x7B7E;" class="headerlink" title="1.&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6807;&#x7B7E;"></a>1.&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6807;&#x7B7E;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-自定义属性（data-）"><span class="nav-text"><a href="#2-&#x81EA;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;&#xFF08;data-&#xFF09;" class="headerlink" title="2.&#x81EA;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;&#xFF08;data-*&#xFF09;"></a>2.&#x81EA;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;&#xFF08;data-*&#xFF09;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-新的表单提交方式"><span class="nav-text"><a href="#3-&#x65B0;&#x7684;&#x8868;&#x5355;&#x63D0;&#x4EA4;&#x65B9;&#x5F0F;" class="headerlink" title="3.&#x65B0;&#x7684;&#x8868;&#x5355;&#x63D0;&#x4EA4;&#x65B9;&#x5F0F;"></a>3.&#x65B0;&#x7684;&#x8868;&#x5355;&#x63D0;&#x4EA4;&#x65B9;&#x5F0F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-新的选择器"><span class="nav-text"><a href="#4-&#x65B0;&#x7684;&#x9009;&#x62E9;&#x5668;" class="headerlink" title="4.&#x65B0;&#x7684;&#x9009;&#x62E9;&#x5668;"></a>4.&#x65B0;&#x7684;&#x9009;&#x62E9;&#x5668;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-元素类列表（Element-classList）"><span class="nav-text"><a href="#5-&#x5143;&#x7D20;&#x7C7B;&#x5217;&#x8868;&#xFF08;Element-classList&#xFF09;" class="headerlink" title="5.&#x5143;&#x7D20;&#x7C7B;&#x5217;&#x8868;&#xFF08;Element.classList&#xFF09;"></a>5.&#x5143;&#x7D20;&#x7C7B;&#x5217;&#x8868;&#xFF08;Element.classList&#xFF09;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-访问历史Api"><span class="nav-text"><a href="#6-&#x8BBF;&#x95EE;&#x5386;&#x53F2;Api" class="headerlink" title="6.&#x8BBF;&#x95EE;&#x5386;&#x53F2;Api"></a>6.&#x8BBF;&#x95EE;&#x5386;&#x53F2;Api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-全屏Api"><span class="nav-text"><a href="#7-&#x5168;&#x5C4F;Api" class="headerlink" title="7.&#x5168;&#x5C4F;Api"></a>7.&#x5168;&#x5C4F;Api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Application-Cache离线访问技术"><span class="nav-text"><a href="#8-Application-Cache&#x79BB;&#x7EBF;&#x8BBF;&#x95EE;&#x6280;&#x672F;" class="headerlink" title="8.Application Cache&#x79BB;&#x7EBF;&#x8BBF;&#x95EE;&#x6280;&#x672F;"></a>8.Application Cache&#x79BB;&#x7EBF;&#x8BBF;&#x95EE;&#x6280;&#x672F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-web网页存储"><span class="nav-text"><a href="#9-web&#x7F51;&#x9875;&#x5B58;&#x50A8;" class="headerlink" title="9.web&#x7F51;&#x9875;&#x5B58;&#x50A8;"></a>9.web&#x7F51;&#x9875;&#x5B58;&#x50A8;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-操作文件Api"><span class="nav-text"><a href="#10-&#x64CD;&#x4F5C;&#x6587;&#x4EF6;Api" class="headerlink" title="10.&#x64CD;&#x4F5C;&#x6587;&#x4EF6;Api"></a>10.&#x64CD;&#x4F5C;&#x6587;&#x4EF6;Api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-拖拽文件"><span class="nav-text"><a href="#11-&#x62D6;&#x62FD;&#x6587;&#x4EF6;" class="headerlink" title="11.&#x62D6;&#x62FD;&#x6587;&#x4EF6;"></a>11.&#x62D6;&#x62FD;&#x6587;&#x4EF6;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-访问设备信息"><span class="nav-text"><a href="#12-&#x8BBF;&#x95EE;&#x8BBE;&#x5907;&#x4FE1;&#x606F;" class="headerlink" title="12.&#x8BBF;&#x95EE;&#x8BBE;&#x5907;&#x4FE1;&#x606F;"></a>12.&#x8BBF;&#x95EE;&#x8BBE;&#x5907;&#x4FE1;&#x606F;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

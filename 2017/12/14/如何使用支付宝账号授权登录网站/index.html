@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="支付宝登录," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本周在项目开发中使用到了支付宝授权登录（一键登录）我们的网站，周末做一下总结： 0.总体思路为防止各位朋友看迷糊，先说一下整体执行流程：用户在我们网站点击一个“支付宝授权登录”按钮，请求到了java后台，完成跳转至支付宝之前的字符串拼接（包括回调地址，appid，scope，state），后台将这个地址处理完成之后返回给前端，前端通过window.href=”url”的形式跳转至支付宝登录页面，用">
+<meta name="keywords" content="支付宝登录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用支付宝账号授权登录网站">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/如何使用支付宝账号授权登录网站/index.html">
+<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:description" content="本周在项目开发中使用到了支付宝授权登录（一键登录）我们的网站，周末做一下总结： 0.总体思路为防止各位朋友看迷糊，先说一下整体执行流程：用户在我们网站点击一个“支付宝授权登录”按钮，请求到了java后台，完成跳转至支付宝之前的字符串拼接（包括回调地址，appid，scope，state），后台将这个地址处理完成之后返回给前端，前端通过window.href=”url”的形式跳转至支付宝登录页面，用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20171202131833969?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171202145545643?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-12-14T11:07:34.835Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用支付宝账号授权登录网站">
+<meta name="twitter:description" content="本周在项目开发中使用到了支付宝授权登录（一键登录）我们的网站，周末做一下总结： 0.总体思路为防止各位朋友看迷糊，先说一下整体执行流程：用户在我们网站点击一个“支付宝授权登录”按钮，请求到了java后台，完成跳转至支付宝之前的字符串拼接（包括回调地址，appid，scope，state），后台将这个地址处理完成之后返回给前端，前端通过window.href=”url”的形式跳转至支付宝登录页面，用">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171202131833969?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/如何使用支付宝账号授权登录网站/"/>
+
+
+
+
+
+  <title>如何使用支付宝账号授权登录网站 | 一颗向上的草莓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一颗向上的草莓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/如何使用支付宝账号授权登录网站/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何使用支付宝账号授权登录网站</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T19:06:10+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工作—后台/" itemprop="url" rel="index">
+                    <span itemprop="name">工作—后台</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本周在项目开发中使用到了支付宝授权登录（一键登录）我们的网站，周末做一下总结：</p>
+<h3 id="0-总体思路"><a href="#0-总体思路" class="headerlink" title="0.总体思路"></a>0.总体思路</h3><p>为防止各位朋友看迷糊，先说一下整体执行流程：用户在我们网站点击一个“支付宝授权登录”按钮，请求到了java后台，完成跳转至支付宝之前的字符串拼接（包括回调地址，appid，scope，state），后台将这个地址处理完成之后返回给前端，前端通过window.href=”url”的形式跳转至支付宝登录页面，用户通过输入密码或者扫码，支付宝判断如果正确就会携带支付宝用户id和access_token跳转至我写的回调地址里面（这个回调地址是我们自己写的，让支付宝调用的，需要在支付宝页面配置，下面会说），我根据alipay_user_id查自己的库，看用户是否存在，如果存在说明已经与我们平台的用户系统进行绑定，将其重定向至成功页，否则重定向至绑定用户信息页，完善信息。需要明白的是我们平台也有自己的用户系统，必须将从支付宝拿过来的alipay_user_id与我们平台的用户系统进行绑定，否则区分不出哪个是哪个用户，绑定就是在这个完善用户信息页面进行的。</p>
+<h3 id="1-开通蚂蚁金服开发服务并配置完成。"><a href="#1-开通蚂蚁金服开发服务并配置完成。" class="headerlink" title="1.开通蚂蚁金服开发服务并配置完成。"></a>1.开通蚂蚁金服开发服务并配置完成。</h3><p>上面只说了思路，下面说具体的操作流程。既然需要调用支付宝的接口，那就要开通蚂蚁金服的服务，通过下面地址开通：<a href="https://openhome.alipay.com/platform/appManage.htm" target="_blank" rel="noopener">https://openhome.alipay.com/platform/appManage.htm</a> ，需要营业执照或者身份证信息，审核通过后创建应用，并在功能选项中选择要使用的服务，比如我这里使用“获取会员信息”，点击“继续添加”可以添加其他的，如下图：<br><img src="http://img.blog.csdn.net/20171202131833969?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>点击概览下面的应用信息，配置回调地址和公钥，密钥，如下图：<br><img src="http://img.blog.csdn.net/20171202145545643?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>随后下载支付宝sdk的jar，已经集成了非常简单的调用方法。<br>参考文档如下：<br><a href="https://docs.open.alipay.com/289/105656#s3" target="_blank" rel="noopener">https://docs.open.alipay.com/289/105656#s3</a></p>
+<h3 id="2-代码开发"><a href="#2-代码开发" class="headerlink" title="2.代码开发"></a>2.代码开发</h3><p>代码开发不太难，有点绕的是怎么传参。我是通过state传递的。从官方文档中可以看到：state参数不是必须参数，属于商户自定义参数，用户授权后，重定向到redirect_uri时会原样回传给商户，而且最大长度只能是100，最好是做到既不可预测，又可以证明客户端和当前第三方网站的登录认证状态存在关联，那我们就可以通过state参数进行传递，比如我这里通过1_0，2_500这种形式拼接的，前面的数代表操作类型，比如我这里1代表登录，2代表修改支付宝账号，0代表无上级id，大于0表示那就是上级id，如500代表上级id，然后拿到传递过来的参数之后使用split参数进行分割、解析、判断不同情况，部分示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @Description 登录接口</span><br><span class="line"> * @Author 刘俊重</span><br><span class="line"> */</span><br><span class="line">@NoLogin</span><br><span class="line">@RequestMapping(&quot;/supplierLogin&quot;)</span><br><span class="line">public R supplierLogin(@RequestBody Map&lt;String, Object&gt; map) throws Exception &#123;</span><br><span class="line">	//获取核心企业id，0表示不是通过核心企业邀请链接登录</span><br><span class="line">	Object coreId = map.get(&quot;coreId&quot;);</span><br><span class="line">	if (null == coreId || coreId == &quot;&quot;) &#123;</span><br><span class="line">		coreId = 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	String s = DbEnum.CallBack.Type.LOGIN+&quot;_&quot;+coreId;</span><br><span class="line">	logger.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;s&quot;+s);</span><br><span class="line">	/***重定向至支付宝授权登录页*/</span><br><span class="line">	String encode = URLEncoder.encode(SystemVar.REDIRECT_URL,&quot;UTF-8&quot;);</span><br><span class="line">	return R.ok().put(&quot;visitUrl&quot;, SystemVar.ALIPAY_URL+&quot;?app_id=&quot; + SystemVar.APP_ID + &quot;&amp;scope=auth_user&amp;redirect_uri=&quot; + encode + &quot;&amp;state=&quot; + s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>回调函数部分代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">	 * @Description 支付宝登录成功之后的回调函数，供支付宝调用</span><br><span class="line">	 * @Author 刘俊重</span><br><span class="line">	 */</span><br><span class="line">	@NoLogin</span><br><span class="line">	@RequestMapping(&quot;/callBackLogin&quot;)</span><br><span class="line">	@ResponseBody</span><br><span class="line">	public R callBackLogin(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;</span><br><span class="line">		String authCode = request.getParameter(&quot;auth_code&quot;);</span><br><span class="line">		String state = request.getParameter(&quot;state&quot;);   /***我们需要的参数，拿到之后以下划线分割*/</span><br><span class="line"></span><br><span class="line">		if(null==state || state==&quot;&quot;)&#123;</span><br><span class="line">			return R.error(&quot;获取支付宝授权失败&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		AlipaySystemOauthTokenResponse authToken = getAuthToken(authCode);</span><br><span class="line">		if (null == authToken) &#123;</span><br><span class="line">			return R.error(&quot;获取支付宝授权失败&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		String userId = authToken.getUserId();</span><br><span class="line">		String accessToken = authToken.getAccessToken();</span><br><span class="line"></span><br><span class="line">		String[] split = state.split(&quot;_&quot;);</span><br><span class="line">		String type = split[0];</span><br><span class="line">		if(DbEnum.CallBack.Type.LOGIN.equals(type))&#123;</span><br><span class="line">			String coreId = split[1];</span><br><span class="line">			//登录</span><br><span class="line">			/***根据支付宝用户id查询供应商是否存在*/</span><br><span class="line">			Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();</span><br><span class="line">			map.put(&quot;alipayUserId&quot;, userId);</span><br><span class="line">			SuppliersInfo suppliersInfo = suppliersInfoService.look(map);</span><br><span class="line">			if (null == suppliersInfo) &#123;</span><br><span class="line">				if(&quot;0&quot;.equals(coreId))&#123;</span><br><span class="line">					//说明没有注册而且没有带核心企业id，跳转至错误提示页面</span><br><span class="line">					response.sendRedirect(SystemVar.WEBSITE + &quot;/#/error?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId);</span><br><span class="line">					return R.ok();</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				//根据上级id查询是否确实存在，避免乱注册</span><br><span class="line">				Map&lt;String, Object&gt; param = new HashMap&lt;String, Object&gt;();</span><br><span class="line">				param.put(&quot;finmallId&quot;, coreId);</span><br><span class="line">				CoreCorpInfo coreCorpInfo = coreCorpInfoService.look(param);</span><br><span class="line">				if (null == coreCorpInfo) &#123;</span><br><span class="line">					response.sendRedirect(SystemVar.WEBSITE + &quot;/#/error?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId);</span><br><span class="line">					return R.ok();</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				logger.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;完善信息地址&quot;+SystemVar.WEBSITE + &quot;/#/fillCompMess?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId);</span><br><span class="line">				//信息不存在，说明没有注册，去完善信息页</span><br><span class="line">				response.sendRedirect(SystemVar.WEBSITE + &quot;/#/fillCompMess?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId);</span><br><span class="line">				return R.ok();</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">			String auditState = suppliersInfo.getAuditState();</span><br><span class="line">			if (SuppliersInfo.AuditState.WAIT.equals(auditState)) &#123;</span><br><span class="line">				logger.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;待审核地址&quot;+SystemVar.WEBSITE + &quot;/#/waitExam?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId);</span><br><span class="line">				//待审核，进待审核提示页</span><br><span class="line">				response.sendRedirect(SystemVar.WEBSITE + &quot;/#/waitExam?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId);</span><br><span class="line">				return R.ok();</span><br><span class="line">			&#125; else if (SuppliersInfo.AuditState.UNPASSED.equals(auditState)) &#123;</span><br><span class="line">				logger.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;审核拒绝地址&quot;+SystemVar.WEBSITE + &quot;/#/refuse?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId);</span><br><span class="line">				//审核拒绝，进审核拒绝提示页</span><br><span class="line">				response.sendRedirect(SystemVar.WEBSITE + &quot;/#/refuse?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId);</span><br><span class="line">				return R.ok();</span><br><span class="line">			&#125; else if (SuppliersInfo.AuditState.PASSED.equals(auditState)) &#123;</span><br><span class="line">				//审核通过，把用户信息放session中</span><br><span class="line">				String token = TokenUtils.getToken();</span><br><span class="line">				cacheManager.getCache(SysCache.SESSION_CACHE_NAME).put(token, suppliersInfo);</span><br><span class="line">				//往cookie中添加token</span><br><span class="line">				CookieUtils.setCookie(request, response, CookieName.SCM_TOKEN, token);</span><br><span class="line"></span><br><span class="line">				logger.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;审核通过地址&quot;+SystemVar.WEBSITE + &quot;/#/alipay?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId + &quot;&amp;token=&quot; + token);</span><br><span class="line">				response.sendRedirect(SystemVar.WEBSITE + &quot;/#/alipay?userId=&quot; + userId + &quot;&amp;coreId=&quot; + coreId + &quot;&amp;token=&quot; + token);</span><br><span class="line">				return R.ok();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<p>支付宝获取获取authToken方法如下（支付宝中也有示例）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @Description 获取支付宝authToken</span><br><span class="line"> * @Author 刘俊重</span><br><span class="line"> * @Date 2017/11/27</span><br><span class="line"> */</span><br><span class="line">private AlipaySystemOauthTokenResponse getAuthToken(String authCode) &#123;</span><br><span class="line"></span><br><span class="line">	AlipayClient alipayClient = new DefaultAlipayClient(SystemVar.ALIPAY_GATEWAY, SystemVar.APP_ID, SystemVar.PRIVATE_KEY, &quot;json&quot;, CHARSET_UTF8, SystemVar.ALIPAY_PUBLIC_KEY, &quot;RSA2&quot;);</span><br><span class="line">	AlipaySystemOauthTokenRequest request = new AlipaySystemOauthTokenRequest();</span><br><span class="line">	request.setCode(authCode);</span><br><span class="line">	request.setGrantType(&quot;authorization_code&quot;);</span><br><span class="line">	AlipaySystemOauthTokenResponse oauthTokenResponse = null;</span><br><span class="line">	try &#123;</span><br><span class="line">		oauthTokenResponse = alipayClient.execute(request);</span><br><span class="line">		System.out.println(oauthTokenResponse.getAccessToken());</span><br><span class="line">	&#125; catch (AlipayApiException e) &#123;</span><br><span class="line">		//处理异常</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	return oauthTokenResponse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>到这里已经可以获取到alipay_user_id供我们使用了，如果还想获取其它信息，可以使用accessToken换取用户信息，文档中有，这里不再赘述。</p>
+<h3 id="3-如何配置支付宝沙箱测试"><a href="#3-如何配置支付宝沙箱测试" class="headerlink" title="3.如何配置支付宝沙箱测试"></a>3.如何配置支付宝沙箱测试</h3><p>支付宝的回调地址只能填写一个，如果项目已经上线了，那总不能一会把回调地址配置成生产的，一会配置成测试的吧，好在支付宝提供了一套供测试使用的沙箱环境，沙箱环境的文档地址如下：<br><a href="https://docs.open.alipay.com/200/105311" target="_blank" rel="noopener">https://docs.open.alipay.com/200/105311</a> ，也可以看我下面说的这些：<br>首先进入如下地址：<a href="https://openhome.alipay.com/platform/appDaily.htm?tab=info" target="_blank" rel="noopener">https://openhome.alipay.com/platform/appDaily.htm?tab=info</a> 配置沙箱环境，包括沙箱的网关，授权url，appid，公钥，密钥，均跟生产的都不同，需要重新配置，其中授权url如下：<br><a href="https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm" target="_blank" rel="noopener">https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm</a> 。沙箱环境使用正常的支付宝账号也无法登录，必须要使用沙箱环境分配的账号，可以在下面地址中找到沙箱测试账号：<a href="https://openhome.alipay.com/platform/appDaily.htm?tab=account" target="_blank" rel="noopener">https://openhome.alipay.com/platform/appDaily.htm?tab=account</a> ，以上便是支付宝授权登录网站的开发流程。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/支付宝登录/" rel="tag"># 支付宝登录</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/百度统计数据导出服务踩的坑/" rel="next" title="百度统计数据导出服务踩的坑">
+                <i class="fa fa-chevron-left"></i> 百度统计数据导出服务踩的坑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/Maven项目打包遇到的两个问题/" rel="prev" title="Maven项目打包遇到的两个问题">
+                Maven项目打包遇到的两个问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">你只有非常努力，才能看起来毫不费力！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635?is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-总体思路"><span class="nav-text"><a href="#0-&#x603B;&#x4F53;&#x601D;&#x8DEF;" class="headerlink" title="0.&#x603B;&#x4F53;&#x601D;&#x8DEF;"></a>0.&#x603B;&#x4F53;&#x601D;&#x8DEF;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-开通蚂蚁金服开发服务并配置完成。"><span class="nav-text"><a href="#1-&#x5F00;&#x901A;&#x8682;&#x8681;&#x91D1;&#x670D;&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x5E76;&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x3002;" class="headerlink" title="1.&#x5F00;&#x901A;&#x8682;&#x8681;&#x91D1;&#x670D;&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x5E76;&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x3002;"></a>1.&#x5F00;&#x901A;&#x8682;&#x8681;&#x91D1;&#x670D;&#x5F00;&#x53D1;&#x670D;&#x52A1;&#x5E76;&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x3002;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-代码开发"><span class="nav-text"><a href="#2-&#x4EE3;&#x7801;&#x5F00;&#x53D1;" class="headerlink" title="2.&#x4EE3;&#x7801;&#x5F00;&#x53D1;"></a>2.&#x4EE3;&#x7801;&#x5F00;&#x53D1;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-如何配置支付宝沙箱测试"><span class="nav-text"><a href="#3-&#x5982;&#x4F55;&#x914D;&#x7F6E;&#x652F;&#x4ED8;&#x5B9D;&#x6C99;&#x7BB1;&#x6D4B;&#x8BD5;" class="headerlink" title="3.&#x5982;&#x4F55;&#x914D;&#x7F6E;&#x652F;&#x4ED8;&#x5B9D;&#x6C99;&#x7BB1;&#x6D4B;&#x8BD5;"></a>3.&#x5982;&#x4F55;&#x914D;&#x7F6E;&#x652F;&#x4ED8;&#x5B9D;&#x6C99;&#x7BB1;&#x6D4B;&#x8BD5;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

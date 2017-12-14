@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="springcloud," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.消费者使用Ribbon组件负载均衡的调用服务者接口在上一节中只介绍了如何将服务者和消费者注册到Eureka注册中心中，消费者并没有调用服务者，现在开始介绍，首先为了避免混淆，不再用上一节的消费者，重新建一个名为microservice-consumer-movie-ribbon的消费者，代码跟microservice-consumer-movie的一样，下面介绍如何负载均衡的调用。 1.1 使">
+<meta name="keywords" content="springcloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springcloud中使用Ribbon和Feign调用服务以及服务的高可用">
+<meta property="og:url" content="http://yoursite.com/2017/12/14/springcloud中使用Ribbon和Feign调用服务以及服务的高可用/index.html">
+<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:description" content="1.消费者使用Ribbon组件负载均衡的调用服务者接口在上一节中只介绍了如何将服务者和消费者注册到Eureka注册中心中，消费者并没有调用服务者，现在开始介绍，首先为了避免混淆，不再用上一节的消费者，重新建一个名为microservice-consumer-movie-ribbon的消费者，代码跟microservice-consumer-movie的一样，下面介绍如何负载均衡的调用。 1.1 使">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20171102130252278?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20171109174607603?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-12-14T11:22:42.668Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="springcloud中使用Ribbon和Feign调用服务以及服务的高可用">
+<meta name="twitter:description" content="1.消费者使用Ribbon组件负载均衡的调用服务者接口在上一节中只介绍了如何将服务者和消费者注册到Eureka注册中心中，消费者并没有调用服务者，现在开始介绍，首先为了避免混淆，不再用上一节的消费者，重新建一个名为microservice-consumer-movie-ribbon的消费者，代码跟microservice-consumer-movie的一样，下面介绍如何负载均衡的调用。 1.1 使">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171102130252278?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/14/springcloud中使用Ribbon和Feign调用服务以及服务的高可用/"/>
+
+
+
+
+
+  <title>springcloud中使用Ribbon和Feign调用服务以及服务的高可用 | 一颗向上的草莓</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一颗向上的草莓</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/14/springcloud中使用Ribbon和Feign调用服务以及服务的高可用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一颗向上的草莓">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">springcloud中使用Ribbon和Feign调用服务以及服务的高可用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T19:14:37+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台—springcloud/" itemprop="url" rel="index">
+                    <span itemprop="name">后台—springcloud</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-消费者使用Ribbon组件负载均衡的调用服务者接口"><a href="#1-消费者使用Ribbon组件负载均衡的调用服务者接口" class="headerlink" title="1.消费者使用Ribbon组件负载均衡的调用服务者接口"></a>1.消费者使用Ribbon组件负载均衡的调用服务者接口</h3><p>在上一节中只介绍了如何将服务者和消费者注册到Eureka注册中心中，消费者并没有调用服务者，现在开始介绍，首先为了避免混淆，不再用上一节的消费者，重新建一个名为microservice-consumer-movie-ribbon的消费者，代码跟microservice-consumer-movie的一样，下面介绍如何负载均衡的调用。</p>
+<h4 id="1-1-使用Ribbon默认的轮询方式调用服务者"><a href="#1-1-使用Ribbon默认的轮询方式调用服务者" class="headerlink" title="1.1 使用Ribbon默认的轮询方式调用服务者"></a>1.1 使用Ribbon默认的轮询方式调用服务者</h4><ul>
+<li>引入jar包<br>如果调用者要使用Ribbon实现调用服务者的负载均衡首先想到的是引入Ribbon的jar包，这里Eureka中已经包含了此jar，我们上一节已经引入了Eureka的jar，这里可以不用再引入了。</li>
+<li><p>Main方法中引入@LoadBalanced负载均衡注解<br>在MicroserviceConsumerMovieRibbonApplication的创建调用实例对象RestTemplate中加入注解@LoadBalanced注解，默认是轮询。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaClient</span><br><span class="line">public class MicroserviceConsumerMovieRibbonApplication &#123;</span><br><span class="line">	@Bean</span><br><span class="line">	@LoadBalanced</span><br><span class="line">	public RestTemplate restTemplate()&#123;</span><br><span class="line">		return  new RestTemplate();</span><br><span class="line">	&#125;</span><br><span class="line">	public static void main(String[] args) &#123;		SpringApplication.run(MicroserviceConsumerMovieRibbonApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动两个或两个以上服务者进行测试<br>启动注册中项目和服务者，消费者项目，这里因为要测负载均衡，所以至少要启动两个服务者才行。启动完第一个服务者之后，修改application.yml的端口号，接着启动第二个服务者，如下图：<br><img src="http://img.blog.csdn.net/20171102130252278?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>经过以上步骤即可创建另一个服务者实例MicroserviceProviderUserApplication2，启动它将其注册到注册中心中。<br>访问消费者的项目，多刷新一次会发现交替调用服务者MicroserviceProviderUserApplication和MicroserviceProviderUserApplication2，测试成功。</p>
+<h4 id="1-2自定义负载均衡算法调用服务者"><a href="#1-2自定义负载均衡算法调用服务者" class="headerlink" title="1.2自定义负载均衡算法调用服务者"></a>1.2自定义负载均衡算法调用服务者</h4><p>可以自己定义一个负载均衡策略的类，我这里定义一个随机策略。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 刘俊重</span><br><span class="line"> * @Description 负载均衡配置,配置调用者调用服务者的调用策略</span><br><span class="line"> * @date 13:56</span><br><span class="line"> */</span><br><span class="line">@Configuration</span><br><span class="line">public class BalanceConfiguration &#123;</span><br><span class="line">    /**</span><br><span class="line">     * @Description 定义随机调用的负载均衡算法</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public IRule ribbonRule()&#123;</span><br><span class="line">        return new RandomRule();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在Main方法中，RibbonClient注解中指明调用某个服务使用某个指定的策略。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@RibbonClient(name=&quot;microservice-provider-user&quot;,configuration = BalanceConfiguration.class)</span><br></pre></td></tr></table></figure></p>
+<p>调用microservice-provider-user服务时，使用BalanceConfiguration定义的负载均衡策略，完整的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaClient</span><br><span class="line">@RibbonClient(name=&quot;microservice-provider-user&quot;,configuration = BalanceConfiguration.class)</span><br><span class="line">public class MicroserviceConsumerMovieRibbonApplication &#123;</span><br><span class="line"></span><br><span class="line">	@Bean</span><br><span class="line">	@LoadBalanced</span><br><span class="line">	public RestTemplate restTemplate()&#123;</span><br><span class="line">		return  new RestTemplate();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;	SpringApplication.run(MicroserviceConsumerMovieRibbonApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：所有用到Ribbon负载均衡的均要有@LoadBalanced注解，只是我们没有定义自己的调用策略时，默认会使用轮询的策略。同时这里有坑，不能把定义的策略类BalanceConfiguration放在Main方法同级或子包下面，会有冲突（或者你自己用注解@ComponentScan再写方法，不让spring扫描这个自定义的策略类），官方文档中写的非常清楚，不懂的可以看看：<a href="https://springcloud.cc/spring-cloud-dalston.html#_customizing_the_ribbon_client" target="_blank" rel="noopener">https://springcloud.cc/spring-cloud-dalston.html#_customizing_the_ribbon_client</a> </p>
+<h4 id="1-3使用配置文件自定义RibbonClient实现客户端负载均衡"><a href="#1-3使用配置文件自定义RibbonClient实现客户端负载均衡" class="headerlink" title="1.3使用配置文件自定义RibbonClient实现客户端负载均衡"></a>1.3使用配置文件自定义RibbonClient实现客户端负载均衡</h4><p>springcloud从1.2.0版本之后支持通过自定义配置文件的方式配置负载均衡策略。官方在application.yml中这样配置的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">users:</span><br><span class="line">  ribbon:</span><br><span class="line">    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule</span><br></pre></td></tr></table></figure></p>
+<p>你只需要把users改成你的服务提供者的应用名称即可，WeightedResponseTimeRule可以配置成其他的策略，这里为了不影响其它代码，我再重新创建一个microservice-consumer-movie-ribbon-custom-properties项目。之前Main方法的@RibbonClient可以去掉了，application.yml中这么配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">microservice-provider-user:</span><br><span class="line">  ribbon:</span><br><span class="line">    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule</span><br></pre></td></tr></table></figure></p>
+<p>这段配置的意思就是通过Ribbon调用microservice-provider-user服务时采用RandomRule（随机）的策略。<br>小结：消费者调用服务者时，我们使用Ribbon实现请求的负载均衡，而且Eureka的jar中已经集成了Ribbon，不用再引jar包即可直接使用。使用有三种方法：1.直接在RestTemplate实例中添加@LoadBalanced即可实现默认轮询的负载均衡，2.自定义负载均衡策略类，并在RibbonClient中引入这个策略类，3.在yml配置文件中自定义负载策略，其中第三种比较方便。</p>
+<h3 id="2-使用Ribbon不使用Eureka"><a href="#2-使用Ribbon不使用Eureka" class="headerlink" title="2.使用Ribbon不使用Eureka"></a>2.使用Ribbon不使用Eureka</h3><p>为防止污染其它代码，再创建一个microservice-consumer-movie-ribbon-without-eureka项目，用来演示使用Ribbon时不适用Eureka。<br>官方文档中在application.yml中这样配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">stores:</span><br><span class="line">  ribbon:</span><br><span class="line">    listOfServers: example.com,google.com</span><br></pre></td></tr></table></figure></p>
+<p>意为通过ribbon调用stores不适用Eureka中注册的服务者，而是调用example.com和google.com这两个服务。<br>那我也这样做，配置文件如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">microservice-provider-user:</span><br><span class="line">  ribbon:</span><br><span class="line">    listOfServers: localhost:7100</span><br></pre></td></tr></table></figure></p>
+<p>当使用ribbon调用microservice-provider-user服务时调用localhost:7100的服务，虽然Eureka中microservice-provider-user注册了好几个服务提供者（比如localhost:7100，localhost:7101，localhost:7102），但只会调用localhost:7100，这就是使用Ribbon不使用Eureka。注意：@LoadBalanced注解不要落下，因为listOfServers这里也可以配置多个主机，同样需要负载均衡。<br>文档地址：<a href="https://springcloud.cc/spring-cloud-dalston.html#spring-cloud-ribbon-without-eureka" target="_blank" rel="noopener">https://springcloud.cc/spring-cloud-dalston.html#spring-cloud-ribbon-without-eureka</a></p>
+<h3 id="3-在Ribbon中禁用Eureka"><a href="#3-在Ribbon中禁用Eureka" class="headerlink" title="3.在Ribbon中禁用Eureka"></a>3.在Ribbon中禁用Eureka</h3><p>application.yml中这样配置即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ribbon:</span><br><span class="line">  eureka:</span><br><span class="line">   enabled: false</span><br></pre></td></tr></table></figure></p>
+<p>文档地址：<a href="https://springcloud.cc/spring-cloud-dalston.html#_example_disable_eureka_use_in_ribbon" target="_blank" rel="noopener">https://springcloud.cc/spring-cloud-dalston.html#_example_disable_eureka_use_in_ribbon</a></p>
+<h3 id="4-声明式的Rest客户端-Feign"><a href="#4-声明式的Rest客户端-Feign" class="headerlink" title="4.声明式的Rest客户端:Feign"></a>4.声明式的Rest客户端:Feign</h3><p>Feign是一种声明式的Web服务客户端，通过它可以方便的调用服务提供者的服务。使用Feign的步骤如下：</p>
+<ul>
+<li><p>引入Feign的jar</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-cloud-starter-feign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义Feign客户端类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @Description 用户自定义Feign客户端</span><br><span class="line"> * @Author 刘俊重</span><br><span class="line"> * @Date 2017/11/8</span><br><span class="line"> */</span><br><span class="line">@FeignClient(&quot;microservice-provider-user&quot;)</span><br><span class="line">public interface UserFeign &#123;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(value = &quot;/simple/&#123;id&#125;&quot;,method = RequestMethod.GET)</span><br><span class="line">    public User findUserbyId(@PathVariable(&quot;id&quot;) Long id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>@FeignClient注明要调用的服务microservice-provider-user，public User findUserbyId(@PathVariable(“id”) Long id)这个接口是服务提供者接受调用的。</p>
+<ul>
+<li><p>Main方法中加入@EnableFeignClients表明这个Feign客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaClient</span><br><span class="line">@EnableFeignClients</span><br><span class="line">public class MicroserviceConsumerMovieFeignApplication &#123;</span><br><span class="line">	public static void main(String[] args) &#123;	SpringApplication.run(MicroserviceConsumerMovieFeignApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消费者调用端注入自定义的Feign客户端，发起调用请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">public class MovieController &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private UserFeign userFeign;</span><br><span class="line">    @GetMapping(&quot;/simple/&#123;id&#125;&quot;)</span><br><span class="line">    public User findUserById(@PathVariable Long id)&#123;</span><br><span class="line">        return userFeign.findUserbyId(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>自定义了Feign客户端就不需要再使用RestTemplate调用了，现在的调用顺序是调用者通过调用自定义Feign客户端调用，自定义的Feign客户端又通过@FeignClient声明要调用的服务，通过跟服务者同名的方法调用。但是这里还有几个坑：</p>
+<ol>
+<li>@GetMapping不支持,需要使用@RequestMapping，在括号里面指定请求方式。</li>
+<li>@PathVariable得设置value，@PathVariable(“id”)如果没有(“id”)会报错</li>
+<li>Feign里面方法的参数如果是复杂对象（引用数据类型），即使你通过method = RequestMethod.GET指定这个get请求，请求到达服务提供者时依然是以Post请求方式到达的。<h3 id="5-覆盖Feign的默认值（自定义Feign的配置方式）"><a href="#5-覆盖Feign的默认值（自定义Feign的配置方式）" class="headerlink" title="5.覆盖Feign的默认值（自定义Feign的配置方式）"></a>5.覆盖Feign的默认值（自定义Feign的配置方式）</h3>默认情况下，Feign使用的是SpringMvcContract（Springmvc的契约），可以在Feign客户端中使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value = &quot;/simple/&#123;id&#125;&quot;,method = RequestMethod.GET)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这种方式调用服务者，但是假如我们不想采用这种方式，而是通过自定义的方式那就可以定义这样一个类。</p>
+<ul>
+<li><p>定义Feign配置类，覆盖默认配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 刘俊重</span><br><span class="line"> * @Description 自定义Feign的配置</span><br><span class="line"> */</span><br><span class="line">@Configuration</span><br><span class="line">public class CustomFeignConfiguration &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public Contract feignContract() &#123;</span><br><span class="line">        return new feign.Contract.Default();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在Feign客户端中引入刚才定义的配置类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@FeignClient(name=&quot;microservice-provider-user&quot;,configuration = CustomFeignConfiguration.class)</span><br><span class="line">public interface UserFeign &#123;</span><br><span class="line">    @RequestLine(&quot;GET /simple/&#123;id&#125;&quot;)</span><br><span class="line">    public User findUserbyId(@Param(&quot;id&quot;) Long id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>因为我们已经覆盖了Feign的默认配置，自定义了CustomFeignConfiguration，里面定义契约不再采用springmvc的而是采用Feign的，所以这里请求注解@RequestMapping要改成@RequestLine，相应参数也要改变了，不然会报错。参考文档：<a href="https://springcloud.cc/spring-cloud-dalston.html#spring-cloud-feign-overriding-defaults" target="_blank" rel="noopener">https://springcloud.cc/spring-cloud-dalston.html#spring-cloud-feign-overriding-defaults</a></p>
+<h3 id="6-解决Feign第一次请求超时的问题"><a href="#6-解决Feign第一次请求超时的问题" class="headerlink" title="6.解决Feign第一次请求超时的问题"></a>6.解决Feign第一次请求超时的问题</h3><p>在实际测试中发现如果机器配置比较低，第一次使用Feign调用服务者时经常会出现超时的现象，之后再调用就没有问题了，可以通过以下方法解决。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 解决第一次请求报超时异常的方案：</span><br><span class="line"># hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000   (将请求超时时间设为5秒)</span><br><span class="line"># 或者： （直接禁用超时提醒）</span><br><span class="line"># hystrix.command.default.execution.timeout.enabled: false</span><br><span class="line"># 或者：</span><br><span class="line">feign.hystrix.enabled: false ## 索性禁用feign的hystrix支持</span><br></pre></td></tr></table></figure></p>
+<h3 id="Eureka的高可用设置"><a href="#Eureka的高可用设置" class="headerlink" title="Eureka的高可用设置"></a>Eureka的高可用设置</h3><p>Eureka在这里充当的是注册中心的作用，所以必须要保证高可用，每个Eureka服务器同时也是一个Eureka客户端，同时还需要至少一个服务来定位对等体。Eureka的高可用可以采用下面的步骤来完成。</p>
+<ul>
+<li>application.xml中配置多个Eureka对等体<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: EUREKA-HA</span><br><span class="line">---</span><br><span class="line">server:</span><br><span class="line">  port: 8761</span><br><span class="line">spring:</span><br><span class="line">  profiles: peer1</span><br><span class="line">eureka:</span><br><span class="line">  instance:</span><br><span class="line">    hostname: peer1</span><br><span class="line">  client:</span><br><span class="line">    serviceUrl:</span><br><span class="line">      defaultZone: http://peer2:8762/eureka/</span><br><span class="line">---</span><br><span class="line">server:</span><br><span class="line">  port: 8762</span><br><span class="line">spring:</span><br><span class="line">  profiles: peer2</span><br><span class="line">eureka:</span><br><span class="line">  instance:</span><br><span class="line">    hostname: peer2</span><br><span class="line">  client:</span><br><span class="line">    serviceUrl:</span><br><span class="line">      defaultZone: http://peer1:8761/eureka/</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面的意思就是定义一个应用名为EUREKA-HA，定义一个profiles名为peer1,它的主机名是peer1，将其注册到<a href="http://peer2:8762/eureka/" target="_blank" rel="noopener">http://peer2:8762/eureka/</a> 服务器上，peer2跟它同理，现在peer1跟peer2就是对等体（名字可以随便定）。</p>
+<ul>
+<li><p>window系统修改hosts文件。进入“C:\Windows\System32\drivers\etc”，修改hosts文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 peer1 peer2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>依次启动peer1和peer2。<br>启动pee1时可能会报错，因为它要把服务注册到peer2上，但是peer2还未启动，不用管它，访问<a href="http://localhost:8761" target="_blank" rel="noopener">http://localhost:8761</a> ,发现什么都没有；接着启动peer2，访问<a href="http://localhost:8762" target="_blank" rel="noopener">http://localhost:8762</a> ，发现8761和8762都注册在了8762上，此时在刷新8761的浏览器页面发现8761和8762已经都在了，因为peer1和peer2是对等体，他们互相注册，服务注册表也是共享了，由此就组成了Eureka的高可用。启动peer1和peer2图片如下图（Active profiles必须配置，否则报错）：<br><img src="http://img.blog.csdn.net/20171109174607603?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>注意：如果你引入了spring-boot-starter-security包，但是并没有指定用户名和密码，那么Eureka会为你生成一个随机密码，导致你登录不上，所以请不要引入spring-boot-starter-security或者自己指定密码。参考地址：<a href="https://springcloud.cc/spring-cloud-dalston.html#spring-cloud-eureka-server-zones-and-regions" target="_blank" rel="noopener">https://springcloud.cc/spring-cloud-dalston.html#spring-cloud-eureka-server-zones-and-regions</a><br>总结：本节首先是将服务提供者和消费者注册在了Eureka的注册中心上，之后消费者通过两种方式调用服务者，一种是Ribbon负载均衡调用，一种是用Feign客户端调用，当然在每种调用方式中都可以进行自定义配置；鉴于Eureka注册中心的地位非常重要，一旦宕机将导致其它服务都不可用，所以需要保证Eureka注册中心的高可用。<br>代码地址：<a href="https://gitee.com/catchu/springcloud-study" target="_blank" rel="noopener">https://gitee.com/catchu/springcloud-study</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/springcloud/" rel="tag"># springcloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/springcloud将服务者和消费者注册到注册中心-Eureka/" rel="next" title="springcloud将服务者和消费者注册到注册中心(Eureka)">
+                <i class="fa fa-chevron-left"></i> springcloud将服务者和消费者注册到注册中心(Eureka)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/14/springcloud中使用Hystrix保护应用/" rel="prev" title="springcloud中使用Hystrix保护应用">
+                springcloud中使用Hystrix保护应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">你只有非常努力，才能看起来毫不费力！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635?is_all=1" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-globe"></i>微博</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-消费者使用Ribbon组件负载均衡的调用服务者接口"><span class="nav-text"><a href="#1-&#x6D88;&#x8D39;&#x8005;&#x4F7F;&#x7528;Ribbon&#x7EC4;&#x4EF6;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7684;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;&#x63A5;&#x53E3;" class="headerlink" title="1.&#x6D88;&#x8D39;&#x8005;&#x4F7F;&#x7528;Ribbon&#x7EC4;&#x4EF6;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7684;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;&#x63A5;&#x53E3;"></a>1.&#x6D88;&#x8D39;&#x8005;&#x4F7F;&#x7528;Ribbon&#x7EC4;&#x4EF6;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7684;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;&#x63A5;&#x53E3;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-使用Ribbon默认的轮询方式调用服务者"><span class="nav-text"><a href="#1-1-&#x4F7F;&#x7528;Ribbon&#x9ED8;&#x8BA4;&#x7684;&#x8F6E;&#x8BE2;&#x65B9;&#x5F0F;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;" class="headerlink" title="1.1 &#x4F7F;&#x7528;Ribbon&#x9ED8;&#x8BA4;&#x7684;&#x8F6E;&#x8BE2;&#x65B9;&#x5F0F;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;"></a>1.1 &#x4F7F;&#x7528;Ribbon&#x9ED8;&#x8BA4;&#x7684;&#x8F6E;&#x8BE2;&#x65B9;&#x5F0F;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2自定义负载均衡算法调用服务者"><span class="nav-text"><a href="#1-2&#x81EA;&#x5B9A;&#x4E49;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7B97;&#x6CD5;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;" class="headerlink" title="1.2&#x81EA;&#x5B9A;&#x4E49;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7B97;&#x6CD5;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;"></a>1.2&#x81EA;&#x5B9A;&#x4E49;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x7B97;&#x6CD5;&#x8C03;&#x7528;&#x670D;&#x52A1;&#x8005;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3使用配置文件自定义RibbonClient实现客户端负载均衡"><span class="nav-text"><a href="#1-3&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x81EA;&#x5B9A;&#x4E49;RibbonClient&#x5B9E;&#x73B0;&#x5BA2;&#x6237;&#x7AEF;&#x8D1F;&#x8F7D;&#x5747;&#x8861;" class="headerlink" title="1.3&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x81EA;&#x5B9A;&#x4E49;RibbonClient&#x5B9E;&#x73B0;&#x5BA2;&#x6237;&#x7AEF;&#x8D1F;&#x8F7D;&#x5747;&#x8861;"></a>1.3&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x81EA;&#x5B9A;&#x4E49;RibbonClient&#x5B9E;&#x73B0;&#x5BA2;&#x6237;&#x7AEF;&#x8D1F;&#x8F7D;&#x5747;&#x8861;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用Ribbon不使用Eureka"><span class="nav-text"><a href="#2-&#x4F7F;&#x7528;Ribbon&#x4E0D;&#x4F7F;&#x7528;Eureka" class="headerlink" title="2.&#x4F7F;&#x7528;Ribbon&#x4E0D;&#x4F7F;&#x7528;Eureka"></a>2.&#x4F7F;&#x7528;Ribbon&#x4E0D;&#x4F7F;&#x7528;Eureka</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-在Ribbon中禁用Eureka"><span class="nav-text"><a href="#3-&#x5728;Ribbon&#x4E2D;&#x7981;&#x7528;Eureka" class="headerlink" title="3.&#x5728;Ribbon&#x4E2D;&#x7981;&#x7528;Eureka"></a>3.&#x5728;Ribbon&#x4E2D;&#x7981;&#x7528;Eureka</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-声明式的Rest客户端-Feign"><span class="nav-text"><a href="#4-&#x58F0;&#x660E;&#x5F0F;&#x7684;Rest&#x5BA2;&#x6237;&#x7AEF;-Feign" class="headerlink" title="4.&#x58F0;&#x660E;&#x5F0F;&#x7684;Rest&#x5BA2;&#x6237;&#x7AEF;:Feign"></a>4.&#x58F0;&#x660E;&#x5F0F;&#x7684;Rest&#x5BA2;&#x6237;&#x7AEF;:Feign</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-覆盖Feign的默认值（自定义Feign的配置方式）"><span class="nav-text"><a href="#5-&#x8986;&#x76D6;Feign&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF08;&#x81EA;&#x5B9A;&#x4E49;Feign&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF09;" class="headerlink" title="5.&#x8986;&#x76D6;Feign&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF08;&#x81EA;&#x5B9A;&#x4E49;Feign&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF09;"></a>5.&#x8986;&#x76D6;Feign&#x7684;&#x9ED8;&#x8BA4;&#x503C;&#xFF08;&#x81EA;&#x5B9A;&#x4E49;Feign&#x7684;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;&#xFF09;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-解决Feign第一次请求超时的问题"><span class="nav-text"><a href="#6-&#x89E3;&#x51B3;Feign&#x7B2C;&#x4E00;&#x6B21;&#x8BF7;&#x6C42;&#x8D85;&#x65F6;&#x7684;&#x95EE;&#x9898;" class="headerlink" title="6.&#x89E3;&#x51B3;Feign&#x7B2C;&#x4E00;&#x6B21;&#x8BF7;&#x6C42;&#x8D85;&#x65F6;&#x7684;&#x95EE;&#x9898;"></a>6.&#x89E3;&#x51B3;Feign&#x7B2C;&#x4E00;&#x6B21;&#x8BF7;&#x6C42;&#x8D85;&#x65F6;&#x7684;&#x95EE;&#x9898;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eureka的高可用设置"><span class="nav-text"><a href="#Eureka&#x7684;&#x9AD8;&#x53EF;&#x7528;&#x8BBE;&#x7F6E;" class="headerlink" title="Eureka&#x7684;&#x9AD8;&#x53EF;&#x7528;&#x8BBE;&#x7F6E;"></a>Eureka&#x7684;&#x9AD8;&#x53EF;&#x7528;&#x8BBE;&#x7F6E;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
