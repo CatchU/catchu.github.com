@@ -179,7 +179,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button>
+    <button onclick="showSubtitle()">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -187,7 +187,7 @@
   </div>
 </div>
 
-<nav class="site-nav">
+<nav class="site-nav" id="site-nav">
   
 
   
@@ -2789,5 +2789,21 @@ Meter(数值显示器)示例:1234567891011121314151617181920212223&lt;html lang=
 
   
 
+  </script>
+<script type="text/JavaScript">
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
 </body>
 </html>
