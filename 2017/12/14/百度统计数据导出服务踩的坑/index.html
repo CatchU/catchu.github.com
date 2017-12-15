@@ -83,21 +83,21 @@
 
 
 
-<meta name="description" content="今天在项目中引入百度统计，我们是打算在我们的页面中引入百度提供的接口，而不仅仅是用百度统计里面的一些js，中途踩到一些坑，做下记录。 ###1. 开通百度统计导出服务这个导出服务算是高级功能吧，开通完之后百度统计会给你分配一个token，在后面会用到，开通的图如下： 2.通过代码调用百度统计的接口为避免看此篇文章的同学不看完就动手操作导致翻车，先说结论，直接在postman中测即可，不用登录，不清">
+<meta name="description" content="今天在项目中引入百度统计，我们是打算在我们的页面中引入百度提供的接口，而不仅仅是用百度统计里面的一些js，中途踩到一些坑，做下记录。 1.开通百度统计导出服务这个导出服务算是高级功能吧，开通完之后百度统计会给你分配一个token，在后面会用到，开通的图如下： 2.通过代码调用百度统计的接口为避免看此篇文章的同学不看完就动手操作导致翻车，先说结论，直接在postman中测即可，不用登录，不清楚的继续">
 <meta name="keywords" content="百度统计">
 <meta property="og:type" content="article">
 <meta property="og:title" content="百度统计数据导出服务踩的坑">
 <meta property="og:url" content="http://yoursite.com/2017/12/14/百度统计数据导出服务踩的坑/index.html">
-<meta property="og:site_name" content="一颗向上的草莓">
-<meta property="og:description" content="今天在项目中引入百度统计，我们是打算在我们的页面中引入百度提供的接口，而不仅仅是用百度统计里面的一些js，中途踩到一些坑，做下记录。 ###1. 开通百度统计导出服务这个导出服务算是高级功能吧，开通完之后百度统计会给你分配一个token，在后面会用到，开通的图如下： 2.通过代码调用百度统计的接口为避免看此篇文章的同学不看完就动手操作导致翻车，先说结论，直接在postman中测即可，不用登录，不清">
+<meta property="og:site_name" content="Java开发日记">
+<meta property="og:description" content="今天在项目中引入百度统计，我们是打算在我们的页面中引入百度提供的接口，而不仅仅是用百度统计里面的一些js，中途踩到一些坑，做下记录。 1.开通百度统计导出服务这个导出服务算是高级功能吧，开通完之后百度统计会给你分配一个token，在后面会用到，开通的图如下： 2.通过代码调用百度统计的接口为避免看此篇文章的同学不看完就动手操作导致翻车，先说结论，直接在postman中测即可，不用登录，不清楚的继续">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20171116190808092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171116193355961?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20171116194212773?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-12-14T11:05:35.325Z">
+<meta property="og:updated_time" content="2017-12-15T07:23:16.709Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="百度统计数据导出服务踩的坑">
-<meta name="twitter:description" content="今天在项目中引入百度统计，我们是打算在我们的页面中引入百度提供的接口，而不仅仅是用百度统计里面的一些js，中途踩到一些坑，做下记录。 ###1. 开通百度统计导出服务这个导出服务算是高级功能吧，开通完之后百度统计会给你分配一个token，在后面会用到，开通的图如下： 2.通过代码调用百度统计的接口为避免看此篇文章的同学不看完就动手操作导致翻车，先说结论，直接在postman中测即可，不用登录，不清">
+<meta name="twitter:description" content="今天在项目中引入百度统计，我们是打算在我们的页面中引入百度提供的接口，而不仅仅是用百度统计里面的一些js，中途踩到一些坑，做下记录。 1.开通百度统计导出服务这个导出服务算是高级功能吧，开通完之后百度统计会给你分配一个token，在后面会用到，开通的图如下： 2.通过代码调用百度统计的接口为避免看此篇文章的同学不看完就动手操作导致翻车，先说结论，直接在postman中测即可，不用登录，不清楚的继续">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20171116190808092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <title>百度统计数据导出服务踩的坑 | 一颗向上的草莓</title>
+  <title>百度统计数据导出服务踩的坑 | Java开发日记</title>
   
 
 
@@ -174,12 +174,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">一颗向上的草莓</span>
+        <span class="site-title">Java开发日记</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <p class="site-subtitle">分享前后端开发技术</p>
       
   </div>
 
@@ -334,7 +334,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一颗向上的草莓">
+      <meta itemprop="name" content="Java开发日记">
     </span>
 
     
@@ -446,7 +446,7 @@
 
       
         <p>今天在项目中引入百度统计，我们是打算在我们的页面中引入百度提供的接口，而不仅仅是用百度统计里面的一些js，中途踩到一些坑，做下记录。</p>
-<p>###1. 开通百度统计导出服务<br>这个导出服务算是高级功能吧，开通完之后百度统计会给你分配一个token，在后面会用到，开通的图如下：<br><img src="http://img.blog.csdn.net/20171116190808092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="1-开通百度统计导出服务"><a href="#1-开通百度统计导出服务" class="headerlink" title="1.开通百度统计导出服务"></a>1.开通百度统计导出服务</h3><p>这个导出服务算是高级功能吧，开通完之后百度统计会给你分配一个token，在后面会用到，开通的图如下：<br><img src="http://img.blog.csdn.net/20171116190808092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
 <h3 id="2-通过代码调用百度统计的接口"><a href="#2-通过代码调用百度统计的接口" class="headerlink" title="2.通过代码调用百度统计的接口"></a>2.通过代码调用百度统计的接口</h3><p>为避免看此篇文章的同学不看完就动手操作导致翻车，先说结论，直接在postman中测即可，<strong>不用登录</strong>，不清楚的继续往下看。<br>在官网页面我首先看到最下面的示例代码和开发文档，把它们下载下来看，发现效果不好，一大坨一大坨的，直接用postman测<a href="https://api.baidu.com/json/tongji/v1/ReportService/getSiteList" target="_blank" rel="noopener">https://api.baidu.com/json/tongji/v1/ReportService/getSiteList</a> 这个接口，报如下错误：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;header&quot;: &#123;</span><br><span class="line">        &quot;desc&quot;: &quot;system failure&quot;,</span><br><span class="line">        &quot;failures&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;code&quot;: 8603,</span><br><span class="line">                &quot;message&quot;: &quot;The request header you provided is invalid. sn:289933044807937&quot;,</span><br><span class="line">                &quot;position&quot;: &quot;_sys&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        &quot;status&quot;: 3</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>难道姿势不对，我又回过头来仔细的看百度文档，终于翻到下面这篇文档，我如获至宝，以为可以把问题解决，但就是这篇文档把我一步步带到坑中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://tongji.baidu.com/open/api/more?p=tongjiapi_guide.tpl</span><br></pre></td></tr></table></figure></p>
 <p>它在使用流程中写到，首先要进行身份认证，就是根据账号，密码和token进行身份验证，之后进行站点选择，这让我坚信，我上面操作失败是因为少了一步登录操作，我开始去百度上搜索这个问题，回答着寥寥，大部分都是提问，其中有一两个回答把我引到了github上，网址如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/nqdy666/BaiduTongjiClient</span><br><span class="line">和https://github.com/justlive1/baiduTongJi</span><br></pre></td></tr></table></figure></p>
@@ -635,7 +635,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -646,7 +646,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -657,7 +657,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -730,7 +730,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通过代码调用百度统计的接口"><span class="nav-text"><a href="#2-&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x7684;&#x63A5;&#x53E3;" class="headerlink" title="2.&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x7684;&#x63A5;&#x53E3;"></a>2.&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x7684;&#x63A5;&#x53E3;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-开通百度统计导出服务"><span class="nav-text"><a href="#1-&#x5F00;&#x901A;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x5BFC;&#x51FA;&#x670D;&#x52A1;" class="headerlink" title="1.&#x5F00;&#x901A;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x5BFC;&#x51FA;&#x670D;&#x52A1;"></a>1.&#x5F00;&#x901A;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x5BFC;&#x51FA;&#x670D;&#x52A1;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通过代码调用百度统计的接口"><span class="nav-text"><a href="#2-&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x7684;&#x63A5;&#x53E3;" class="headerlink" title="2.&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x7684;&#x63A5;&#x53E3;"></a>2.&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x8C03;&#x7528;&#x767E;&#x5EA6;&#x7EDF;&#x8BA1;&#x7684;&#x63A5;&#x53E3;</span></a></li></ol></div>
             
 
           </div>
@@ -762,21 +762,26 @@ var jiathis_config={
 
 <div class="powered-by">
 <i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">
+   访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-meta-divider">|</span>
 <span id="busuanzi_container_site_pv">
-    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    访问量：<span id="busuanzi_value_site_pv"></span>
 </span>
 </div>
-
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
 
 
   <span class="post-meta-divider">|</span>
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+<!--  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+-->
 
 
 

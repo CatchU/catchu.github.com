@@ -88,10 +88,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端入门—js第五天">
 <meta property="og:url" content="http://yoursite.com/2017/12/14/前端入门—js第五天/index.html">
-<meta property="og:site_name" content="一颗向上的草莓">
+<meta property="og:site_name" content="Java开发日记">
 <meta property="og:description" content="0.操作节点复习上一节的节点操作，append添加子节点，而且子节点在最后一个位置，cloneNode()，克隆节点，括号里面可以加参数，如果是true则是深克隆（克隆当前节点及其子节点），如果是false则是浅克隆，只可能当前选中的节点；parentNode父节点，给我的父节点增加子节点其实相当于给我增加了一个兄弟节。window.onload是入口函数,代表页面加载完毕之后执行（一个页面只能有">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-14T10:43:14.421Z">
+<meta property="og:updated_time" content="2017-12-15T07:56:11.584Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端入门—js第五天">
 <meta name="twitter:description" content="0.操作节点复习上一节的节点操作，append添加子节点，而且子节点在最后一个位置，cloneNode()，克隆节点，括号里面可以加参数，如果是true则是深克隆（克隆当前节点及其子节点），如果是false则是浅克隆，只可能当前选中的节点；parentNode父节点，给我的父节点增加子节点其实相当于给我增加了一个兄弟节。window.onload是入口函数,代表页面加载完毕之后执行（一个页面只能有">
@@ -130,7 +130,7 @@
 
 
 
-  <title>前端入门—js第五天 | 一颗向上的草莓</title>
+  <title>前端入门—js第五天 | Java开发日记</title>
   
 
 
@@ -170,12 +170,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">一颗向上的草莓</span>
+        <span class="site-title">Java开发日记</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <p class="site-subtitle">分享前后端开发技术</p>
       
   </div>
 
@@ -330,7 +330,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="一颗向上的草莓">
+      <meta itemprop="name" content="Java开发日记">
     </span>
 
     
@@ -453,7 +453,7 @@
 <p>resize: none可以设置textarea不可拖拉，textarea这里是双标签，有开始标签和结束标签，不能写成单标签，而且上面这个我就是先把样式写好，再把ul注释掉从js中动态生成的。</p>
 <h3 id="2-日期函数"><a href="#2-日期函数" class="headerlink" title="2.日期函数"></a>2.日期函数</h3><p>Date是js中的内置对象，使用它可以创建日期，获取当前的时间。<br>var date = new Date();  可以创建一个日期对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var date = new Date();</span><br><span class="line">console.log(date);   //Wed Aug 30 2017 13:26:51 GMT+0800 (中国标准时间)</span><br><span class="line">console.log(date.getTime());  //1504070843457   从1970年至现在的毫秒数</span><br><span class="line">console.log(date.valueOf());  //1504070843457   跟上面的一样，但是没有上面的常用</span><br><span class="line">//直接使用的</span><br><span class="line">console.log(Date.now());  //1504070966613</span><br><span class="line">console.log(+new Date());  //1504070966613</span><br><span class="line">console.log(typeof (+&quot;123456&quot;));  //number</span><br></pre></td></tr></table></figure></p>
 <p>js中，在某个值前使用”+”可以将这个变量转换成Number类型，如果转换失败，将得到NaN。所以上面的+new Date()跟其它值一样。</p>
-<h4 id="3-1日期函数常用方法"><a href="#3-1日期函数常用方法" class="headerlink" title="3.1日期函数常用方法"></a>3.1日期函数常用方法</h4><p>日期函数中常用的方法如下：</p>
+<h4 id="2-1日期函数常用方法"><a href="#2-1日期函数常用方法" class="headerlink" title="2.1日期函数常用方法"></a>2.1日期函数常用方法</h4><p>日期函数中常用的方法如下：</p>
 <table>
 <thead>
 <tr>
@@ -506,9 +506,9 @@
 </table>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    var date = new Date();</span><br><span class="line"></span><br><span class="line">    console.log(date.getFullYear());  //2017</span><br><span class="line">    console.log(date.getYear());  //117</span><br><span class="line">    console.log(date.getMonth());  //7</span><br><span class="line">    console.log(date.getDate());  //30</span><br><span class="line">    console.log(date.getDay())   //3</span><br><span class="line">    console.log(date.getHours())  //14</span><br><span class="line">    console.log(date.getMinutes()) //5</span><br><span class="line">    console.log(date.getSeconds()) //16</span><br><span class="line">    console.log(date.getMilliseconds()) //728</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 <p>下面这一个是根据日历函数生成一个日历，其中定义一个数组来装星期的思路不错。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;06日历&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        .box&#123;</span><br><span class="line">            width: 150px;</span><br><span class="line">            height: 180px;</span><br><span class="line">            margin: 100px auto;</span><br><span class="line">            background-color: #336699;</span><br><span class="line">            text-align: center;</span><br><span class="line">        &#125;</span><br><span class="line">        .box p&#123;</span><br><span class="line">            line-height: 60px;</span><br><span class="line">            color: #FFFFFF;</span><br><span class="line">            font-size: 12px;</span><br><span class="line">        &#125;</span><br><span class="line">        .box span&#123;</span><br><span class="line">            display: block;</span><br><span class="line">            width: 75px;</span><br><span class="line">            height: 75px;</span><br><span class="line">            background-color:#9ACD32 ;</span><br><span class="line">            margin: 0 auto;</span><br><span class="line">            line-height: 75px;</span><br><span class="line">            font-size: 50px;</span><br><span class="line">            color: #000000;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        window.onload = function()&#123;</span><br><span class="line">            var box = document.getElementById(&quot;box&quot;);</span><br><span class="line">            var arr = [&quot;星期日&quot;,&quot;星期一&quot;,&quot;星期二&quot;,&quot;星期三&quot;,&quot;星期四&quot;,&quot;星期五&quot;,&quot;星期六&quot;];</span><br><span class="line">            var childrens = box.children;</span><br><span class="line">            var date = new Date();</span><br><span class="line">            childrens[0].innerHTML = date.getFullYear()+&quot;年&quot;+(date.getMonth()+1)+&quot;月&quot;+date.getDate()+&quot;日&quot;+</span><br><span class="line">                arr[date.getDay()];</span><br><span class="line">            childrens[1].innerHTML = date.getDate();</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;box&quot; id=&quot;box&quot;&gt;</span><br><span class="line">        &lt;p&gt;432431&lt;/p&gt;</span><br><span class="line">        &lt;span&gt;3&lt;/span&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
-<h4 id="3-2自定义时间"><a href="#3-2自定义时间" class="headerlink" title="3.2自定义时间"></a>3.2自定义时间</h4><p>有时我们自己需要自己指定时间，那么在创建时间时传一个时间参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var date = new Date(&quot;2016/09/11&quot;);</span><br><span class="line">console.log(date.getFullYear());</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-2自定义时间"><a href="#2-2自定义时间" class="headerlink" title="2.2自定义时间"></a>2.2自定义时间</h4><p>有时我们自己需要自己指定时间，那么在创建时间时传一个时间参数即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var date = new Date(&quot;2016/09/11&quot;);</span><br><span class="line">console.log(date.getFullYear());</span><br></pre></td></tr></table></figure></p>
 <p>所以new Date()里面如果有参数，生成指定日期，如果没有参数，生成当前日期。</p>
-<h3 id="4-定时器"><a href="#4-定时器" class="headerlink" title="4.定时器"></a>4.定时器</h3><p>通过设定定时器可以让某个函数或动作持续的执行下去，定时器通过setInterval()函数来设定。<br>window.setInterval(“函数名”,”时间间隔”)；每隔指定的时间间隔去执行函数。<br>下面这几种写法都是可以的：</p>
+<h3 id="3-定时器"><a href="#3-定时器" class="headerlink" title="3.定时器"></a>3.定时器</h3><p>通过设定定时器可以让某个函数或动作持续的执行下去，定时器通过setInterval()函数来设定。<br>window.setInterval(“函数名”,”时间间隔”)；每隔指定的时间间隔去执行函数。<br>下面这几种写法都是可以的：</p>
 <ul>
 <li>window.setInterval(fun,1000);  其中fun是已经定义好的函数名</li>
 <li>window.setInterval(function(){//函数体},1000);<br>下面这两种会报错</li>
@@ -699,7 +699,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -710,7 +710,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -721,7 +721,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -794,7 +794,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-操作节点"><span class="nav-text"><a href="#0-&#x64CD;&#x4F5C;&#x8282;&#x70B9;" class="headerlink" title="0.&#x64CD;&#x4F5C;&#x8282;&#x70B9;"></a>0.&#x64CD;&#x4F5C;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-操作属性"><span class="nav-text"><a href="#1-&#x64CD;&#x4F5C;&#x5C5E;&#x6027;" class="headerlink" title="1.&#x64CD;&#x4F5C;&#x5C5E;&#x6027;"></a>1.&#x64CD;&#x4F5C;&#x5C5E;&#x6027;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-日期函数"><span class="nav-text"><a href="#2-&#x65E5;&#x671F;&#x51FD;&#x6570;" class="headerlink" title="2.&#x65E5;&#x671F;&#x51FD;&#x6570;"></a>2.&#x65E5;&#x671F;&#x51FD;&#x6570;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1日期函数常用方法"><span class="nav-text"><a href="#3-1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;" class="headerlink" title="3.1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;"></a>3.1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2自定义时间"><span class="nav-text"><a href="#3-2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;" class="headerlink" title="3.2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;"></a>3.2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-定时器"><span class="nav-text"><a href="#4-&#x5B9A;&#x65F6;&#x5668;" class="headerlink" title="4.&#x5B9A;&#x65F6;&#x5668;"></a>4.&#x5B9A;&#x65F6;&#x5668;</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-操作节点"><span class="nav-text"><a href="#0-&#x64CD;&#x4F5C;&#x8282;&#x70B9;" class="headerlink" title="0.&#x64CD;&#x4F5C;&#x8282;&#x70B9;"></a>0.&#x64CD;&#x4F5C;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-操作属性"><span class="nav-text"><a href="#1-&#x64CD;&#x4F5C;&#x5C5E;&#x6027;" class="headerlink" title="1.&#x64CD;&#x4F5C;&#x5C5E;&#x6027;"></a>1.&#x64CD;&#x4F5C;&#x5C5E;&#x6027;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-日期函数"><span class="nav-text"><a href="#2-&#x65E5;&#x671F;&#x51FD;&#x6570;" class="headerlink" title="2.&#x65E5;&#x671F;&#x51FD;&#x6570;"></a>2.&#x65E5;&#x671F;&#x51FD;&#x6570;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1日期函数常用方法"><span class="nav-text"><a href="#2-1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;" class="headerlink" title="2.1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;"></a>2.1&#x65E5;&#x671F;&#x51FD;&#x6570;&#x5E38;&#x7528;&#x65B9;&#x6CD5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2自定义时间"><span class="nav-text"><a href="#2-2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;" class="headerlink" title="2.2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;"></a>2.2&#x81EA;&#x5B9A;&#x4E49;&#x65F6;&#x95F4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-定时器"><span class="nav-text"><a href="#3-&#x5B9A;&#x65F6;&#x5668;" class="headerlink" title="3.&#x5B9A;&#x65F6;&#x5668;"></a>3.&#x5B9A;&#x65F6;&#x5668;</span></a></li></ol></div>
             
 
           </div>
@@ -826,21 +826,26 @@ var jiathis_config={
 
 <div class="powered-by">
 <i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">
+   访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-meta-divider">|</span>
 <span id="busuanzi_container_site_pv">
-    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+    访问量：<span id="busuanzi_value_site_pv"></span>
 </span>
 </div>
-
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
 
 
   <span class="post-meta-divider">|</span>
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+<!--  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+-->
 
 
 

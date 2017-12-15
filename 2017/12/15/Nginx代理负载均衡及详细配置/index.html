@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="nginx," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.Nginx正向代理和反向代理有很多同学都分不清正向代理和反向代理，下面我尽量用通俗易懂的文字指出二者的区别。首先需要明白代理的意思，代理是指受委托代表当事人从事某种活动。正向代理就是平时说的代理（比如Shadowsocks就是正向代理），是指Nginx代理服务器受客户端委托代理客户端，转发请求，并将从服务端获得的响应返回给客户端；反向代理是指Nginx代理服务器受服务端的委托代理服务端，作为集">
+<meta name="keywords" content="nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx代理负载均衡及详细配置">
+<meta property="og:url" content="http://yoursite.com/2017/12/15/Nginx代理负载均衡及详细配置/index.html">
+<meta property="og:site_name" content="Java开发日记">
+<meta property="og:description" content="1.Nginx正向代理和反向代理有很多同学都分不清正向代理和反向代理，下面我尽量用通俗易懂的文字指出二者的区别。首先需要明白代理的意思，代理是指受委托代表当事人从事某种活动。正向代理就是平时说的代理（比如Shadowsocks就是正向代理），是指Nginx代理服务器受客户端委托代理客户端，转发请求，并将从服务端获得的响应返回给客户端；反向代理是指Nginx代理服务器受服务端的委托代理服务端，作为集">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20170901111313426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170901134316747?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-12-15T08:01:46.165Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx代理负载均衡及详细配置">
+<meta name="twitter:description" content="1.Nginx正向代理和反向代理有很多同学都分不清正向代理和反向代理，下面我尽量用通俗易懂的文字指出二者的区别。首先需要明白代理的意思，代理是指受委托代表当事人从事某种活动。正向代理就是平时说的代理（比如Shadowsocks就是正向代理），是指Nginx代理服务器受客户端委托代理客户端，转发请求，并将从服务端获得的响应返回给客户端；反向代理是指Nginx代理服务器受服务端的委托代理服务端，作为集">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170901111313426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/15/Nginx代理负载均衡及详细配置/"/>
+
+
+
+
+
+  <title>Nginx代理负载均衡及详细配置 | Java开发日记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Java开发日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享前后端开发技术</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/15/Nginx代理负载均衡及详细配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Java开发日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nginx代理负载均衡及详细配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-15T16:00:44+08:00">
+                2017-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务器—nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器—nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,579 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-Nginx正向代理和反向代理"><a href="#1-Nginx正向代理和反向代理" class="headerlink" title="1.Nginx正向代理和反向代理"></a>1.Nginx正向代理和反向代理</h3><p>有很多同学都分不清正向代理和反向代理，下面我尽量用通俗易懂的文字指出二者的区别。首先需要明白代理的意思，代理是指受委托代表当事人从事某种活动。正向代理就是平时说的代理（比如Shadowsocks就是正向代理），是指Nginx代理服务器受客户端委托代理客户端，转发请求，并将从服务端获得的响应返回给客户端；反向代理是指Nginx代理服务器受服务端的委托代理服务端，作为集群的web节点，反向代理一般和负载均衡配合使用。一言以蔽之：正向代理，代理端代理的是客户端；反向代理，代理端代理的是服务端。见下图：</p>
+<p><img src="http://img.blog.csdn.net/20170901111313426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="nginx代理"></p>
+<p>nginx做反向代理时根据不同的配置策略，可以进行不同的转发，比如图片结尾的走文件服务器，动态页面走web服务器，而且可以判断被分发的服务器的状态，如果存在异常将转发给其它服务器。</p>
+<h3 id="2-负载均衡"><a href="#2-负载均衡" class="headerlink" title="2.负载均衡"></a>2.负载均衡</h3><p>负载均衡的实现必须依赖于反向代理，Nginx的负载均衡策略有两种：内置策略和扩展策略。<br>内置策略：</p>
+<ul>
+<li>轮询：将请求依次轮询发给每个服务器。</li>
+<li>最少连接：将请求发送给持有最少活动链接的服务器。</li>
+<li>IP哈希：通过哈希函数决定请求发送给哪个服务器。</li>
+<li>权重：服务器的权重越高，处理请求的概率越大。<br><img src="http://img.blog.csdn.net/20170901134316747?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="负载均衡"></li>
+</ul>
+<h3 id="3-Nginx的配置文件"><a href="#3-Nginx的配置文件" class="headerlink" title="3.Nginx的配置文件"></a>3.Nginx的配置文件</h3><p>nginx.conf是nginx的配置文件，上面提到的代理和负载均衡都需要在配置文件中进行配置，#在配置文件中是注释掉的，不会起作用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">...              #全局块</span><br><span class="line">events &#123;         #events块</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br><span class="line">http      #http块</span><br><span class="line">&#123;</span><br><span class="line">    ...   #http全局块</span><br><span class="line">    server        #server块</span><br><span class="line">    &#123; </span><br><span class="line">        ...       #server全局块</span><br><span class="line">        location [PATTERN]   #location块</span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">        location [PATTERN] </span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server</span><br><span class="line">    &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...     #http全局块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>全局块：一般配置影响nginx全局的指令。一般配置用户组，日志存放路径，pid存放路径和worker_connections；</li>
+<li>events块：配置nginx服务器与用户的网络连接。</li>
+<li>http块：可以嵌套多个server块，配置代理服务器，日志</li>
+<li>server块：可以嵌套多个location块，配置代理服务器的相关参数。</li>
+<li>location块：配置请求路由和处理请求的页面或服务器。<h4 id="3-1-配置正向代理"><a href="#3-1-配置正向代理" class="headerlink" title="3.1 配置正向代理"></a>3.1 配置正向代理</h4>现在前后端分离已经越来越流行，那么前端开发时可以在本地配置一个nginx正向代理服务器，来代理前端的请求，将其转发至后台服务器中。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">########### 每个指令必须以分号结束。#################</span><br><span class="line">#user  nobody;  #配置用户或者组，默认为nobody nobody。</span><br><span class="line">#worker_processes 1;  #允许生成的进程数，默认为1，设置的话一般设置成跟cpu数量相等</span><br><span class="line">#pid /nginx/pid/nginx.pid;   #指定nginx进程运行文件存放地址</span><br><span class="line">error_log log/error.log debug;  #制定日志路径，级别。这个设置可以放入全局块，http块，server块，级别依次为：debug|info|notice|warn|error|crit|alert|emerg</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    accept_mutex on;   #设置网路连接序列化，防止惊群现象发生，默认为on</span><br><span class="line">    multi_accept on;  #设置一个进程是否同时接受多个网络连接，默认为off</span><br><span class="line">    #use epoll;      #事件驱动模型，仅用于linux2.6以上内核,可以大大提高nginx的性能</span><br><span class="line">    worker_connections  1024;    #最大连接数</span><br><span class="line">    # 并发总数=worker_processes*worker_connections;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types;   #文件扩展名与文件类型映射表</span><br><span class="line">    default_type  application/octet-stream; #默认文件类型，默认为text/plain</span><br><span class="line">    #access_log off; #取消服务日志    </span><br><span class="line">    log_format myFormat &apos;$remote_addr–$remote_user [$time_local] $request $status $body_bytes_sent $http_referer $http_user_agent $http_x_forwarded_for&apos;; #自定义格式</span><br><span class="line">    access_log log/access.log myFormat;  #combined为日志格式的默认值</span><br><span class="line">    sendfile on;   #允许sendfile方式传输文件，默认为off，可以在http块，server块，location块。</span><br><span class="line">    keepalive_timeout  65; #连接超时时间</span><br><span class="line">    tcp_nodelay     on;</span><br><span class="line"></span><br><span class="line">    #开启gzip压缩</span><br><span class="line">    gzip  on;</span><br><span class="line">    gzip_disable &quot;MSIE [1-6].&quot;;</span><br><span class="line">	</span><br><span class="line">    #设定请求缓冲</span><br><span class="line">    client_header_buffer_size    128k;</span><br><span class="line">    large_client_header_buffers  4 128k;</span><br><span class="line"></span><br><span class="line">    #设定虚拟主机配置</span><br><span class="line">    server &#123;</span><br><span class="line">        #侦听1000端口(可以随意设定成你想要的未占用的端口)</span><br><span class="line">        listen    1000;</span><br><span class="line">        #定义使用 localhost访问(设定成你本地的IP地址或localhost)</span><br><span class="line">        server_name  localhost;</span><br><span class="line"></span><br><span class="line">        #定义服务器的默认网站根目录位置</span><br><span class="line">        root html;</span><br><span class="line"></span><br><span class="line">        #设定本虚拟主机的访问日志</span><br><span class="line">        access_log  logs/nginx.access.log  main;</span><br><span class="line"></span><br><span class="line">        #默认请求</span><br><span class="line">        location / &#123;</span><br><span class="line">            index index.html index.htm;    #定义首页索引文件的名称</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # 定义错误提示页面</span><br><span class="line">        error_page   500 502 503 504 /50x.html;</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #静态文件，nginx自己处理</span><br><span class="line">        location ~ ^/(images|javascript|js|css|flash|media|static)/ &#123;</span><br><span class="line">            #过期30天，静态文件不怎么更新，过期可以设大一点，如果频繁更新，则可以设置得小一点。</span><br><span class="line">            expires 30d;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        location ~* \.(html|js|css|png|jpg|jpeg|gif|ttf)$ &#123;</span><br><span class="line">        	proxy_pass   http://127.0.0.1:63342;   #访问http://localhost:1000/项目名/以html，js,css等结尾的文件请求均会被转发至http://127.0.0.1:63342;服务器中</span><br><span class="line">        &#125;</span><br><span class="line">		</span><br><span class="line">		location ~* \.*$ &#123;</span><br><span class="line">        	proxy_pass   http://192.168.27.100:8180;   #访问http://localhost:1000/项目名/任意路径的请求均会被转发至http://192.168.27.100:8180服务器中</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        #禁止访问 .ht结尾的文件</span><br><span class="line">            location ~ /.ht &#123;</span><br><span class="line">            deny all;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>我们最常配置的地方是location里面的代理服务器地址，这里要注意的是，1要把拦截小范围请求的放在前面，把拦截大范围请求的配置放在后面，因为像这里：location ~<em> .</em>$ 拦截以<em>结尾的请求(即所有请求)，如果它放在前面了，那么请求再也走不到location ~</em> .(html|js|css|png|jpg|jpeg|gif|ttf)$这个配置里面了（在前面已经被拦截到了）。2.还是要注意检查结尾，我之前踩过一个坑，nginx配置文件是直接拷过来的，当时配置的location ~* .do$,此意为拦截以.do结尾的请求（java中可以配置），但我真正的请求是以.action结尾的，所以不会被拦截到，亦即不会被转发至后台服务器中，导致每次请求均是404。</p>
+<h4 id="3-2-配置负载均衡"><a href="#3-2-配置负载均衡" class="headerlink" title="3.2 配置负载均衡"></a>3.2 配置负载均衡</h4><p>配置负载均衡时Nginx充当的是反向代理服务器，当请求进来时，根据相应的负载策略，将请求分发至不同的处理器进行处理，配置步骤如下：</p>
+<h5 id="3-2-1-添加节点"><a href="#3-2-1-添加节点" class="headerlink" title="3.2.1 添加节点"></a>3.2.1 添加节点</h5><p>在http块下，添加upstream节点。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">upstream mytest &#123; </span><br><span class="line">    server 192.168.1.1:8081; </span><br><span class="line">    server 192.168.1.2:8082; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>mytest可以改成任何你喜欢的变量，</p>
+<h5 id="3-2-2-配置路径"><a href="#3-2-2-配置路径" class="headerlink" title="3.2.2 配置路径"></a>3.2.2 配置路径</h5><p>将server块下的location节点中的proxy_pass配置为：http:// + upstream名称，即“<br><a href="http://mytest”。" target="_blank" rel="noopener">http://mytest”。</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">location / &#123; </span><br><span class="line">            root  html; </span><br><span class="line">            index  index.html index.htm; </span><br><span class="line">            proxy_pass http://mytest; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在负载均衡初步完成了。upstream按照轮询（默认）方式进行负载，每个请求按时间顺序逐一分配到不同的后端服务器(比如第一个请求进来就交给第一个服务器处理，第二个请求进来就交给第二个服务器处理)，如果后端服务器down掉，能自动剔除。虽然这种方式简便、成本低廉。但缺点是：可靠性低和负载分配不均衡（比如明明一台服务器性能很强他处理的请求跟低配的服务器一样，那肯定是资源的浪费，要让”年轻力壮”的比”老弱病残”的处理更多的请求）。适用于图片服务器集群和纯静态页面服务器集群。所以除此之外，upstream还有其它的负载策略，分别如下：</p>
+<h5 id="3-2-3-weight（权重）"><a href="#3-2-3-weight（权重）" class="headerlink" title="3.2.3 weight（权重）"></a>3.2.3 weight（权重）</h5><p>指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。如下所示，192.168.1.2:8082的访问比率要比192.168.1.1:8081的访问比率高一倍。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">upstream mytest&#123; </span><br><span class="line">      server 192.168.1.1:8081 weight=5; </span><br><span class="line">      server 192.168.1.2:8082 weight=10; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-2-4-ip-hash（按访问IP进行哈希计算）"><a href="#3-2-4-ip-hash（按访问IP进行哈希计算）" class="headerlink" title="3.2.4 ip_hash（按访问IP进行哈希计算）"></a>3.2.4 ip_hash（按访问IP进行哈希计算）</h5><p>每个请求按访问IP的hash结果分配，这样每个访客固定访问一个后端服务器，同时也解决了session的问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream mytest&#123; </span><br><span class="line">      ip_hash; </span><br><span class="line">      server 192.168.1.1:8081; </span><br><span class="line">      server 192.168.1.2:8082; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-2-5-fair（第三方）"><a href="#3-2-5-fair（第三方）" class="headerlink" title="3.2.5 fair（第三方）"></a>3.2.5 fair（第三方）</h5><p>按后端服务器的响应时间来分配请求，响应时间短的优先分配。与weight分配策略类似。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">upstream mytest&#123; </span><br><span class="line">      server 192.168.1.1:8081; </span><br><span class="line">      server 192.168.1.2:8082; </span><br><span class="line">      fair; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-2-6-url-hash（第三方）"><a href="#3-2-6-url-hash（第三方）" class="headerlink" title="3.2.6 url_hash（第三方）"></a>3.2.6 url_hash（第三方）</h5><p>按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。注意：在upstream中加入hash语句，server语句中不能写入weight等其他的参数，hash_method是使用的hash算法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">upstream mytest&#123; </span><br><span class="line">      server 192.168.1.1:8081; </span><br><span class="line">      server 192.168.1.2:8082; </span><br><span class="line">      hash $request_uri; </span><br><span class="line">      hash_method crc32; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面是常用的几种负载均衡策略及配置，其实upstream还可以为每个服务器设置状态值，这些状态值的含义分别如下：</p>
+<ul>
+<li>down ：落下（宕机），表示当前的server暂时不参与负载。</li>
+<li>weight ：权重，默认为1。weight越大，负载的权重就越大。</li>
+<li>max_fails ：最大失败次数，允许请求失败的次数默认为1。当超过最大次数时，返回proxy_next_upstream 模块定义的错误.</li>
+<li>fail_timeout ：失败超时时间，max_fails次失败后，暂停的时间。</li>
+<li>backup：备份，其它所有的非backup机器down或者忙的时候，请求backup机器。所以这台机器压力会最轻。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">upstream mytest&#123; #定义负载均衡设备的Ip及设备状态 </span><br><span class="line">      ip_hash; </span><br><span class="line">      server 192.168.1.1:9090 down; </span><br><span class="line">      server 192.168.1.1:8080 weight=2; </span><br><span class="line">      server 192.168.1.1:6060; </span><br><span class="line">      server 192.168.1.1:7070 backup; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上简单介绍了nginx的应用，基本可以满足平时的开发需要，以后如果有哪些补充再进行追加。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nginx/" rel="tag"><i class="fa fa-tag"></i> nginx</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/14/springcloud中使用Hystrix保护应用/" rel="next" title="springcloud中使用Hystrix保护应用">
+                <i class="fa fa-chevron-left"></i> springcloud中使用Hystrix保护应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/15/最实用的Linux命令总结/" rel="prev" title="最实用的Linux命令总结">
+                最实用的Linux命令总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">微信公众号【Java开发日记】</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:653837271@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gitee.com/catchu/projects" title="码云" target="_blank">码云</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/u014532775" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Nginx正向代理和反向代理"><span class="nav-text"><a href="#1-Nginx&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x548C;&#x53CD;&#x5411;&#x4EE3;&#x7406;" class="headerlink" title="1.Nginx&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x548C;&#x53CD;&#x5411;&#x4EE3;&#x7406;"></a>1.Nginx&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x548C;&#x53CD;&#x5411;&#x4EE3;&#x7406;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-负载均衡"><span class="nav-text"><a href="#2-&#x8D1F;&#x8F7D;&#x5747;&#x8861;" class="headerlink" title="2.&#x8D1F;&#x8F7D;&#x5747;&#x8861;"></a>2.&#x8D1F;&#x8F7D;&#x5747;&#x8861;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Nginx的配置文件"><span class="nav-text"><a href="#3-Nginx&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;" class="headerlink" title="3.Nginx&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;"></a>3.Nginx&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-配置正向代理"><span class="nav-text"><a href="#3-1-&#x914D;&#x7F6E;&#x6B63;&#x5411;&#x4EE3;&#x7406;" class="headerlink" title="3.1 &#x914D;&#x7F6E;&#x6B63;&#x5411;&#x4EE3;&#x7406;"></a>3.1 &#x914D;&#x7F6E;&#x6B63;&#x5411;&#x4EE3;&#x7406;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-配置负载均衡"><span class="nav-text"><a href="#3-2-&#x914D;&#x7F6E;&#x8D1F;&#x8F7D;&#x5747;&#x8861;" class="headerlink" title="3.2 &#x914D;&#x7F6E;&#x8D1F;&#x8F7D;&#x5747;&#x8861;"></a>3.2 &#x914D;&#x7F6E;&#x8D1F;&#x8F7D;&#x5747;&#x8861;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-1-添加节点"><span class="nav-text"><a href="#3-2-1-&#x6DFB;&#x52A0;&#x8282;&#x70B9;" class="headerlink" title="3.2.1 &#x6DFB;&#x52A0;&#x8282;&#x70B9;"></a>3.2.1 &#x6DFB;&#x52A0;&#x8282;&#x70B9;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-配置路径"><span class="nav-text"><a href="#3-2-2-&#x914D;&#x7F6E;&#x8DEF;&#x5F84;" class="headerlink" title="3.2.2 &#x914D;&#x7F6E;&#x8DEF;&#x5F84;"></a>3.2.2 &#x914D;&#x7F6E;&#x8DEF;&#x5F84;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-3-weight（权重）"><span class="nav-text"><a href="#3-2-3-weight&#xFF08;&#x6743;&#x91CD;&#xFF09;" class="headerlink" title="3.2.3 weight&#xFF08;&#x6743;&#x91CD;&#xFF09;"></a>3.2.3 weight&#xFF08;&#x6743;&#x91CD;&#xFF09;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-4-ip-hash（按访问IP进行哈希计算）"><span class="nav-text"><a href="#3-2-4-ip-hash&#xFF08;&#x6309;&#x8BBF;&#x95EE;IP&#x8FDB;&#x884C;&#x54C8;&#x5E0C;&#x8BA1;&#x7B97;&#xFF09;" class="headerlink" title="3.2.4 ip_hash&#xFF08;&#x6309;&#x8BBF;&#x95EE;IP&#x8FDB;&#x884C;&#x54C8;&#x5E0C;&#x8BA1;&#x7B97;&#xFF09;"></a>3.2.4 ip_hash&#xFF08;&#x6309;&#x8BBF;&#x95EE;IP&#x8FDB;&#x884C;&#x54C8;&#x5E0C;&#x8BA1;&#x7B97;&#xFF09;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-5-fair（第三方）"><span class="nav-text"><a href="#3-2-5-fair&#xFF08;&#x7B2C;&#x4E09;&#x65B9;&#xFF09;" class="headerlink" title="3.2.5 fair&#xFF08;&#x7B2C;&#x4E09;&#x65B9;&#xFF09;"></a>3.2.5 fair&#xFF08;&#x7B2C;&#x4E09;&#x65B9;&#xFF09;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-6-url-hash（第三方）"><span class="nav-text"><a href="#3-2-6-url-hash&#xFF08;&#x7B2C;&#x4E09;&#x65B9;&#xFF09;" class="headerlink" title="3.2.6 url_hash&#xFF08;&#x7B2C;&#x4E09;&#x65B9;&#xFF09;"></a>3.2.6 url_hash&#xFF08;&#x7B2C;&#x4E09;&#x65B9;&#xFF09;</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">
+   访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_pv">
+    访问量：<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+<!--  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

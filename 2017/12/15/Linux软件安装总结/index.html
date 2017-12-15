@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="首先Xshell一个好用的选项，如果你同时要管理几台一样的服务器组成的集群，一台一台操作很麻烦，可以使用Xshell菜单栏——工具——勾选发送键输入到所有会话，这样你在一个bash窗口输入的指令，其它所有打开的会话服务器也都会执行这条指令。 1.安装JDK 上传jdk-7u45-linux-x64.tar.gz到Linux上 解压jdk到/usr/local目录tar -zxvf jdk-7u45">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux软件安装总结">
+<meta property="og:url" content="http://yoursite.com/2017/12/15/Linux软件安装总结/index.html">
+<meta property="og:site_name" content="Java开发日记">
+<meta property="og:description" content="首先Xshell一个好用的选项，如果你同时要管理几台一样的服务器组成的集群，一台一台操作很麻烦，可以使用Xshell菜单栏——工具——勾选发送键输入到所有会话，这样你在一个bash窗口输入的指令，其它所有打开的会话服务器也都会执行这条指令。 1.安装JDK 上传jdk-7u45-linux-x64.tar.gz到Linux上 解压jdk到/usr/local目录tar -zxvf jdk-7u45">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-15T08:43:39.596Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux软件安装总结">
+<meta name="twitter:description" content="首先Xshell一个好用的选项，如果你同时要管理几台一样的服务器组成的集群，一台一台操作很麻烦，可以使用Xshell菜单栏——工具——勾选发送键输入到所有会话，这样你在一个bash窗口输入的指令，其它所有打开的会话服务器也都会执行这条指令。 1.安装JDK 上传jdk-7u45-linux-x64.tar.gz到Linux上 解压jdk到/usr/local目录tar -zxvf jdk-7u45">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/15/Linux软件安装总结/"/>
+
+
+
+
+
+  <title>Linux软件安装总结 | Java开发日记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Java开发日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享前后端开发技术</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/15/Linux软件安装总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Java开发日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux软件安装总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-15T16:05:52+08:00">
+                2017-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务器—linux/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器—linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,196 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  19 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>首先Xshell一个好用的选项，如果你同时要管理几台一样的服务器组成的集群，一台一台操作很麻烦，可以使用Xshell菜单栏——工具——勾选发送键输入到所有会话，这样你在一个bash窗口输入的指令，其它所有打开的会话服务器也都会执行这条指令。</p>
+<h3 id="1-安装JDK"><a href="#1-安装JDK" class="headerlink" title="1.安装JDK"></a>1.安装JDK</h3><ul>
+<li>上传jdk-7u45-linux-x64.tar.gz到Linux上</li>
+<li>解压jdk到/usr/local目录<br>tar -zxvf jdk-7u45-linux-x64.tar.gz -C /usr/local/<br>-C 后面是指定要解压的路径，如果没有-C及其后面的默认解压到当前文件夹</li>
+<li>配置环境变量，在/etc/profile文件最后追加相关内容<br>vi /etc/profile<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/jdk1.7.0_45</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>$PATH是默认变量，新设置的PATH不能把原来的给覆盖了，所以先写原来的，冒号后面在写新的bin路径。</p>
+<ul>
+<li>刷新环境变量<br>source /etc/profile</li>
+<li>测试java命令是否可用<br>java -version<h3 id="2-安装Tomcat"><a href="#2-安装Tomcat" class="headerlink" title="2.安装Tomcat"></a>2.安装Tomcat</h3></li>
+<li>上传apache-tomcat-7.0.68.tar.gz到Linux上</li>
+<li><p>解压tomcat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-tomcat-7.0.68.tar.gz -C /usr/local/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动tomcat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/apache-tomcat-7.0.68/bin/startup.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看tomcat进程端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -nltp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过浏览器访问tomcat<br><a href="http://192.168.0.101:8080/" target="_blank" rel="noopener">http://192.168.0.101:8080/</a></p>
+<h3 id="3-安装mysql"><a href="#3-安装mysql" class="headerlink" title="3.安装mysql"></a>3.安装mysql</h3></li>
+<li><p>执行yum命令，删除原来的MySQLlib库和服务文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove mysql mysql-server mysql-libs mysql-server;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找是否删除干净</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql 或者 find / -name mysql</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果还有mysql文件，运行“rm -rf 文件名”删除残留的MySQL文件</p>
+<ul>
+<li>将MySQL-client-5.5.48-1.linux2.6.i386.rpm和MySQL-server-5.5.48-1.linux2.6.i386.rpm拷贝到centos服务器上。</li>
+<li>安装MySQL-server-5.5.48-1.linux2.6.i386.rpm<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh MySQL-server-5.5.48-1.linux2.6.i386.rpm</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果报错，说明需要安装perl依赖，执行以下命令安装perl依赖环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install perl*</span><br><span class="line">这个命令基本上把perl的模块给安装齐了。</span><br></pre></td></tr></table></figure></p>
+<p>如果再报缺少其它的依赖包，就使用yum一个一个的安装，比如：yum install libaio.so.1。</p>
+<ul>
+<li>卸载冲突的依赖包<br>继续刚才的安装，如果报类似于下面的<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file /usr/share/mysql/charsets/README from install of MySQL-server-5.5.48-1.linux2.6.i386 conflicts with file from package mysql-libs-5.1.73-8.el6_8.x86_64</span><br><span class="line">	file /usr/share/mysql/charsets/Index.xml from install of MySQL-server-5.5.48-1.linux2.6.i386 conflicts with file from package mysql-libs-5.1.73-8.el6_8.x86_64</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>就是有冲突，一次卸载冲突包，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -e mysql-libs-5.1.73-8.el6_8.x86_64 --nodeps</span><br></pre></td></tr></table></figure></p>
+<p>如果成功，会看到进度条。<br>最后，有关于root密码设置的提示，一定要记下来，推荐截图保存<br>我这个是5.5版本的，这个版本的提示是，先启动server<br>service mysql start<br>然后/usr/bin/mysql_secure_installation 命令去交互式修改root密码</p>
+<ul>
+<li>当我执行/usr/bin/mysql_secure_installation这条命令修改密码时，它提示我需要先安装client，那我就安装client，但是安装完之后记得还是要执行修改密码那一步，因为我们是第一次进来没有密码，直接按回车进去设置即可。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh MySQL-client-5.5.48-1.linux2.6.x86_64.rpm</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>客户端安装成功后，记得还要用/usr/bin/mysql_secure_installation 命令去交互式修改root密码</p>
+<ul>
+<li>登录验证<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -proot</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>查询测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br></pre></td></tr></table></figure></p>
+<p>验证成功，退出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit;</span><br></pre></td></tr></table></figure></p>
+<p>安装中途如果出现什么问题导致无法继续下去，把所有mysql东西卸载干净，重启服务器，再重新装。</p>
+<ul>
+<li>设置navicat可以连接<br>如果使用navicat连接不上，报“1130 host xxx  is not allowed to connect mysql”那么就需要执行下面这些配置。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.在装有MySQL的机器上登录MySQL mysql -u root -p密码</span><br><span class="line">2.执行use mysql;</span><br><span class="line">3.执行update user set host = &apos;%&apos; where user = &apos;root&apos;;这一句执行完可能会报错，不用管它。</span><br><span class="line">4.执行FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="4-安装nginx"><a href="#4-安装nginx" class="headerlink" title="4.安装nginx"></a>4.安装nginx</h3><h4 id="4-1安装nginx"><a href="#4-1安装nginx" class="headerlink" title="4.1安装nginx"></a>4.1安装nginx</h4><ul>
+<li><p>下载nginx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">官网：http://nginx.org/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上传并解压nginx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nginx-1.8.1.tar.gz -C /usr/local/src</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>-C后面是执行解压路径</p>
+<ul>
+<li><p>编译nginx<br>因为nginx是用c写的，在不同的机器上需要编译之后再运行，不然可能运行不起来，所以要对官方提供的源码进行编译，这个预编译其实就是一个检查的过程。java中因为直接运行在了jvm机上，所以运行别人编译打包之后的jar或war是没问题的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">进入到nginx源码目录（切记一定要进入到源码目录在执行下面的检查命令）</span><br><span class="line">cd /usr/local/src/nginx-1.8.1</span><br><span class="line">检查安装环境,并指定将来要安装的路径</span><br><span class="line">./configure --prefix=/usr/local/nginx</span><br><span class="line">如果报错</span><br><span class="line">./configure: error: C compiler cc is not found</span><br><span class="line">说明缺少编译包，使用YUM安装缺少的包</span><br><span class="line">yum -y install gcc pcre-devel openssl openssl-devel</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装完后测试是否正常：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">执行下面命令启动nginx</span><br><span class="line">/usr/loca/nginx/sbin/nginx</span><br><span class="line">查看端口是否有ngnix进程监听</span><br><span class="line">netstat -ntlp | grep 80</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="4-2配置nginx"><a href="#4-2配置nginx" class="headerlink" title="4.2配置nginx"></a>4.2配置nginx</h4><ul>
+<li>配置反向代理<br>1.修改nginx配置文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  mini1;    #nginx所在服务器的主机名反向代理的配置</span><br><span class="line">location / &#123;               #拦截所有请求</span><br><span class="line">    root html;</span><br><span class="line">        proxy_pass http://192.168.0.21:8080;   #这里是代理转向的目标服务器</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面这段话的意思是当我访问<a href="http://mini1:80" target="_blank" rel="noopener">http://mini1:80</a> 时(80可以省略)，请求会被转发到<a href="http://192.168.0.21:8080" target="_blank" rel="noopener">http://192.168.0.21:8080</a> 的tomcat服务器上，/代表是所有的请求都被拦击，亦即所有的请求都会被转发至<a href="http://192.168.0.21:8080" target="_blank" rel="noopener">http://192.168.0.21:8080</a> ，当然你也可以配置静态资源（比如css，html,图片）不做转发。<br>2.启动mini1上的tomcat<br>3.启动nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">重启或关闭nginx进程：</span><br><span class="line">/usr/local/nginx/sbin/nginx -s reload</span><br><span class="line">/usr/local/nginx/sbin/nginx -s stop</span><br><span class="line">参考网址:http://www.cnblogs.com/jianxie/p/3990377.html</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>动静分离<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">动态资源 index.jsp</span><br><span class="line">location ~ .*\.(jsp|do|action)$ &#123;</span><br><span class="line">    proxy_pass http://192.168.0.21:8080;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">静态资源</span><br><span class="line">location ~ .*\.(html|js|css|gif|jpg|jpeg|png)$ &#123;</span><br><span class="line">    expires 3d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>配置完成后当请求动态资源jsp文件时就会被转发至<a href="http://192.168.0.21:8080" target="_blank" rel="noopener">http://192.168.0.21:8080</a> 服务器，请求静态资源就不做转发。</p>
+<ul>
+<li>负载均衡<br>在http这个节下面配置一个叫upstream的，后面的名字可以随意取，但是要和location下的proxy_pass <a href="http://后的保持一致。" target="_blank" rel="noopener">http://后的保持一致。</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    是在http里面的, 已有http, 不是在server里,在server外面</span><br><span class="line">    upstream tomcats &#123; </span><br><span class="line">        server http://192.168.0.21:8080 weight=1;#weight权重</span><br><span class="line">        server http://192.168.0.22:8080 weight=1;</span><br><span class="line">        server http://192.168.0.23:8080weight=1;</span><br><span class="line">&#125;</span><br><span class="line">卸载server里</span><br><span class="line">location ~ .*\.(jsp|do|action) &#123;</span><br><span class="line">    proxy_pass http://tomcats;        #tomcats是后面的tomcat服务器组的逻辑组号</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="4-3设置nginx开机自启动"><a href="#4-3设置nginx开机自启动" class="headerlink" title="4.3设置nginx开机自启动"></a>4.3设置nginx开机自启动</h4><ul>
+<li>添加配置文件<br>在linux系统的/etc/init.d/目录下创建nginx文件，使用如下命令：(我建议可以在window下面编辑好之后再上传到nginx上)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/init.d/nginx</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在nginx文件中添加以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">#</span><br><span class="line"># nginx - this script starts and stops the nginx daemon</span><br><span class="line">#</span><br><span class="line"># chkconfig:   - 85 15</span><br><span class="line"># description:  NGINX is an HTTP(S) server, HTTP(S) reverse \</span><br><span class="line">#               proxy and IMAP/POP3 proxy server</span><br><span class="line"># processname: nginx</span><br><span class="line"># config:      /etc/nginx/nginx.conf</span><br><span class="line"># config:      /etc/sysconfig/nginx</span><br><span class="line"># pidfile:     /var/run/nginx.pid</span><br><span class="line"># Source function library.</span><br><span class="line">. /etc/rc.d/init.d/functions</span><br><span class="line"># Source networking configuration.</span><br><span class="line">. /etc/sysconfig/network</span><br><span class="line"># Check that networking is up.</span><br><span class="line">[ &quot;$NETWORKING&quot; = &quot;no&quot; ] &amp;&amp; exit 0</span><br><span class="line">nginx=&quot;/apps/nginx/sbin/nginx&quot;</span><br><span class="line">prog=$(basename $nginx)</span><br><span class="line">NGINX_CONF_FILE=&quot;/apps/nginx/conf/nginx.conf&quot;</span><br><span class="line">[ -f /etc/sysconfig/nginx ] &amp;&amp; . /etc/sysconfig/nginx</span><br><span class="line">lockfile=/var/lock/subsys/nginx</span><br><span class="line">make_dirs() &#123;</span><br><span class="line">   # make required directories</span><br><span class="line">   user=`$nginx -V 2&gt;&amp;1 | grep &quot;configure arguments:&quot; | sed &apos;s/[^*]*--user=\([^ ]*\).*/\1/g&apos; -`</span><br><span class="line">   if [ -z &quot;`grep $user /etc/passwd`&quot; ]; then</span><br><span class="line">       useradd -M -s /bin/nologin $user</span><br><span class="line">   fi</span><br><span class="line">   options=`$nginx -V 2&gt;&amp;1 | grep &apos;configure arguments:&apos;`</span><br><span class="line">   for opt in $options; do</span><br><span class="line">       if [ `echo $opt | grep &apos;.*-temp-path&apos;` ]; then</span><br><span class="line">           value=`echo $opt | cut -d &quot;=&quot; -f 2`</span><br><span class="line">           if [ ! -d &quot;$value&quot; ]; then</span><br><span class="line">               # echo &quot;creating&quot; $value</span><br><span class="line">               mkdir -p $value &amp;&amp; chown -R $user $value</span><br><span class="line">           fi</span><br><span class="line">       fi</span><br><span class="line">   done</span><br><span class="line">&#125;</span><br><span class="line">start() &#123;</span><br><span class="line">    [ -x $nginx ] || exit 5</span><br><span class="line">    [ -f $NGINX_CONF_FILE ] || exit 6</span><br><span class="line">    make_dirs</span><br><span class="line">    echo -n $&quot;Starting $prog: &quot;</span><br><span class="line">    daemon $nginx -c $NGINX_CONF_FILE</span><br><span class="line">    retval=$?</span><br><span class="line">    echo</span><br><span class="line">    [ $retval -eq 0 ] &amp;&amp; touch $lockfile</span><br><span class="line">    return $retval</span><br><span class="line">&#125;</span><br><span class="line">stop() &#123;</span><br><span class="line">    echo -n $&quot;Stopping $prog: &quot;</span><br><span class="line">    killproc $prog -QUIT</span><br><span class="line">    retval=$?</span><br><span class="line">    echo</span><br><span class="line">    [ $retval -eq 0 ] &amp;&amp; rm -f $lockfile</span><br><span class="line">    return $retval</span><br><span class="line">&#125;</span><br><span class="line">restart() &#123;</span><br><span class="line">    configtest || return $?</span><br><span class="line">    stop</span><br><span class="line">    sleep 1</span><br><span class="line">    start</span><br><span class="line">&#125;</span><br><span class="line">reload() &#123;</span><br><span class="line">    configtest || return $?</span><br><span class="line">    echo -n $&quot;Reloading $prog: &quot;</span><br><span class="line">    killproc $nginx -HUP</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    echo</span><br><span class="line">&#125;</span><br><span class="line">force_reload() &#123;</span><br><span class="line">    restart</span><br><span class="line">&#125;</span><br><span class="line">configtest() &#123;</span><br><span class="line">  $nginx -t -c $NGINX_CONF_FILE</span><br><span class="line">&#125;</span><br><span class="line">rh_status() &#123;</span><br><span class="line">    status $prog</span><br><span class="line">&#125;</span><br><span class="line">rh_status_q() &#123;</span><br><span class="line">    rh_status &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">&#125;</span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">    start)</span><br><span class="line">        rh_status_q &amp;&amp; exit 0</span><br><span class="line">        $1</span><br><span class="line">        ;;</span><br><span class="line">    stop)</span><br><span class="line">        rh_status_q || exit 0</span><br><span class="line">        $1</span><br><span class="line">        ;;</span><br><span class="line">    restart|configtest)</span><br><span class="line">        $1</span><br><span class="line">        ;;</span><br><span class="line">    reload)</span><br><span class="line">        rh_status_q || exit 7</span><br><span class="line">        $1</span><br><span class="line">        ;;</span><br><span class="line">    force-reload)</span><br><span class="line">        force_reload</span><br><span class="line">        ;;</span><br><span class="line">    status)</span><br><span class="line">        rh_status</span><br><span class="line">        ;;</span><br><span class="line">    condrestart|try-restart)</span><br><span class="line">        rh_status_q || exit 0</span><br><span class="line">            ;;</span><br><span class="line">    *)</span><br><span class="line">        echo $&quot;Usage: $0 &#123;start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest&#125;&quot;</span><br><span class="line">        exit 2</span><br><span class="line">esac</span><br></pre></td></tr></table></figure></p>
+<p>注意要把下面两项配置修改成你自己的：<br>nginx=”/apps/nginx/sbin/nginx”   修改成nginx执行程序的路径。<br>NGINX_CONF_FILE=”/apps/nginx/conf/nginx.conf”  修改成nginx配置文件的路径。</p>
+<ul>
+<li>添加执行权限<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x /etc/init.d/nginx</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>现在就可以通过该脚本对nginx服务进行管理了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/nginx start   启动</span><br><span class="line">/etc/init.d/nginx stop   停止</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>终极方案——开机自启动nginx<br>到上一步其实已经可以方便的管理了，但我还是比较懒，希望开机就自启动nginx运行，可以使用chkconfig来设置。<br>先将nginx服务加入chkconfig管理列表：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add /etc/init.d/nginx</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>加完这个之后，就可以使用service对nginx进行启动，重启等操作了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service nginx start</span><br><span class="line">service nginx stop</span><br></pre></td></tr></table></figure></p>
+<p>设置开机自启动：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig nginx on</span><br></pre></td></tr></table></figure></p>
+<p>使用下面命令确定是否加入了开机自启动。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig | grep nginx</span><br></pre></td></tr></table></figure></p>
+<p>END<br>参考文档：<a href="http://blog.csdn.net/u013870094/article/details/52463026" target="_blank" rel="noopener">http://blog.csdn.net/u013870094/article/details/52463026</a></p>
+<h3 id="5-安装KeepAlived实现高可用"><a href="#5-安装KeepAlived实现高可用" class="headerlink" title="5.安装KeepAlived实现高可用"></a>5.安装KeepAlived实现高可用</h3><p>keepalive是一款可以实现高可用的软件，通常部署在2台服务器上，分为一主一备。Keepalived可以对本机上的进程进行检测，一旦Master检测出某个进程出现问题，将自己切换成Backup状态，然后通知另外一个节点切换成Master状态。</p>
+<h4 id="5-1keepalived安装"><a href="#5-1keepalived安装" class="headerlink" title="5.1keepalived安装"></a>5.1keepalived安装</h4><ul>
+<li><p>下载keepalived</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">官网:http://keepalived.org</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将keepalived解压到/usr/local/src目录下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf  keepalived-1.2.19.tar.gz -C /usr/local/src</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入到/usr/local/src/keepalived-1.2.19目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/src/keepalived-1.2.19</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开始configure</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/keepalived</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>-编译并安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure></p>
+<h4 id="5-2将keepalived添加到系统服务中"><a href="#5-2将keepalived添加到系统服务中" class="headerlink" title="5.2将keepalived添加到系统服务中"></a>5.2将keepalived添加到系统服务中</h4><p>拷贝执行文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/keepalived/sbin/keepalived /usr/sbin/</span><br></pre></td></tr></table></figure></p>
+<p>将init.d文件拷贝到etc下,加入开机启动项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/keepalived/etc/rc.d/init.d/keepalived </span><br><span class="line">/etc/init.d/keepalived</span><br></pre></td></tr></table></figure></p>
+<p>将keepalived文件拷贝到etc下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/keepalived/etc/sysconfig/keepalived /etc/sysconfig/</span><br></pre></td></tr></table></figure></p>
+<p>创建keepalived文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/keepalived</span><br></pre></td></tr></table></figure></p>
+<p>将keepalived配置文件拷贝到etc下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf</span><br></pre></td></tr></table></figure></p>
+<p>添加可执行权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/init.d/keepalived</span><br></pre></td></tr></table></figure></p>
+<p>也可以一次性执行以上命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cp /usr/local/keepalived/sbin/keepalived /usr/sbin/</span><br><span class="line">cp /usr/local/keepalived/etc/rc.d/init.d/keepalived /etc/init.d/keepalived</span><br><span class="line">cp /usr/local/keepalived/etc/sysconfig/keepalived /etc/sysconfig/ </span><br><span class="line">mkdir -p /etc/keepalived</span><br><span class="line">cp /usr/local/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/keepalived.conf</span><br><span class="line">chmod +x /etc/init.d/keepalived</span><br><span class="line">chkconfig --add keepalived	</span><br><span class="line">chkconfig keepalived on</span><br></pre></td></tr></table></figure></p>
+<p>添加keepalived到开机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig --add keepalived	</span><br><span class="line">chkconfig keepalived on</span><br></pre></td></tr></table></figure></p>
+<h4 id="5-3配置keepalived虚拟IP"><a href="#5-3配置keepalived虚拟IP" class="headerlink" title="5.3配置keepalived虚拟IP"></a>5.3配置keepalived虚拟IP</h4><p>修改配置文件： /etc/keepalived/keepalived.conf<br>MASTER节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state MASTER   #指定A节点为主节点 备用节点上设置为BACKUP即可</span><br><span class="line">    interface eth0    #绑定虚拟IP的网络接口</span><br><span class="line">    virtual_router_id 51   #VRRP组名，两个节点的设置必须一样，以指明各个节点属于同一VRRP组</span><br><span class="line">    priority 100   #主节点的优先级（1-254之间），备用节点必须比主节点优先级低</span><br><span class="line">    advert_int 1  #组播信息发送间隔，两个节点设置必须一样</span><br><span class="line">    authentication &#123;    #设置验证信息，两个节点必须一致</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    virtual_ipaddress &#123;    #指定虚拟IP, 两个节点设置必须一样</span><br><span class="line">        192.168.33.60/24    #如果两个nginx的ip分别是192.168.33.61,192.168.33.62，则此处的虚拟ip跟它俩同一个网段即可</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>BACKUP节点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state BACKUP</span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id 51</span><br><span class="line">    priority 99</span><br><span class="line">    advert_int 1</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.33.60/24</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>测试：<br>分别启动两台机器上的keepalived<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service keepalived start</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>杀掉master上的keepalived进程，你会发现，在slave机器上的eth0网卡多了一个ip地址<br>查看ip地址的命令：  ip addr </p>
+<h4 id="5-4配置keepalived心跳检查"><a href="#5-4配置keepalived心跳检查" class="headerlink" title="5.4配置keepalived心跳检查"></a>5.4配置keepalived心跳检查</h4><p>原理：<br>Keepalived并不跟nginx耦合，它俩完全不是一家人<br>但是keepalived提供一个机制：让用户自定义一个shell脚本去检测用户自己的程序，返回状态给keepalived就可以了<br>MASTER节点:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vrrp_script chk_health &#123;</span><br><span class="line">    script &quot;[[ `ps -ef | grep nginx | grep -v grep | wc -l` -ge 2 ]] &amp;&amp; exit 0 || exit 1&quot;</span><br><span class="line">    interval 1    #每隔1秒执行上述的脚本，去检查用户的程序ngnix</span><br><span class="line">    weight -2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state MASTER</span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id 1</span><br><span class="line">    priority 100</span><br><span class="line">    advert_int 2</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_health</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        10.0.0.10/24</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    notify_master &quot;/usr/local/keepalived/sbin/notify.sh master&quot;</span><br><span class="line">    notify_backup &quot;/usr/local/keepalived/sbin/notify.sh backup&quot;</span><br><span class="line">    notify_fault &quot;/usr/local/keepalived/sbin/notify.sh fault&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>添加切换通知脚本<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/local/keepalived/sbin/notify.sh</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">    master)</span><br><span class="line">        /usr/local/nginx/sbin/nginx</span><br><span class="line">        exit 0</span><br><span class="line">    ;;</span><br><span class="line">backup)</span><br><span class="line">        /usr/local/nginx/sbin/nginx -s stop</span><br><span class="line">        /usr/local/nginx/sbin/nginx</span><br><span class="line">        exit 0</span><br><span class="line">    ;;</span><br><span class="line">    fault)</span><br><span class="line">        /usr/local/nginx/sbin/nginx -s stop</span><br><span class="line">        exit 0</span><br><span class="line">    ;;</span><br><span class="line">    *)</span><br><span class="line">        echo &apos;Usage: notify.sh &#123;master|backup|fault&#125;&apos;</span><br><span class="line">        exit 1</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>添加执行权限<br>chmod +x /usr/local/keepalived/sbin/notify.sh</li>
+<li>在第二台机器上添加notify.sh脚本</li>
+<li>分别在两台机器上启动keepalived<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service keepalived start </span><br><span class="line">chkconfig keepalived on</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="6-虚拟机克隆"><a href="#6-虚拟机克隆" class="headerlink" title="6.虚拟机克隆"></a>6.虚拟机克隆</h3><p>严格来说这不属于安装软件的范畴，但是为了总结方便，也把虚拟机的克隆放在这里记一下：<br>有时候我们在虚拟机模拟集群的时候需要多台linux服务器，如果一台已经安装好了，这时就可以采用克隆的办法去快速生成多台liunx服务器。<br>虚拟机桌面上，选定你要克隆的虚拟机——右键——管理——克隆，下一步下一步即可。<br>克隆完成后需要修改ip，主机名等配置：</p>
+<ul>
+<li><p>修改hosts：<br>vi /etc/hosts</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.85.102 mini2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改sysconfig/network：<br>vi /etc/sysconfig/network</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HOSTNAME=mini1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改resolv.conf<br>vi /etc/resolv.conf </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search mini1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改ifcfg-eth0:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">配置IP为：</span><br><span class="line">IPADDR=192.168.85.101</span><br><span class="line">删掉UUID和HWADDR那两行</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除70-persistent-net.rules：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf 　/etc/udev/rules.d/70-persistent-net.rules</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启即可使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="7-从一台linux登录到另一台linux机器上并配置免密登录"><a href="#7-从一台linux登录到另一台linux机器上并配置免密登录" class="headerlink" title="7.从一台linux登录到另一台linux机器上并配置免密登录"></a>7.从一台linux登录到另一台linux机器上并配置免密登录</h3><ul>
+<li>从一台linux登录到另一台linux<br>现在假如有两台服务器192.168.85.101和192.168.85.102，如果我想从101服务器向102服务器复制文件，而又不想走xshell做一次中转，那就可以直接从101登录到102上。liunx上的登录采用的是ssh协议的方式，分为客户端和服务端，每一台服务器就是服务端，那什么是客户端呢，只需要输入ssh即可，就相当于调出了linux这台机器上的客户端。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 192.168.85.102</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>输入yes和密码，就可以从101上登录到102这台服务器上了，输入exit可以退出102服务器。<br>以magic用户的身份登录102服务器（前提是192.168.85.102服务器上存在magic这个用户）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh magic@192.168.85.102</span><br></pre></td></tr></table></figure></p>
+<p>使用root用户的身份将testfile文件拷贝到192.168.85.102服务器的apps文件夹下，scp就是在服务器之间拷贝文件的命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp testfile root@192.168.85.102:/apps</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>配置免密登录<br>上面基本已经解决了前面的问题，但是有个缺陷，每次都需要输入密码，很麻烦，可以配置免密登录。ssh是远程登录的安全外壳协议，提供两种身份验证机制：用户名+密码或者密钥验证。</li>
+<li>配置主机之间的免密ssh登陆<br>假如从192.168.85.101要登陆192.168.85.102<br>在192.168.85.101上进行操作：<br>1.首先生成密钥对：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>中间有提示时，直接回车即可。<br>2.再将192.168.85.101的公钥拷贝并追加到192.168.85.102的授权列表文件authorized_keys中,使用下面命令执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id 192.168.85.102</span><br></pre></td></tr></table></figure></p>
+<p>到此结束，安装完成，直接ssh 192.168.85.102 不用输密码即可登录。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/15/Linux进阶命令和Shell编程/" rel="next" title="Linux进阶命令和Shell编程">
+                <i class="fa fa-chevron-left"></i> Linux进阶命令和Shell编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/15/虚拟机中设置Linux网络为静态IP踩过的坑/" rel="prev" title="虚拟机中设置Linux网络为静态IP踩过的坑">
+                虚拟机中设置Linux网络为静态IP踩过的坑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">微信公众号【Java开发日记】</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:653837271@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gitee.com/catchu/projects" title="码云" target="_blank">码云</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/u014532775" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装JDK"><span class="nav-text"><a href="#1-&#x5B89;&#x88C5;JDK" class="headerlink" title="1.&#x5B89;&#x88C5;JDK"></a>1.&#x5B89;&#x88C5;JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装Tomcat"><span class="nav-text"><a href="#2-&#x5B89;&#x88C5;Tomcat" class="headerlink" title="2.&#x5B89;&#x88C5;Tomcat"></a>2.&#x5B89;&#x88C5;Tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-安装mysql"><span class="nav-text"><a href="#3-&#x5B89;&#x88C5;mysql" class="headerlink" title="3.&#x5B89;&#x88C5;mysql"></a>3.&#x5B89;&#x88C5;mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-安装nginx"><span class="nav-text"><a href="#4-&#x5B89;&#x88C5;nginx" class="headerlink" title="4.&#x5B89;&#x88C5;nginx"></a>4.&#x5B89;&#x88C5;nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1安装nginx"><span class="nav-text"><a href="#4-1&#x5B89;&#x88C5;nginx" class="headerlink" title="4.1&#x5B89;&#x88C5;nginx"></a>4.1&#x5B89;&#x88C5;nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2配置nginx"><span class="nav-text"><a href="#4-2&#x914D;&#x7F6E;nginx" class="headerlink" title="4.2&#x914D;&#x7F6E;nginx"></a>4.2&#x914D;&#x7F6E;nginx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3设置nginx开机自启动"><span class="nav-text"><a href="#4-3&#x8BBE;&#x7F6E;nginx&#x5F00;&#x673A;&#x81EA;&#x542F;&#x52A8;" class="headerlink" title="4.3&#x8BBE;&#x7F6E;nginx&#x5F00;&#x673A;&#x81EA;&#x542F;&#x52A8;"></a>4.3&#x8BBE;&#x7F6E;nginx&#x5F00;&#x673A;&#x81EA;&#x542F;&#x52A8;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-安装KeepAlived实现高可用"><span class="nav-text"><a href="#5-&#x5B89;&#x88C5;KeepAlived&#x5B9E;&#x73B0;&#x9AD8;&#x53EF;&#x7528;" class="headerlink" title="5.&#x5B89;&#x88C5;KeepAlived&#x5B9E;&#x73B0;&#x9AD8;&#x53EF;&#x7528;"></a>5.&#x5B89;&#x88C5;KeepAlived&#x5B9E;&#x73B0;&#x9AD8;&#x53EF;&#x7528;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1keepalived安装"><span class="nav-text"><a href="#5-1keepalived&#x5B89;&#x88C5;" class="headerlink" title="5.1keepalived&#x5B89;&#x88C5;"></a>5.1keepalived&#x5B89;&#x88C5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2将keepalived添加到系统服务中"><span class="nav-text"><a href="#5-2&#x5C06;keepalived&#x6DFB;&#x52A0;&#x5230;&#x7CFB;&#x7EDF;&#x670D;&#x52A1;&#x4E2D;" class="headerlink" title="5.2&#x5C06;keepalived&#x6DFB;&#x52A0;&#x5230;&#x7CFB;&#x7EDF;&#x670D;&#x52A1;&#x4E2D;"></a>5.2&#x5C06;keepalived&#x6DFB;&#x52A0;&#x5230;&#x7CFB;&#x7EDF;&#x670D;&#x52A1;&#x4E2D;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3配置keepalived虚拟IP"><span class="nav-text"><a href="#5-3&#x914D;&#x7F6E;keepalived&#x865A;&#x62DF;IP" class="headerlink" title="5.3&#x914D;&#x7F6E;keepalived&#x865A;&#x62DF;IP"></a>5.3&#x914D;&#x7F6E;keepalived&#x865A;&#x62DF;IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4配置keepalived心跳检查"><span class="nav-text"><a href="#5-4&#x914D;&#x7F6E;keepalived&#x5FC3;&#x8DF3;&#x68C0;&#x67E5;" class="headerlink" title="5.4&#x914D;&#x7F6E;keepalived&#x5FC3;&#x8DF3;&#x68C0;&#x67E5;"></a>5.4&#x914D;&#x7F6E;keepalived&#x5FC3;&#x8DF3;&#x68C0;&#x67E5;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-虚拟机克隆"><span class="nav-text"><a href="#6-&#x865A;&#x62DF;&#x673A;&#x514B;&#x9686;" class="headerlink" title="6.&#x865A;&#x62DF;&#x673A;&#x514B;&#x9686;"></a>6.&#x865A;&#x62DF;&#x673A;&#x514B;&#x9686;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-从一台linux登录到另一台linux机器上并配置免密登录"><span class="nav-text"><a href="#7-&#x4ECE;&#x4E00;&#x53F0;linux&#x767B;&#x5F55;&#x5230;&#x53E6;&#x4E00;&#x53F0;linux&#x673A;&#x5668;&#x4E0A;&#x5E76;&#x914D;&#x7F6E;&#x514D;&#x5BC6;&#x767B;&#x5F55;" class="headerlink" title="7.&#x4ECE;&#x4E00;&#x53F0;linux&#x767B;&#x5F55;&#x5230;&#x53E6;&#x4E00;&#x53F0;linux&#x673A;&#x5668;&#x4E0A;&#x5E76;&#x914D;&#x7F6E;&#x514D;&#x5BC6;&#x767B;&#x5F55;"></a>7.&#x4ECE;&#x4E00;&#x53F0;linux&#x767B;&#x5F55;&#x5230;&#x53E6;&#x4E00;&#x53F0;linux&#x673A;&#x5668;&#x4E0A;&#x5E76;&#x914D;&#x7F6E;&#x514D;&#x5BC6;&#x767B;&#x5F55;</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">
+   访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_pv">
+    访问量：<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+<!--  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

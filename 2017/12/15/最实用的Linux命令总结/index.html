@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.linux安装中文环境（可选）联网之后执行：sudo yum groupinstall chinese-support，安装完语言包之后修改/etc/sysconfig/i18n文件，修改LANG=”zh_CN.UTF-8”。如果只想对当前登录用户有效请编辑~/.bashrc文件，在最后加入：export LANG=”zh_CN.UTF-8” 2. 一些杂项2.1监听网络端口netstat -">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最实用的Linux命令总结">
+<meta property="og:url" content="http://yoursite.com/2017/12/15/最实用的Linux命令总结/index.html">
+<meta property="og:site_name" content="Java开发日记">
+<meta property="og:description" content="1.linux安装中文环境（可选）联网之后执行：sudo yum groupinstall chinese-support，安装完语言包之后修改/etc/sysconfig/i18n文件，修改LANG=”zh_CN.UTF-8”。如果只想对当前登录用户有效请编辑~/.bashrc文件，在最后加入：export LANG=”zh_CN.UTF-8” 2. 一些杂项2.1监听网络端口netstat -">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-15T08:03:05.959Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最实用的Linux命令总结">
+<meta name="twitter:description" content="1.linux安装中文环境（可选）联网之后执行：sudo yum groupinstall chinese-support，安装完语言包之后修改/etc/sysconfig/i18n文件，修改LANG=”zh_CN.UTF-8”。如果只想对当前登录用户有效请编辑~/.bashrc文件，在最后加入：export LANG=”zh_CN.UTF-8” 2. 一些杂项2.1监听网络端口netstat -">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/15/最实用的Linux命令总结/"/>
+
+
+
+
+
+  <title>最实用的Linux命令总结 | Java开发日记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Java开发日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">分享前后端开发技术</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/15/最实用的Linux命令总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Java开发日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">最实用的Linux命令总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-15T16:02:17+08:00">
+                2017-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务器—linux/" itemprop="url" rel="index">
+                    <span itemprop="name">服务器—linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6,500 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  26 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-linux安装中文环境（可选）"><a href="#1-linux安装中文环境（可选）" class="headerlink" title="1.linux安装中文环境（可选）"></a>1.linux安装中文环境（可选）</h3><p>联网之后执行：sudo yum groupinstall chinese-support，安装完语言包之后修改<br>/etc/sysconfig/i18n文件，修改LANG=”zh_CN.UTF-8”。如果只想对当前登录用户有效请编辑<br>~/.bashrc文件，在最后加入：export LANG=”zh_CN.UTF-8”</p>
+<h3 id="2-一些杂项"><a href="#2-一些杂项" class="headerlink" title="2. 一些杂项"></a>2. 一些杂项</h3><h4 id="2-1监听网络端口"><a href="#2-1监听网络端口" class="headerlink" title="2.1监听网络端口"></a>2.1监听网络端口</h4><p>netstat -nltp   比如可以看3306是否存在来确定mysql是否启动<br>service network status 可以查看某个服务的运行状态</p>
+<h4 id="2-2查看进程树"><a href="#2-2查看进程树" class="headerlink" title="2.2查看进程树"></a>2.2查看进程树</h4><p>pstree<br>每新开一个命令行窗口都有一个新的bash</p>
+<h4 id="2-3set命令"><a href="#2-3set命令" class="headerlink" title="2.3set命令"></a>2.3set命令</h4><p>set会显示当前环境中所有的变量包含系统变量和用户变量。export   变量名 会将这个变量提升为全局环境变量，供其它shell使用，完事之后source会把export指令输出一遍，比如source /etc/profile</p>
+<h3 id="3-网络连接方式"><a href="#3-网络连接方式" class="headerlink" title="3.网络连接方式"></a>3.网络连接方式</h3><p>VMware虚拟机三种联网方法及原理</p>
+<h4 id="3-1Brigde——桥接：默认使用VMnet0"><a href="#3-1Brigde——桥接：默认使用VMnet0" class="headerlink" title="3.1Brigde——桥接：默认使用VMnet0"></a>3.1Brigde——桥接：默认使用VMnet0</h4><p>  这一种联网方式最简单，在局域网内，你的主机是怎么联网的，你在虚拟机里就怎么连网。把虚拟机看成局域网内的另一台电脑就行了！ （备注：我在公司用这种方式连接，配置静态IP无法上网，动态获取ip可以）<br>  提示：主机网卡处在一个可以访问Internet的局域网中，虚拟机才能通过Bridge访问Internet。 </p>
+<h4 id="3-2NAT——网络地址转换-：默认使用VMnet8"><a href="#3-2NAT——网络地址转换-：默认使用VMnet8" class="headerlink" title="3.2NAT——网络地址转换  ：默认使用VMnet8"></a>3.2NAT——网络地址转换  ：默认使用VMnet8</h4><p>  NAT 是  Network  address  translate的简称。NAT技术应用在internet网关和路由器上，比如192.168.0.123这个地址要访问internet，它的数据包就要通过一个网关或者路由器，而网关或者路由器拥有一个能访问internet的ip地址，这样的网关和路由器就要在收发数据包时，对数据包的IP协议层数据进行更改（即  NAT），以使私有网段的主机能够顺利访问internet。此技术解决了IP地址稀缺的问题。VMWare的NAT上网也是同样的道理，它在主机和虚拟机之间用软件伪造出一块网卡，这块网卡和虚拟机的ip处于一个地址段。同时，在这块网卡和主机的网络接口之间进行NAT。虚拟机发出的每一块数据包都会经过虚拟网卡，然后NAT，然后由主机的接口发出。<br>联网方式： </p>
+<ul>
+<li>动态IP地址：<br>主机是静态IP或动态IP，都无所谓，将虚拟机设置成使用DHCP方式上网,Windows下选择“自动获取IP“，linux下开启DHCP服务即可。（这种方法最简单，不用过多的设置，但要在VMware中进行“编辑→虚拟网络设置”，将NAT和DHCP都开启了。一般NAT默认开启，DHCP默认关闭） 　 </li>
+<li>静态IP地址：<br>如果不想使用DHCP，也可以手动设置：IP设置与vmnet1同网段,网关设置成vmnet8的网关（在“虚拟网络设置”里的Net选项卡里能找到Gateway）通常是xxx.xxx.xxx.2，子网掩码设置与VMnet8相同（设置好IP地址后，子网掩码自动生成），DNS设置与主机相同。<h4 id="3-3Host-Only——私有网络共享主机：默认使用VMnet1"><a href="#3-3Host-Only——私有网络共享主机：默认使用VMnet1" class="headerlink" title="3.3Host-Only——私有网络共享主机：默认使用VMnet1"></a>3.3Host-Only——私有网络共享主机：默认使用VMnet1</h4>只想让虚拟机和主机之间有数据交换，而不想让虚拟机访问Internet，就要采用这个设置了。<br>联网方法： </li>
+<li>动态IP地址：<br>像上面那样开启DHCP后，虚拟机直接自动获取IP地址和DNS。就可以和主机相连了。当然，还要进行一些局域网共享的操作，这里不再赘述。 </li>
+<li>方法2、静态IP地址：<br>也可以手动设置，将虚拟机IP设置与VMnet1同网段,网关设置成VMnet1的网关相同,其余设置与VMnet1相同,DNS设置与主机相同。<br>例如：VMnet1  IP:172.16.249.1        Gateway  :172.16.249.2 　<br>那么虚拟机  IP:172.16.249.100        Gateway:  172.16.249.2<h3 id="4-修改网络和主机配置"><a href="#4-修改网络和主机配置" class="headerlink" title="4.修改网络和主机配置"></a>4.修改网络和主机配置</h3></li>
+<li>修改ip地址<br>vi /etc/sysconfig/network-scripts/ifcfg-eth0<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=eth0</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">ONBOOT=yes     #是否开机启用</span><br><span class="line">BOOTPROTO=static   #ip地址设置为静态</span><br><span class="line">IPADDR=192.168.0.101</span><br><span class="line">NETMASK=255.255.255.0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>service network restart   修改之后重启</p>
+<ul>
+<li><p>修改主机<br>vi /etc/sysconfig/network</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=server1.catchu.me</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改ip地址和主机名的映射关系<br>vi /etc/hosts</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">192.168.0.101 server1.catchu.me</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭iptables(防火墙)并设置其开机启动/不启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">service iptables stop  关闭防火墙</span><br><span class="line">service iptables status 查看防火墙状态</span><br><span class="line">service iptables start 开启防火墙</span><br><span class="line">service iptables restart 重启防火墙</span><br><span class="line">chkconfig iptables on  设置防火墙开机启动</span><br><span class="line">chkconfig iptables off  设置防火墙开机不启动</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意：如果在xshell中可以ping通你的linux主机，却无法连接，多半是被防火墙拦截了。<br>通过chkconfig指令可以查询哪些进程是开机自启动的</p>
+<h3 id="5-查询用户密码"><a href="#5-查询用户密码" class="headerlink" title="5.查询用户密码"></a>5.查询用户密码</h3><p>cat /etc/passwd<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">bin:x:1:1:bin:/bin:/sbin/nologin</span><br><span class="line">daemon:x:2:2:daemon:/sbin:/sbin/nologin</span><br><span class="line">adm:x:3:4:adm:/var/adm:/sbin/nologin</span><br><span class="line">mysql:x:496:493:MySQL server:/var/lib/mysql:/bin/bash</span><br><span class="line">magic:x:500:500:HAir:/home/magic:/bin/bash</span><br></pre></td></tr></table></figure></p>
+<p>root，密码是占位符x，用户id是0，组id是0，root是别名，/root是家目录，/bin/bash默认用的shell解析器。<br>用户id为0的超级用户，大于等于500的是超级用户，小于500的是伪用户，不能登录，但是它操作的时候也是以一个用户的身份，比如mysql就是以mysql用户的身份。<br>cat /etc/group   可以查看所有的组<br>linux查看帮助：ls –help     wc  –help</p>
+<h3 id="6-防火墙iptables"><a href="#6-防火墙iptables" class="headerlink" title="6.防火墙iptables"></a>6.防火墙iptables</h3><p>iptables也叫netfilter，从字面上也不难理解，它是对网络进行过滤的。防火墙（iptables）可以对流入，流出，流经服务器的数据包进行精细的控制。它的底层由四张表构成，分别是filter,nat,mangle和raw，每一张表都包含不同的链，最常用的是filter表。我一般把防火墙理解成过滤ip的表。</p>
+<h4 id="6-1基本操作"><a href="#6-1基本操作" class="headerlink" title="6.1基本操作"></a>6.1基本操作</h4><ul>
+<li><p>查看iptables状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">service iptables status</span><br><span class="line">或者下面这命令也是同样的效果</span><br><span class="line">列出iptables规则</span><br><span class="line">iptables -L -n</span><br><span class="line">列出iptables规则并显示规则编号</span><br><span class="line">iptables -L -n --line-numbers</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启/关闭iptables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service iptables start</span><br><span class="line">service iptables stop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看iptables是否开机启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig iptables --list</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置iptables开机启动/不启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chkconfig iptables on</span><br><span class="line">chkconfig iptables off</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>查看帮助<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -h</span><br><span class="line">iptables -help</span><br><span class="line">man iptables</span><br></pre></td></tr></table></figure></p>
+<h4 id="6-2规则配置"><a href="#6-2规则配置" class="headerlink" title="6.2规则配置"></a>6.2规则配置</h4><ul>
+<li>清除所有规则<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>-重启iptables发现规则依然存在，那是因为没有保存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables restart</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>保存配置规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用vim编辑器编辑规则<br>vim /etc/sysconfig/iptables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT</span><br><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>解释一下含义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-A, --append 追加到规则的最后一条</span><br><span class="line">-D, --delete 从规则中删除</span><br><span class="line">-I, --insert 插入，添加到规则的第一条</span><br><span class="line">-p, --proto  协议，常用协议有tcp、udp、icmp、all</span><br><span class="line">-j, --jump   常见的行为有ACCEPT、DROP和REJECT三种，但一般不用REJECT，会带来安全隐患，ACCEPT接受，表示可以访问；DROP扔掉，表示不能访问</span><br><span class="line">INPUT数据流入，OUTPUT数据流出</span><br><span class="line">注意：INPUT和DROP这样的关键字需要大写</span><br></pre></td></tr></table></figure></p>
+<p>其它还有一些规则比如匹配某些端口范围或者多个端口的，可以去网上搜，不记太多不常用的命令。</p>
+<h3 id="7-帮助命令"><a href="#7-帮助命令" class="headerlink" title="7.帮助命令"></a>7.帮助命令</h3><p>1.内部命令：echo<br>查看内部命令帮助：help echo 或者 man echo<br>2.外部命令：ls<br>查看外部命令帮助：ls –help 或者 man ls 或者 info ls<br>3.man文档的类型(1~9)<br>man 7 man<br>man 5 passwd<br>4.快捷键：<br>ctrl + c：停止进程<br>ctrl + l：清屏<br>ctrl + r：搜索历史命令<br>ctrl + q：退出<br>5.善于使用tab键</p>
+<h3 id="8-文件相关命令"><a href="#8-文件相关命令" class="headerlink" title="8.文件相关命令"></a>8.文件相关命令</h3><h4 id="8-1ls命令"><a href="#8-1ls命令" class="headerlink" title="8.1ls命令"></a>8.1ls命令</h4><p>-a  all全部的，包含隐藏文件<br>-l  long长的，表示详细信息<br>-d  directory目录，查看目录的信息<br>文件类型<br>drwxr-xr-x 2 root root 4096 10月5 08：24  bin<br>第一个表示文件类型<br>d directory  目录<br>-binary   二进制文件<br>l link  软链接文件<br>rwx  r-x  r-x<br>r   read  读<br>w   write 写<br>x   execute 执行<br>三组代表三种权限<br>所有者u（user,onwer,谁创建谁是所有者）   所属组g（group）    其他人o（others）<br>2代表硬链接数<br>第一个root代表所有者<br>第二个root代表所属组<br>4096代表文件大小，不是准确数值，数据块，存储数据的最小单位，默认512字节<br>10月5 08：24 创建时间或最后修改时间<br>bin 文件名或目录类名</p>
+<h4 id="8-2cd命令"><a href="#8-2cd命令" class="headerlink" title="8.2cd命令"></a>8.2cd命令</h4><p>cd  change directory  切换目录<br>cd / 切换到根目录<br>cd .. 切换到上级目录</p>
+<h4 id="8-3pwd命令"><a href="#8-3pwd命令" class="headerlink" title="8.3pwd命令"></a>8.3pwd命令</h4><p>pwd  print working directory  打印当前所在的目录</p>
+<h4 id="8-4-touch命令"><a href="#8-4-touch命令" class="headerlink" title="8.4 touch命令"></a>8.4 touch命令</h4><p>touch 创建空文件<br>touch newFile</p>
+<h4 id="8-5mkdir命令"><a href="#8-5mkdir命令" class="headerlink" title="8.5mkdir命令"></a>8.5mkdir命令</h4><p>mkdir make directories  创建目录<br>mkdir newDir</p>
+<h4 id="8-6cp命令"><a href="#8-6cp命令" class="headerlink" title="8.6cp命令"></a>8.6cp命令</h4><p>cp  copy复制文件<br>cp 原文件地址 目标文件地址<br>cp /etc/servers  /test   将etc目录下的servers文件复制到test目录下；<br>cp -R /etc /test   使用-R是复制目录的，将etc目录复制到test目录下；<br>scp sourecFile romoteUserName@remoteIp:remoteAddr 远程拷贝，scp是远程拷贝命令</p>
+<h4 id="8-7mv命令"><a href="#8-7mv命令" class="headerlink" title="8.7mv命令"></a>8.7mv命令</h4><p>mv   a.txt    /ect/     移动<br>mv  b.txt   a.txt    改名<br>mv   a.txt   ../b.txt    移动并改名</p>
+<h4 id="8-8rm命令"><a href="#8-8rm命令" class="headerlink" title="8.8rm命令"></a>8.8rm命令</h4><p>rm remove删除文件<br>rmdir  删除空目录（使用较少）<br>rm file1 删除文件1<br>rm -r dir1  删除目录1，记得加-r</p>
+<h4 id="8-9ln命令"><a href="#8-9ln命令" class="headerlink" title="8.9ln命令"></a>8.9ln命令</h4><p>ln  link产生链接文件<br>ln -s 产生软链接，不加-s产生硬链接<br>ln -s /etc/issue /issue.soft<br>创建issue文件的软链接issue.soft,软链接相当于windows系统的快捷方式<br>ln /etc/issue /issue.hard<br>创建issue的硬链接issue.hard,硬链接相当于拷贝，除了时间不同</p>
+<h4 id="9-文件查看编辑命令"><a href="#9-文件查看编辑命令" class="headerlink" title="9.文件查看编辑命令"></a>9.文件查看编辑命令</h4><h4 id="9-1cat命令"><a href="#9-1cat命令" class="headerlink" title="9.1cat命令"></a>9.1cat命令</h4><p>cat fileName 不能分页，一次展示文件内容</p>
+<h4 id="9-2more命令"><a href="#9-2more命令" class="headerlink" title="9.2more命令"></a>9.2more命令</h4><p>more 分页显示文件<br>more /etc/services<br>空格或f  显示下一页<br>Enter 显示下一行<br>q或Q 退出</p>
+<h4 id="9-3head命令"><a href="#9-3head命令" class="headerlink" title="9.3head命令"></a>9.3head命令</h4><p>head 显示文件前几行<br>head -20 /etc/services  显示services文件前20行   不加默认显示前十行</p>
+<h4 id="9-4tail命令"><a href="#9-4tail命令" class="headerlink" title="9.4tail命令"></a>9.4tail命令</h4><p>tail 显示文件后几行<br>tail -30 /etc/services<br>tail -f logs.log  一直滚动显示logs.log的后几行（f  follow）用于查看日志</p>
+<h4 id="9-5less命令"><a href="#9-5less命令" class="headerlink" title="9.5less命令"></a>9.5less命令</h4><p>比more功能更强大，可以搜索，可以直接进入vi编辑器中<br>回车键  向下移动一行<br>空格键  向下滚动一屏<br>b    向上滚动一屏<br>g    跳到第一行<br>G    跳到最后一行<br>/pattern 搜索pattern ，比如 /MAIL表示在文件中搜索MAIL单词<br>v   进入vi编辑器<br>q    退出less </p>
+<h4 id="9-6vim命令"><a href="#9-6vim命令" class="headerlink" title="9.6vim命令"></a>9.6vim命令</h4><ul>
+<li>最基本用法<br>vi  somefile<br>1、首先会进入“一般模式”，此模式只接受各种快捷键，不能编辑文件内容<br>2、按i键，就会从一般模式进入编辑模式，此模式下，敲入的都是文件内容<br>3、编辑完成之后，按Esc键退出编辑模式，回到一般模式；<br>4、再按：，进入“底行命令模式”，输入wq命令（或者shift+z+z），回车即可</li>
+<li>一些有用的快捷键（在一般模式下使用）：<br>a  在光标后一位开始插入<br>A   在该行的最后插入<br>I   在该行的最前面插入<br>gg   直接跳到文件的首行<br>G    直接跳到文件的末行<br>dd   删除行，如果  5dd   ，则一次性删除光标后的5行<br>yy  复制当前行,  复制多行，则  3yy，则复制当前行附近的3行<br>p   粘贴<br>v  进入字符选择模式，选择完成后，按y复制，按p粘贴<br>ctrl+v  进入块选择模式，选择完成后，按y复制，按p粘贴<br>shift+v  进入行选择模式，选择完成后，按y复制，按p粘贴<br>:set number  显示行号<br>:set nonumber  不显示行号<br>查找并替换（在底行命令模式中输入）<br>%s/sad/88888888888888     效果：查找文件中所有sad，替换为88888888888888<br>/you       效果：查找文件中出现的you，并定位到第一个找到的地方，按n可以定位到下一个匹配位置（按N定位到上一个）<h3 id="10-系统相关命令"><a href="#10-系统相关命令" class="headerlink" title="10.系统相关命令"></a>10.系统相关命令</h3><h4 id="10-1查看主机名"><a href="#10-1查看主机名" class="headerlink" title="10.1查看主机名"></a>10.1查看主机名</h4>hostname<h4 id="10-2修改主机名"><a href="#10-2修改主机名" class="headerlink" title="10.2修改主机名"></a>10.2修改主机名</h4>(重启后无效)<br>hostname magic<br>修改主机名(重启后永久生效)<br>vi /ect/sysconfig/network<h4 id="10-3修改IP"><a href="#10-3修改IP" class="headerlink" title="10.3修改IP"></a>10.3修改IP</h4>(重启后无效)<br>ifconfig eth0 192.168.12.22<br>修改IP(重启后永久生效)<br>vi /etc/sysconfig/network-scripts/ifcfg-eth0<h4 id="10-4查看系统信息"><a href="#10-4查看系统信息" class="headerlink" title="10.4查看系统信息"></a>10.4查看系统信息</h4>uname -a<br>uname -r<h4 id="10-5日期"><a href="#10-5日期" class="headerlink" title="10.5日期"></a>10.5日期</h4>date<br>date +%Y-%m-%d<br>date +%T<br>date +%Y-%m-%d” “%T<h4 id="10-6日历"><a href="#10-6日历" class="headerlink" title="10.6日历"></a>10.6日历</h4>cal 2012<h4 id="10-7挂载硬盘"><a href="#10-7挂载硬盘" class="headerlink" title="10.7挂载硬盘"></a>10.7挂载硬盘</h4>mount<br>umount<br>加载windows共享<br>mount -t cifs //192.168.1.100/tools /mnt<h4 id="10-8查看文件大小"><a href="#10-8查看文件大小" class="headerlink" title="10.8查看文件大小"></a>10.8查看文件大小</h4>du -h<br>du -ah<h4 id="10-9查看分区"><a href="#10-9查看分区" class="headerlink" title="10.9查看分区"></a>10.9查看分区</h4>df -h<h4 id="10-10ssh连接其它服务器"><a href="#10-10ssh连接其它服务器" class="headerlink" title="10.10ssh连接其它服务器"></a>10.10ssh连接其它服务器</h4>ssh root@192.168.1.1<h4 id="10-11关机和重启"><a href="#10-11关机和重启" class="headerlink" title="10.11关机和重启"></a>10.11关机和重启</h4>shutdown -h now /init 0/halt   关机命令<br>shutdown -r now /reboot  重启命令<h3 id="11用户和用户组相关命令"><a href="#11用户和用户组相关命令" class="headerlink" title="11用户和用户组相关命令"></a>11用户和用户组相关命令</h3><h4 id="11-1添加一个tom用户，设置它属于users组，并添加注释信息"><a href="#11-1添加一个tom用户，设置它属于users组，并添加注释信息" class="headerlink" title="11.1添加一个tom用户，设置它属于users组，并添加注释信息"></a>11.1添加一个tom用户，设置它属于users组，并添加注释信息</h4>分步完成：useradd tom<pre><code>usermod -g users tom
+usermod -c &quot;hr tom&quot; tom
+</code></pre>一步完成：useradd -g users -c “hr tom” tom<h4 id="11-2设置tom用户的密码"><a href="#11-2设置tom用户的密码" class="headerlink" title="11.2设置tom用户的密码"></a>11.2设置tom用户的密码</h4>passwd tom<h4 id="11-3修改tom用户的登陆名为tomcat"><a href="#11-3修改tom用户的登陆名为tomcat" class="headerlink" title="11.3修改tom用户的登陆名为tomcat"></a>11.3修改tom用户的登陆名为tomcat</h4>usermod -l tomcat tom<h4 id="11-4将tomcat添加到sys和root组中"><a href="#11-4将tomcat添加到sys和root组中" class="headerlink" title="11.4将tomcat添加到sys和root组中"></a>11.4将tomcat添加到sys和root组中</h4>usermod -G sys,root tomcat<h4 id="11-5查看tomcat的组信息"><a href="#11-5查看tomcat的组信息" class="headerlink" title="11.5查看tomcat的组信息"></a>11.5查看tomcat的组信息</h4>groups tomcat<h4 id="11-6添加一个jerry用户并设置密码"><a href="#11-6添加一个jerry用户并设置密码" class="headerlink" title="11.6添加一个jerry用户并设置密码"></a>11.6添加一个jerry用户并设置密码</h4>useradd jerry<br>passwd jerry<h4 id="11-7添加一个名为america的组"><a href="#11-7添加一个名为america的组" class="headerlink" title="11.7添加一个名为america的组"></a>11.7添加一个名为america的组</h4>groupadd america<h4 id="11-8将jerry添加到america组中"><a href="#11-8将jerry添加到america组中" class="headerlink" title="11.8将jerry添加到america组中"></a>11.8将jerry添加到america组中</h4>usermod -g america jerry<h4 id="11-9将tomcat用户从root组和sys组删除"><a href="#11-9将tomcat用户从root组和sys组删除" class="headerlink" title="11.9将tomcat用户从root组和sys组删除"></a>11.9将tomcat用户从root组和sys组删除</h4>gpasswd -d tomcat root<br>gpasswd -d tomcat sys<h4 id="11-10将america组名修改为am"><a href="#11-10将america组名修改为am" class="headerlink" title="11.10将america组名修改为am"></a>11.10将america组名修改为am</h4>groupmod -n am america<h3 id="12权限相关命令"><a href="#12权限相关命令" class="headerlink" title="12权限相关命令"></a>12权限相关命令</h3><h4 id="12-1-chmod命令"><a href="#12-1-chmod命令" class="headerlink" title="12.1 chmod命令"></a>12.1 chmod命令</h4>chmod change the permissions mode of a file改变文件或者目录的权限<br>chmod u+r  给所有者增加读权限<pre><code>g-w  给所属组减去写权限
+o=x  不管其他人是什么权限，置为执行权限
+</code></pre>u 代表所有者 g所属组 o其他人<br>例如 chmod u+r a   给a文件的所属者添加读权限<br>但是，通常使用数字表示<br>r-4 w-2 x-1<br>rwxr-xr– 代表的就是754<br>例如：<br>将/apps目录下的所有文件与子目录皆设为任何人可读取<br>chmod -R a+r /apps   （a代表的就是all）<br>将/apps目录下的所有文件与子目录的拥有者设为root，用户拥有组为users<br>chown -R root:users /apps<h4 id="12-2-rwx权限解析"><a href="#12-2-rwx权限解析" class="headerlink" title="12.2 rwx权限解析"></a>12.2 rwx权限解析</h4>对于文件来说<br>r 查看文件内容，命令 cat,more,head,tail<br>w 修改文件内容，命令echo,vi<br>x 执行文件，包括命令或者脚本<br>对于目录来说<br>r 列出目录中的内容，命令ls<br>w 在目录中创建和删除文件，想要删除文件，即使对这个文件有写权限也不行，只能修改文件，必须要对目录有w权限，才可以删除目录下的文件，命令mkdir,touch,rm<br>x  可以进入目录,命令cd.所以可以看到对于一个目录文件一般都由rwx权限，不然死活都进不去的<h4 id="12-3chown命令"><a href="#12-3chown命令" class="headerlink" title="12.3chown命令"></a>12.3chown命令</h4>chown change file ownership 改变文件或目录的所有者<br>chown nobody file1 改变file1的所有者nobody   注意所有者不能随便写，必须是系统中存在的用户，例如nobody就是系统自带的用户，类似于windows的guest<br>引入知识点</li>
+<li>切换用户，命令：su - 用户名 例如su - root   切换到root用户</li>
+<li>添加用户，命令：useradd 用户名 例如useradd hair 添加hair用户之后设置密码让他登陆，命令：passwd 密码<h4 id="12-4chgrp命令"><a href="#12-4chgrp命令" class="headerlink" title="12.4chgrp命令"></a>12.4chgrp命令</h4>chgrp change file group owership 改变文件或目录的所属组<br>chgrp adm file1 改变file1的所属组为adm   adm是系统自带的缺省组<h4 id="12-5umask命令"><a href="#12-5umask命令" class="headerlink" title="12.5umask命令"></a>12.5umask命令</h4>umask 显示或折这文件的缺省权限<br>直接umask显示的结果：0022<br>解析0022<br>首个0是特殊权限位<br>后面的022为权限掩码值<br>777-022=755   表示所有者有读写执行权限，所属组和其他人有读执行权限。<br>可以使用这样来修改创建文件的默认权限，例如umask -027 则新创建的文件或者目录所有者是读写执行，用户组是读，执行，其他人什么权限也没有<br>还可以直接使用umask -S命令，结果u=rwx,g=rx,o=rx<h3 id="13查找相关命令"><a href="#13查找相关命令" class="headerlink" title="13查找相关命令"></a>13查找相关命令</h3><h4 id="13-1-which命令"><a href="#13-1-which命令" class="headerlink" title="13.1 which命令"></a>13.1 which命令</h4>which 命令名称    显示命令所在目录<br>which  ls  查找可执行的命令<br>whereis 命令名称  显示命令所在目录，二者的区别是which可以显示出命令的别名，whereis可以显示出命令所在的帮助文档。使用这个命令可以查看目录所在位置，进而知道命令是超级用户(sbin)或者普通用户（bin）可以执行的。<br>whereis ls   查找可执行的命令和帮助的位置<h4 id="13-2find命令"><a href="#13-2find命令" class="headerlink" title="13.2find命令"></a>13.2find命令</h4>语法：find  搜索路径 搜索关键字   查找文件或目录<br>find /etc -name init  在etc目录下面查找名称为init的文件，还可以使用通配符，init<em>表示以init开头的文件，</em>init*表示包含init的文件</li>
+</ul>
+<p>find / -size +204800  在根目录下查找大于100MB的文件，是以block块为单位算的，一个block块是512字节，即0.5kb,100MB=102400kb=204800个0.5kb.<br>find / -user hair 在根目录下查找所有者为hair的文件<br>find /etc -ctime -1  在etc目录下查找24小时之内被修改过属性的文件和目录<br>-ctime -atime -mtime 以天为单位<br>-cmin -amin -mmin 以分钟为单位<br>c change修改过文件的属性，比如所有者，所属组等属性信息<br>a access访问过文件<br>m modify修改过文件的内容<br>-之内，+超过<br>find /etc -mmin -120 在etc目录下查找两小时之内被修改过的文件<br>find /etc -size +163840 -a -size -204800  在etc目录下查找大于80MB小于100MB的文件<br>-a  and表示逻辑与<br>-o  or表示逻辑或<br>find /etc -name inittab -exec ls -l {} \;在etc目录下查找名称为inittab的文件并列出它的详细信息<br>exec执行，固定格式find … -exec 命令 {} \;<br>解析：{}代表前面find到的文件的集合。\代表执行命令本身。 ;代表语句结束。-exec可以换成-ok,只是ok执行之前会询问</p>
+<h4 id="13-3locate命令"><a href="#13-3locate命令" class="headerlink" title="13.3locate命令"></a>13.3locate命令</h4><p>locate 寻找文件或目录<br>locate file 列出所有跟file相关的文件<br>例如：<br>locate test.txt  查找文件(需要更新库:updatedb)</p>
+<h4 id="13-4grep命令"><a href="#13-4grep命令" class="headerlink" title="13.4grep命令"></a>13.4grep命令</h4><p>grep 在文件中搜索字符串匹配的行并输出<br>grep ftp /etc/services  在services文件中搜索包含ftp的行</p>
+<h4 id="14打包与压缩指令"><a href="#14打包与压缩指令" class="headerlink" title="14打包与压缩指令"></a>14打包与压缩指令</h4><h4 id="14-1gzip命令"><a href="#14-1gzip命令" class="headerlink" title="14.1gzip命令"></a>14.1gzip命令</h4><p>gzip GNU zip的缩写，用于压缩文件，且只能压缩文件，不能压缩目录，压缩完成之后原文件消失，压缩后的文件以.gz结尾<br>gzip newfile1  压缩newfile1文件</p>
+<h4 id="14-2gunzip命令"><a href="#14-2gunzip命令" class="headerlink" title="14.2gunzip命令"></a>14.2gunzip命令</h4><p>gunzip GUN unzip解压.gz的压缩文件<br>gunzip newfile1.gz</p>
+<h4 id="14-3bzip2命令"><a href="#14-3bzip2命令" class="headerlink" title="14.3bzip2命令"></a>14.3bzip2命令</h4><p>bzip2 与一般的压缩命令不同，这个可以大大提高压缩比，将文件压缩的更小，压缩后文件后缀.bz2<br>bzip2 -k file1 压缩文件file1,压缩后为文件名为file1.bz2,去掉-k压缩完之后将不保留原文件</p>
+<h4 id="14-4bunzip2命令"><a href="#14-4bunzip2命令" class="headerlink" title="14.4bunzip2命令"></a>14.4bunzip2命令</h4><p>bunzip2 解压文件<br>bunzip2 -k file1.bz2 解压file1.bz2文件。解压之后保留原文件，如果不想要原文件，去掉-k<br>注意：.gz和.bz2的命令不能压缩目录，只能压缩文件</p>
+<h4 id="14-5tar命令-重要"><a href="#14-5tar命令-重要" class="headerlink" title="14.5tar命令(重要)"></a>14.5tar命令(重要)</h4><p>tar 将目录打包成文件后再压缩<br>tar 选项 打包后的名字 待打包的目录<br>选项有以下几种<br>-c 产生.tar打包文件<br>-v 显示详细信息<br>-f 指定压缩后的文件名<br>-z 打包同时压缩<br>压缩后的文件格式.tar.gz<br>tar -zcvf dir1.tar.gz dir1 将dir1文件打包并压缩<br>tar解压命令<br>-x 解包.tar文件<br>-v 显示详细信息<br>-f 指定解压文件<br>-z 解压<br>tar -zxvf dir1.tar.gz 解压dir1文件</p>
+<h4 id="14-6zip命令"><a href="#14-6zip命令" class="headerlink" title="14.6zip命令"></a>14.6zip命令</h4><p>zip 可以压缩文件也可以压缩目录，不同的是压缩目录要加上-r，同样要把压缩后的文件名写在前面，待压缩的文件写在后面,zip比gzip的好处是压缩后原文件并不会消失，同时对于大的文件会显示压缩比。.zip格式的压缩文件是唯一的windows和linux通用的压缩文件<br>zip services.zip /etc/services 压缩文件，将etc目录下的services文件压缩成services.zip<br>zip -r test.zip /test 压缩目录，将test目录压缩成test.zip，记得加-r</p>
+<h4 id="14-7unzip命令"><a href="#14-7unzip命令" class="headerlink" title="14.7unzip命令"></a>14.7unzip命令</h4><p>unzip 解压缩命令<br>unzip 文件名<br>unzip test.zip   解压test.zip文件</p>
+<h3 id="15网络通信相关指令"><a href="#15网络通信相关指令" class="headerlink" title="15网络通信相关指令"></a>15网络通信相关指令</h3><h4 id="15-1write命令"><a href="#15-1write命令" class="headerlink" title="15.1write命令"></a>15.1write命令</h4><p>write 用户名   向另外一个用户发信息，Ctrl+D结束<br>write root 向root发送信息</p>
+<h4 id="15-2wall命令"><a href="#15-2wall命令" class="headerlink" title="15.2wall命令"></a>15.2wall命令</h4><p>wall 信息  向所有用户发送广播信息<br>wall happy new year 系统中的所有用户均会收到happy new year的消息</p>
+<h4 id="15-3ping命令"><a href="#15-3ping命令" class="headerlink" title="15.3ping命令"></a>15.3ping命令</h4><p>ping ip地址，测试与给定的ip是否连通，如果未连通，测试ping 本机地址，如果依然不能ping通，ping 127.0.0.1<br>ping -s 60000 127.0.0.1 向本机发送60000个数据包（少可能看不出来效果，现在明显看到时间有延迟）<br>ping -c 4 127.0.0.1 发送4次之后自动停止，不加-c 4的话会一直ping,知道按ctrl+c</p>
+<h4 id="15-4ifconfig命令"><a href="#15-4ifconfig命令" class="headerlink" title="15.4ifconfig命令"></a>15.4ifconfig命令</h4><p>ifconfig 查看网络设置信息<br>eth0 实际的物理网卡<br>lo 会话地址网卡<br>ifconfig eth0 192.168.1.1 可以临时改变本机的物理网卡，但是下次启动时会显然显示原来的网卡，这就涉及到linux系统的一般规律，只要改变了配置文件信息，下次才依然生效，命令行修改的只在临时有效。</p>
+<h3 id="16进程控制相关指令"><a href="#16进程控制相关指令" class="headerlink" title="16进程控制相关指令"></a>16进程控制相关指令</h3><h4 id="16-1查看用户最近登录情况"><a href="#16-1查看用户最近登录情况" class="headerlink" title="16.1查看用户最近登录情况"></a>16.1查看用户最近登录情况</h4><p>last<br>lastlog</p>
+<h4 id="16-2查看硬盘使用情况"><a href="#16-2查看硬盘使用情况" class="headerlink" title="16.2查看硬盘使用情况"></a>16.2查看硬盘使用情况</h4><p>df</p>
+<h4 id="16-3查看文件大小"><a href="#16-3查看文件大小" class="headerlink" title="16.3查看文件大小"></a>16.3查看文件大小</h4><p>du</p>
+<h4 id="16-4查看内存使用情况"><a href="#16-4查看内存使用情况" class="headerlink" title="16.4查看内存使用情况"></a>16.4查看内存使用情况</h4><p>free</p>
+<h4 id="16-5查看进程"><a href="#16-5查看进程" class="headerlink" title="16.5查看进程"></a>16.5查看进程</h4><p>ps -e | grep nginx   查看所有进程并从中选出nginx的进程信息<br>ps –ef | grep tomcat 查看所有有关tomcat的进程</p>
+<h4 id="16-6结束进程"><a href="#16-6结束进程" class="headerlink" title="16.6结束进程"></a>16.6结束进程</h4><p>kill 1234<br>kill -9 4333</p>
+<h3 id="17Linux的软件包管理"><a href="#17Linux的软件包管理" class="headerlink" title="17Linux的软件包管理"></a>17Linux的软件包管理</h3><p>linux软件包分为二进制软件包管理（RPM,Yum），源代码包安装，脚本安装（shell或java）,Debian系软件包管理</p>
+<h4 id="17-1RPM软件包管理"><a href="#17-1RPM软件包管理" class="headerlink" title="17.1RPM软件包管理"></a>17.1RPM软件包管理</h4><p>RPM软件命令示例<br>sudo-1.7.2pl-5.el5.i386.rpm<br>sudo软件名<br>1.7.2pl版本号<br>5.el5更新号<br>i386硬件平台</p>
+<h5 id="17-1-1卸载"><a href="#17-1-1卸载" class="headerlink" title="17.1.1卸载"></a>17.1.1卸载</h5><p>命令：rpm -e sudo<br>如果与其他软件包有依赖关系，卸载时会有提示信息，可以使用–nodeps命令<br>no dependent 没有依赖关系<br>rpm -e –nodeps sudo</p>
+<h5 id="17-1-2安装"><a href="#17-1-2安装" class="headerlink" title="17.1.2安装"></a>17.1.2安装</h5><p>安装sudo-1.7.2pl-5.el5.i386.rpm<br>1.挂在光盘，虚拟机让他关联系统管盘，在mnt目录下创建目录cdrom,mkdir /mnt/cdrom,之后使用mount命令挂载<br>mount /dev/cdrom /mnt/cdrom,将系统光盘挂在在刚才创建的cdrom下，使用命令ll | grep sudo，查看是否有sudo文件，答案是存在sudo文件。安装命令：rpm -ivh sudo-1.7.2pl-5.el5.i386.rpm<br>i install安装<br>v view安装时查看<br>h hash安装时显示详情信息<br>i是必须的<br>命令：rpm -q sudo查看sudo软件是否安装了<br>命令：rpm -qa|grep samba<br>a all全部前半部分，查询所有安装的软件包，后半部分，在这些软件包中包含samba关键字<br>命令：rpm -ivh –test sudo-1.8.6p3-24.el6.x86_64.rpm<br>test测试，不真实的安装，只测试一下<br>命令：rpm -ivh –replacepkgs sudo-1.8.6p3-24.el6.x86_64.rpm<br>覆盖原有的基础上安装</p>
+<h5 id="17-1-3RPM其他命令"><a href="#17-1-3RPM其他命令" class="headerlink" title="17.1.3RPM其他命令"></a>17.1.3RPM其他命令</h5><p>命令：rpm -qa|grep vim 查看所有安装的包含vim文件的文件(all)<br>命令：rpm -ql sudo查询sudo安装后的文件所在位置(location)<br>命令：rpm -qi sudo查询sudo文件的相关信息介绍（information）<br>命令：rpm -qc sudo查询sudo的配置文件信息(conf)<br>命令：rpm -qd sudo查询sudo的帮助文档信息（document）</p>
+<h5 id="17-1-4RPM文件的校验"><a href="#17-1-4RPM文件的校验" class="headerlink" title="17.1.4RPM文件的校验"></a>17.1.4RPM文件的校验</h5><p>我首先修改sudo文件的配置文件，vim /etc/sudo.conf,修改文件<br>命令：rpm -V sudo校验sudo文件，控制台显示的结果是<br>S.5….T.  c /etc/sudo.conf<br>S size文件大小改变<br>5 md5文件md5的校验值改变<br>L link链接改变<br>T time创建时间改变<br>D device设备文件改变<br>U user文件的用户改变<br>G group文件的用户组改变<br>M 文件权限改变</p>
+<h4 id="17-2Yum包管理"><a href="#17-2Yum包管理" class="headerlink" title="17.2Yum包管理"></a>17.2Yum包管理</h4><p>命令：yum list | grep sudo列出yum源上所有包含文件sudo的文件<br>命令：yum install sudo使用yum方式安装文件sudo<br>命令：yum check-update sudo检查sudo有无更新<br>命令：yum update sudo更新sudo<br>命令：yum info sudo获取sudo软件包信息<br>命令：yum remove sudo卸载sudo<br>命令：yum -help或man yum获取yum的帮助信息</p>
+<h4 id="17-3源代码包管理"><a href="#17-3源代码包管理" class="headerlink" title="17.3源代码包管理"></a>17.3源代码包管理</h4><p>以proftpd为例：<br>去<a href="http://www.proftpd.org/" target="_blank" rel="noopener">http://www.proftpd.org/</a> 官网下载.tar.gz的源代码文件到本地，通过xshell上传到服务器<br>1.解压压缩包,命令：tar -xzvf proftpd-1.3.5b.tar.gz<br>2.进入文件内,命令：cd proftpd-1.3.5b<br>3.配置安装位置，命令：./configure –prefix=/test/proftpd/proftpdinstall<br>中间它提示我缺少c编译器，安装无法继续，我就使用yum方法安装gcc用于编译c语言写的文件<br>rpm -q gcc提示gcc未安装<br>yum list|grep gcc<br>yum install gcc到此安装gcc完毕<br>4.编译，命令：make<br>5.安装，命令：make install</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/15/Nginx代理负载均衡及详细配置/" rel="next" title="Nginx代理负载均衡及详细配置">
+                <i class="fa fa-chevron-left"></i> Nginx代理负载均衡及详细配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/15/Linux进阶命令和Shell编程/" rel="prev" title="Linux进阶命令和Shell编程">
+                Linux进阶命令和Shell编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">微信公众号【Java开发日记】</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:653837271@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gitee.com/catchu/projects" title="码云" target="_blank">码云</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/u014532775" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-linux安装中文环境（可选）"><span class="nav-text"><a href="#1-linux&#x5B89;&#x88C5;&#x4E2D;&#x6587;&#x73AF;&#x5883;&#xFF08;&#x53EF;&#x9009;&#xFF09;" class="headerlink" title="1.linux&#x5B89;&#x88C5;&#x4E2D;&#x6587;&#x73AF;&#x5883;&#xFF08;&#x53EF;&#x9009;&#xFF09;"></a>1.linux&#x5B89;&#x88C5;&#x4E2D;&#x6587;&#x73AF;&#x5883;&#xFF08;&#x53EF;&#x9009;&#xFF09;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-一些杂项"><span class="nav-text"><a href="#2-&#x4E00;&#x4E9B;&#x6742;&#x9879;" class="headerlink" title="2. &#x4E00;&#x4E9B;&#x6742;&#x9879;"></a>2. &#x4E00;&#x4E9B;&#x6742;&#x9879;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1监听网络端口"><span class="nav-text"><a href="#2-1&#x76D1;&#x542C;&#x7F51;&#x7EDC;&#x7AEF;&#x53E3;" class="headerlink" title="2.1&#x76D1;&#x542C;&#x7F51;&#x7EDC;&#x7AEF;&#x53E3;"></a>2.1&#x76D1;&#x542C;&#x7F51;&#x7EDC;&#x7AEF;&#x53E3;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2查看进程树"><span class="nav-text"><a href="#2-2&#x67E5;&#x770B;&#x8FDB;&#x7A0B;&#x6811;" class="headerlink" title="2.2&#x67E5;&#x770B;&#x8FDB;&#x7A0B;&#x6811;"></a>2.2&#x67E5;&#x770B;&#x8FDB;&#x7A0B;&#x6811;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3set命令"><span class="nav-text"><a href="#2-3set&#x547D;&#x4EE4;" class="headerlink" title="2.3set&#x547D;&#x4EE4;"></a>2.3set&#x547D;&#x4EE4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-网络连接方式"><span class="nav-text"><a href="#3-&#x7F51;&#x7EDC;&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;" class="headerlink" title="3.&#x7F51;&#x7EDC;&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;"></a>3.&#x7F51;&#x7EDC;&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1Brigde——桥接：默认使用VMnet0"><span class="nav-text"><a href="#3-1Brigde&#x2014;&#x2014;&#x6865;&#x63A5;&#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet0" class="headerlink" title="3.1Brigde&#x2014;&#x2014;&#x6865;&#x63A5;&#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet0"></a>3.1Brigde&#x2014;&#x2014;&#x6865;&#x63A5;&#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2NAT——网络地址转换-：默认使用VMnet8"><span class="nav-text"><a href="#3-2NAT&#x2014;&#x2014;&#x7F51;&#x7EDC;&#x5730;&#x5740;&#x8F6C;&#x6362;-&#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet8" class="headerlink" title="3.2NAT&#x2014;&#x2014;&#x7F51;&#x7EDC;&#x5730;&#x5740;&#x8F6C;&#x6362;  &#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet8"></a>3.2NAT&#x2014;&#x2014;&#x7F51;&#x7EDC;&#x5730;&#x5740;&#x8F6C;&#x6362;  &#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet8</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3Host-Only——私有网络共享主机：默认使用VMnet1"><span class="nav-text"><a href="#3-3Host-Only&#x2014;&#x2014;&#x79C1;&#x6709;&#x7F51;&#x7EDC;&#x5171;&#x4EAB;&#x4E3B;&#x673A;&#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet1" class="headerlink" title="3.3Host-Only&#x2014;&#x2014;&#x79C1;&#x6709;&#x7F51;&#x7EDC;&#x5171;&#x4EAB;&#x4E3B;&#x673A;&#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet1"></a>3.3Host-Only&#x2014;&#x2014;&#x79C1;&#x6709;&#x7F51;&#x7EDC;&#x5171;&#x4EAB;&#x4E3B;&#x673A;&#xFF1A;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;VMnet1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-修改网络和主机配置"><span class="nav-text"><a href="#4-&#x4FEE;&#x6539;&#x7F51;&#x7EDC;&#x548C;&#x4E3B;&#x673A;&#x914D;&#x7F6E;" class="headerlink" title="4.&#x4FEE;&#x6539;&#x7F51;&#x7EDC;&#x548C;&#x4E3B;&#x673A;&#x914D;&#x7F6E;"></a>4.&#x4FEE;&#x6539;&#x7F51;&#x7EDC;&#x548C;&#x4E3B;&#x673A;&#x914D;&#x7F6E;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-查询用户密码"><span class="nav-text"><a href="#5-&#x67E5;&#x8BE2;&#x7528;&#x6237;&#x5BC6;&#x7801;" class="headerlink" title="5.&#x67E5;&#x8BE2;&#x7528;&#x6237;&#x5BC6;&#x7801;"></a>5.&#x67E5;&#x8BE2;&#x7528;&#x6237;&#x5BC6;&#x7801;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-防火墙iptables"><span class="nav-text"><a href="#6-&#x9632;&#x706B;&#x5899;iptables" class="headerlink" title="6.&#x9632;&#x706B;&#x5899;iptables"></a>6.&#x9632;&#x706B;&#x5899;iptables</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1基本操作"><span class="nav-text"><a href="#6-1&#x57FA;&#x672C;&#x64CD;&#x4F5C;" class="headerlink" title="6.1&#x57FA;&#x672C;&#x64CD;&#x4F5C;"></a>6.1&#x57FA;&#x672C;&#x64CD;&#x4F5C;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2规则配置"><span class="nav-text"><a href="#6-2&#x89C4;&#x5219;&#x914D;&#x7F6E;" class="headerlink" title="6.2&#x89C4;&#x5219;&#x914D;&#x7F6E;"></a>6.2&#x89C4;&#x5219;&#x914D;&#x7F6E;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-帮助命令"><span class="nav-text"><a href="#7-&#x5E2E;&#x52A9;&#x547D;&#x4EE4;" class="headerlink" title="7.&#x5E2E;&#x52A9;&#x547D;&#x4EE4;"></a>7.&#x5E2E;&#x52A9;&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-文件相关命令"><span class="nav-text"><a href="#8-&#x6587;&#x4EF6;&#x76F8;&#x5173;&#x547D;&#x4EE4;" class="headerlink" title="8.&#x6587;&#x4EF6;&#x76F8;&#x5173;&#x547D;&#x4EE4;"></a>8.&#x6587;&#x4EF6;&#x76F8;&#x5173;&#x547D;&#x4EE4;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1ls命令"><span class="nav-text"><a href="#8-1ls&#x547D;&#x4EE4;" class="headerlink" title="8.1ls&#x547D;&#x4EE4;"></a>8.1ls&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2cd命令"><span class="nav-text"><a href="#8-2cd&#x547D;&#x4EE4;" class="headerlink" title="8.2cd&#x547D;&#x4EE4;"></a>8.2cd&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-3pwd命令"><span class="nav-text"><a href="#8-3pwd&#x547D;&#x4EE4;" class="headerlink" title="8.3pwd&#x547D;&#x4EE4;"></a>8.3pwd&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-4-touch命令"><span class="nav-text"><a href="#8-4-touch&#x547D;&#x4EE4;" class="headerlink" title="8.4 touch&#x547D;&#x4EE4;"></a>8.4 touch&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-5mkdir命令"><span class="nav-text"><a href="#8-5mkdir&#x547D;&#x4EE4;" class="headerlink" title="8.5mkdir&#x547D;&#x4EE4;"></a>8.5mkdir&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-6cp命令"><span class="nav-text"><a href="#8-6cp&#x547D;&#x4EE4;" class="headerlink" title="8.6cp&#x547D;&#x4EE4;"></a>8.6cp&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-7mv命令"><span class="nav-text"><a href="#8-7mv&#x547D;&#x4EE4;" class="headerlink" title="8.7mv&#x547D;&#x4EE4;"></a>8.7mv&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-8rm命令"><span class="nav-text"><a href="#8-8rm&#x547D;&#x4EE4;" class="headerlink" title="8.8rm&#x547D;&#x4EE4;"></a>8.8rm&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-9ln命令"><span class="nav-text"><a href="#8-9ln&#x547D;&#x4EE4;" class="headerlink" title="8.9ln&#x547D;&#x4EE4;"></a>8.9ln&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-文件查看编辑命令"><span class="nav-text"><a href="#9-&#x6587;&#x4EF6;&#x67E5;&#x770B;&#x7F16;&#x8F91;&#x547D;&#x4EE4;" class="headerlink" title="9.&#x6587;&#x4EF6;&#x67E5;&#x770B;&#x7F16;&#x8F91;&#x547D;&#x4EE4;"></a>9.&#x6587;&#x4EF6;&#x67E5;&#x770B;&#x7F16;&#x8F91;&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-1cat命令"><span class="nav-text"><a href="#9-1cat&#x547D;&#x4EE4;" class="headerlink" title="9.1cat&#x547D;&#x4EE4;"></a>9.1cat&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2more命令"><span class="nav-text"><a href="#9-2more&#x547D;&#x4EE4;" class="headerlink" title="9.2more&#x547D;&#x4EE4;"></a>9.2more&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-3head命令"><span class="nav-text"><a href="#9-3head&#x547D;&#x4EE4;" class="headerlink" title="9.3head&#x547D;&#x4EE4;"></a>9.3head&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-4tail命令"><span class="nav-text"><a href="#9-4tail&#x547D;&#x4EE4;" class="headerlink" title="9.4tail&#x547D;&#x4EE4;"></a>9.4tail&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-5less命令"><span class="nav-text"><a href="#9-5less&#x547D;&#x4EE4;" class="headerlink" title="9.5less&#x547D;&#x4EE4;"></a>9.5less&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-6vim命令"><span class="nav-text"><a href="#9-6vim&#x547D;&#x4EE4;" class="headerlink" title="9.6vim&#x547D;&#x4EE4;"></a>9.6vim&#x547D;&#x4EE4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-系统相关命令"><span class="nav-text"><a href="#10-&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#x547D;&#x4EE4;" class="headerlink" title="10.&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#x547D;&#x4EE4;"></a>10.&#x7CFB;&#x7EDF;&#x76F8;&#x5173;&#x547D;&#x4EE4;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#10-1查看主机名"><span class="nav-text"><a href="#10-1&#x67E5;&#x770B;&#x4E3B;&#x673A;&#x540D;" class="headerlink" title="10.1&#x67E5;&#x770B;&#x4E3B;&#x673A;&#x540D;"></a>10.1&#x67E5;&#x770B;&#x4E3B;&#x673A;&#x540D;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-2修改主机名"><span class="nav-text"><a href="#10-2&#x4FEE;&#x6539;&#x4E3B;&#x673A;&#x540D;" class="headerlink" title="10.2&#x4FEE;&#x6539;&#x4E3B;&#x673A;&#x540D;"></a>10.2&#x4FEE;&#x6539;&#x4E3B;&#x673A;&#x540D;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-3修改IP"><span class="nav-text"><a href="#10-3&#x4FEE;&#x6539;IP" class="headerlink" title="10.3&#x4FEE;&#x6539;IP"></a>10.3&#x4FEE;&#x6539;IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-4查看系统信息"><span class="nav-text"><a href="#10-4&#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x4FE1;&#x606F;" class="headerlink" title="10.4&#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x4FE1;&#x606F;"></a>10.4&#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x4FE1;&#x606F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-5日期"><span class="nav-text"><a href="#10-5&#x65E5;&#x671F;" class="headerlink" title="10.5&#x65E5;&#x671F;"></a>10.5&#x65E5;&#x671F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-6日历"><span class="nav-text"><a href="#10-6&#x65E5;&#x5386;" class="headerlink" title="10.6&#x65E5;&#x5386;"></a>10.6&#x65E5;&#x5386;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-7挂载硬盘"><span class="nav-text"><a href="#10-7&#x6302;&#x8F7D;&#x786C;&#x76D8;" class="headerlink" title="10.7&#x6302;&#x8F7D;&#x786C;&#x76D8;"></a>10.7&#x6302;&#x8F7D;&#x786C;&#x76D8;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-8查看文件大小"><span class="nav-text"><a href="#10-8&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5927;&#x5C0F;" class="headerlink" title="10.8&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5927;&#x5C0F;"></a>10.8&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5927;&#x5C0F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-9查看分区"><span class="nav-text"><a href="#10-9&#x67E5;&#x770B;&#x5206;&#x533A;" class="headerlink" title="10.9&#x67E5;&#x770B;&#x5206;&#x533A;"></a>10.9&#x67E5;&#x770B;&#x5206;&#x533A;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-10ssh连接其它服务器"><span class="nav-text"><a href="#10-10ssh&#x8FDE;&#x63A5;&#x5176;&#x5B83;&#x670D;&#x52A1;&#x5668;" class="headerlink" title="10.10ssh&#x8FDE;&#x63A5;&#x5176;&#x5B83;&#x670D;&#x52A1;&#x5668;"></a>10.10ssh&#x8FDE;&#x63A5;&#x5176;&#x5B83;&#x670D;&#x52A1;&#x5668;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-11关机和重启"><span class="nav-text"><a href="#10-11&#x5173;&#x673A;&#x548C;&#x91CD;&#x542F;" class="headerlink" title="10.11&#x5173;&#x673A;&#x548C;&#x91CD;&#x542F;"></a>10.11&#x5173;&#x673A;&#x548C;&#x91CD;&#x542F;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11用户和用户组相关命令"><span class="nav-text"><a href="#11&#x7528;&#x6237;&#x548C;&#x7528;&#x6237;&#x7EC4;&#x76F8;&#x5173;&#x547D;&#x4EE4;" class="headerlink" title="11&#x7528;&#x6237;&#x548C;&#x7528;&#x6237;&#x7EC4;&#x76F8;&#x5173;&#x547D;&#x4EE4;"></a>11&#x7528;&#x6237;&#x548C;&#x7528;&#x6237;&#x7EC4;&#x76F8;&#x5173;&#x547D;&#x4EE4;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#11-1添加一个tom用户，设置它属于users组，并添加注释信息"><span class="nav-text"><a href="#11-1&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;tom&#x7528;&#x6237;&#xFF0C;&#x8BBE;&#x7F6E;&#x5B83;&#x5C5E;&#x4E8E;users&#x7EC4;&#xFF0C;&#x5E76;&#x6DFB;&#x52A0;&#x6CE8;&#x91CA;&#x4FE1;&#x606F;" class="headerlink" title="11.1&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;tom&#x7528;&#x6237;&#xFF0C;&#x8BBE;&#x7F6E;&#x5B83;&#x5C5E;&#x4E8E;users&#x7EC4;&#xFF0C;&#x5E76;&#x6DFB;&#x52A0;&#x6CE8;&#x91CA;&#x4FE1;&#x606F;"></a>11.1&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;tom&#x7528;&#x6237;&#xFF0C;&#x8BBE;&#x7F6E;&#x5B83;&#x5C5E;&#x4E8E;users&#x7EC4;&#xFF0C;&#x5E76;&#x6DFB;&#x52A0;&#x6CE8;&#x91CA;&#x4FE1;&#x606F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-2设置tom用户的密码"><span class="nav-text"><a href="#11-2&#x8BBE;&#x7F6E;tom&#x7528;&#x6237;&#x7684;&#x5BC6;&#x7801;" class="headerlink" title="11.2&#x8BBE;&#x7F6E;tom&#x7528;&#x6237;&#x7684;&#x5BC6;&#x7801;"></a>11.2&#x8BBE;&#x7F6E;tom&#x7528;&#x6237;&#x7684;&#x5BC6;&#x7801;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-3修改tom用户的登陆名为tomcat"><span class="nav-text"><a href="#11-3&#x4FEE;&#x6539;tom&#x7528;&#x6237;&#x7684;&#x767B;&#x9646;&#x540D;&#x4E3A;tomcat" class="headerlink" title="11.3&#x4FEE;&#x6539;tom&#x7528;&#x6237;&#x7684;&#x767B;&#x9646;&#x540D;&#x4E3A;tomcat"></a>11.3&#x4FEE;&#x6539;tom&#x7528;&#x6237;&#x7684;&#x767B;&#x9646;&#x540D;&#x4E3A;tomcat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-4将tomcat添加到sys和root组中"><span class="nav-text"><a href="#11-4&#x5C06;tomcat&#x6DFB;&#x52A0;&#x5230;sys&#x548C;root&#x7EC4;&#x4E2D;" class="headerlink" title="11.4&#x5C06;tomcat&#x6DFB;&#x52A0;&#x5230;sys&#x548C;root&#x7EC4;&#x4E2D;"></a>11.4&#x5C06;tomcat&#x6DFB;&#x52A0;&#x5230;sys&#x548C;root&#x7EC4;&#x4E2D;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-5查看tomcat的组信息"><span class="nav-text"><a href="#11-5&#x67E5;&#x770B;tomcat&#x7684;&#x7EC4;&#x4FE1;&#x606F;" class="headerlink" title="11.5&#x67E5;&#x770B;tomcat&#x7684;&#x7EC4;&#x4FE1;&#x606F;"></a>11.5&#x67E5;&#x770B;tomcat&#x7684;&#x7EC4;&#x4FE1;&#x606F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-6添加一个jerry用户并设置密码"><span class="nav-text"><a href="#11-6&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;jerry&#x7528;&#x6237;&#x5E76;&#x8BBE;&#x7F6E;&#x5BC6;&#x7801;" class="headerlink" title="11.6&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;jerry&#x7528;&#x6237;&#x5E76;&#x8BBE;&#x7F6E;&#x5BC6;&#x7801;"></a>11.6&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;jerry&#x7528;&#x6237;&#x5E76;&#x8BBE;&#x7F6E;&#x5BC6;&#x7801;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-7添加一个名为america的组"><span class="nav-text"><a href="#11-7&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;america&#x7684;&#x7EC4;" class="headerlink" title="11.7&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;america&#x7684;&#x7EC4;"></a>11.7&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;america&#x7684;&#x7EC4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-8将jerry添加到america组中"><span class="nav-text"><a href="#11-8&#x5C06;jerry&#x6DFB;&#x52A0;&#x5230;america&#x7EC4;&#x4E2D;" class="headerlink" title="11.8&#x5C06;jerry&#x6DFB;&#x52A0;&#x5230;america&#x7EC4;&#x4E2D;"></a>11.8&#x5C06;jerry&#x6DFB;&#x52A0;&#x5230;america&#x7EC4;&#x4E2D;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-9将tomcat用户从root组和sys组删除"><span class="nav-text"><a href="#11-9&#x5C06;tomcat&#x7528;&#x6237;&#x4ECE;root&#x7EC4;&#x548C;sys&#x7EC4;&#x5220;&#x9664;" class="headerlink" title="11.9&#x5C06;tomcat&#x7528;&#x6237;&#x4ECE;root&#x7EC4;&#x548C;sys&#x7EC4;&#x5220;&#x9664;"></a>11.9&#x5C06;tomcat&#x7528;&#x6237;&#x4ECE;root&#x7EC4;&#x548C;sys&#x7EC4;&#x5220;&#x9664;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-10将america组名修改为am"><span class="nav-text"><a href="#11-10&#x5C06;america&#x7EC4;&#x540D;&#x4FEE;&#x6539;&#x4E3A;am" class="headerlink" title="11.10&#x5C06;america&#x7EC4;&#x540D;&#x4FEE;&#x6539;&#x4E3A;am"></a>11.10&#x5C06;america&#x7EC4;&#x540D;&#x4FEE;&#x6539;&#x4E3A;am</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12权限相关命令"><span class="nav-text"><a href="#12&#x6743;&#x9650;&#x76F8;&#x5173;&#x547D;&#x4EE4;" class="headerlink" title="12&#x6743;&#x9650;&#x76F8;&#x5173;&#x547D;&#x4EE4;"></a>12&#x6743;&#x9650;&#x76F8;&#x5173;&#x547D;&#x4EE4;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#12-1-chmod命令"><span class="nav-text"><a href="#12-1-chmod&#x547D;&#x4EE4;" class="headerlink" title="12.1 chmod&#x547D;&#x4EE4;"></a>12.1 chmod&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-2-rwx权限解析"><span class="nav-text"><a href="#12-2-rwx&#x6743;&#x9650;&#x89E3;&#x6790;" class="headerlink" title="12.2 rwx&#x6743;&#x9650;&#x89E3;&#x6790;"></a>12.2 rwx&#x6743;&#x9650;&#x89E3;&#x6790;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-3chown命令"><span class="nav-text"><a href="#12-3chown&#x547D;&#x4EE4;" class="headerlink" title="12.3chown&#x547D;&#x4EE4;"></a>12.3chown&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-4chgrp命令"><span class="nav-text"><a href="#12-4chgrp&#x547D;&#x4EE4;" class="headerlink" title="12.4chgrp&#x547D;&#x4EE4;"></a>12.4chgrp&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-5umask命令"><span class="nav-text"><a href="#12-5umask&#x547D;&#x4EE4;" class="headerlink" title="12.5umask&#x547D;&#x4EE4;"></a>12.5umask&#x547D;&#x4EE4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13查找相关命令"><span class="nav-text"><a href="#13&#x67E5;&#x627E;&#x76F8;&#x5173;&#x547D;&#x4EE4;" class="headerlink" title="13&#x67E5;&#x627E;&#x76F8;&#x5173;&#x547D;&#x4EE4;"></a>13&#x67E5;&#x627E;&#x76F8;&#x5173;&#x547D;&#x4EE4;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#13-1-which命令"><span class="nav-text"><a href="#13-1-which&#x547D;&#x4EE4;" class="headerlink" title="13.1 which&#x547D;&#x4EE4;"></a>13.1 which&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-2find命令"><span class="nav-text"><a href="#13-2find&#x547D;&#x4EE4;" class="headerlink" title="13.2find&#x547D;&#x4EE4;"></a>13.2find&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-3locate命令"><span class="nav-text"><a href="#13-3locate&#x547D;&#x4EE4;" class="headerlink" title="13.3locate&#x547D;&#x4EE4;"></a>13.3locate&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-4grep命令"><span class="nav-text"><a href="#13-4grep&#x547D;&#x4EE4;" class="headerlink" title="13.4grep&#x547D;&#x4EE4;"></a>13.4grep&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14打包与压缩指令"><span class="nav-text"><a href="#14&#x6253;&#x5305;&#x4E0E;&#x538B;&#x7F29;&#x6307;&#x4EE4;" class="headerlink" title="14&#x6253;&#x5305;&#x4E0E;&#x538B;&#x7F29;&#x6307;&#x4EE4;"></a>14&#x6253;&#x5305;&#x4E0E;&#x538B;&#x7F29;&#x6307;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-1gzip命令"><span class="nav-text"><a href="#14-1gzip&#x547D;&#x4EE4;" class="headerlink" title="14.1gzip&#x547D;&#x4EE4;"></a>14.1gzip&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-2gunzip命令"><span class="nav-text"><a href="#14-2gunzip&#x547D;&#x4EE4;" class="headerlink" title="14.2gunzip&#x547D;&#x4EE4;"></a>14.2gunzip&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-3bzip2命令"><span class="nav-text"><a href="#14-3bzip2&#x547D;&#x4EE4;" class="headerlink" title="14.3bzip2&#x547D;&#x4EE4;"></a>14.3bzip2&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-4bunzip2命令"><span class="nav-text"><a href="#14-4bunzip2&#x547D;&#x4EE4;" class="headerlink" title="14.4bunzip2&#x547D;&#x4EE4;"></a>14.4bunzip2&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-5tar命令-重要"><span class="nav-text"><a href="#14-5tar&#x547D;&#x4EE4;-&#x91CD;&#x8981;" class="headerlink" title="14.5tar&#x547D;&#x4EE4;(&#x91CD;&#x8981;)"></a>14.5tar&#x547D;&#x4EE4;(&#x91CD;&#x8981;)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-6zip命令"><span class="nav-text"><a href="#14-6zip&#x547D;&#x4EE4;" class="headerlink" title="14.6zip&#x547D;&#x4EE4;"></a>14.6zip&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-7unzip命令"><span class="nav-text"><a href="#14-7unzip&#x547D;&#x4EE4;" class="headerlink" title="14.7unzip&#x547D;&#x4EE4;"></a>14.7unzip&#x547D;&#x4EE4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15网络通信相关指令"><span class="nav-text"><a href="#15&#x7F51;&#x7EDC;&#x901A;&#x4FE1;&#x76F8;&#x5173;&#x6307;&#x4EE4;" class="headerlink" title="15&#x7F51;&#x7EDC;&#x901A;&#x4FE1;&#x76F8;&#x5173;&#x6307;&#x4EE4;"></a>15&#x7F51;&#x7EDC;&#x901A;&#x4FE1;&#x76F8;&#x5173;&#x6307;&#x4EE4;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#15-1write命令"><span class="nav-text"><a href="#15-1write&#x547D;&#x4EE4;" class="headerlink" title="15.1write&#x547D;&#x4EE4;"></a>15.1write&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-2wall命令"><span class="nav-text"><a href="#15-2wall&#x547D;&#x4EE4;" class="headerlink" title="15.2wall&#x547D;&#x4EE4;"></a>15.2wall&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-3ping命令"><span class="nav-text"><a href="#15-3ping&#x547D;&#x4EE4;" class="headerlink" title="15.3ping&#x547D;&#x4EE4;"></a>15.3ping&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-4ifconfig命令"><span class="nav-text"><a href="#15-4ifconfig&#x547D;&#x4EE4;" class="headerlink" title="15.4ifconfig&#x547D;&#x4EE4;"></a>15.4ifconfig&#x547D;&#x4EE4;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16进程控制相关指令"><span class="nav-text"><a href="#16&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x76F8;&#x5173;&#x6307;&#x4EE4;" class="headerlink" title="16&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x76F8;&#x5173;&#x6307;&#x4EE4;"></a>16&#x8FDB;&#x7A0B;&#x63A7;&#x5236;&#x76F8;&#x5173;&#x6307;&#x4EE4;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#16-1查看用户最近登录情况"><span class="nav-text"><a href="#16-1&#x67E5;&#x770B;&#x7528;&#x6237;&#x6700;&#x8FD1;&#x767B;&#x5F55;&#x60C5;&#x51B5;" class="headerlink" title="16.1&#x67E5;&#x770B;&#x7528;&#x6237;&#x6700;&#x8FD1;&#x767B;&#x5F55;&#x60C5;&#x51B5;"></a>16.1&#x67E5;&#x770B;&#x7528;&#x6237;&#x6700;&#x8FD1;&#x767B;&#x5F55;&#x60C5;&#x51B5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16-2查看硬盘使用情况"><span class="nav-text"><a href="#16-2&#x67E5;&#x770B;&#x786C;&#x76D8;&#x4F7F;&#x7528;&#x60C5;&#x51B5;" class="headerlink" title="16.2&#x67E5;&#x770B;&#x786C;&#x76D8;&#x4F7F;&#x7528;&#x60C5;&#x51B5;"></a>16.2&#x67E5;&#x770B;&#x786C;&#x76D8;&#x4F7F;&#x7528;&#x60C5;&#x51B5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16-3查看文件大小"><span class="nav-text"><a href="#16-3&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5927;&#x5C0F;" class="headerlink" title="16.3&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5927;&#x5C0F;"></a>16.3&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5927;&#x5C0F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16-4查看内存使用情况"><span class="nav-text"><a href="#16-4&#x67E5;&#x770B;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x60C5;&#x51B5;" class="headerlink" title="16.4&#x67E5;&#x770B;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x60C5;&#x51B5;"></a>16.4&#x67E5;&#x770B;&#x5185;&#x5B58;&#x4F7F;&#x7528;&#x60C5;&#x51B5;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16-5查看进程"><span class="nav-text"><a href="#16-5&#x67E5;&#x770B;&#x8FDB;&#x7A0B;" class="headerlink" title="16.5&#x67E5;&#x770B;&#x8FDB;&#x7A0B;"></a>16.5&#x67E5;&#x770B;&#x8FDB;&#x7A0B;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16-6结束进程"><span class="nav-text"><a href="#16-6&#x7ED3;&#x675F;&#x8FDB;&#x7A0B;" class="headerlink" title="16.6&#x7ED3;&#x675F;&#x8FDB;&#x7A0B;"></a>16.6&#x7ED3;&#x675F;&#x8FDB;&#x7A0B;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17Linux的软件包管理"><span class="nav-text"><a href="#17Linux&#x7684;&#x8F6F;&#x4EF6;&#x5305;&#x7BA1;&#x7406;" class="headerlink" title="17Linux&#x7684;&#x8F6F;&#x4EF6;&#x5305;&#x7BA1;&#x7406;"></a>17Linux&#x7684;&#x8F6F;&#x4EF6;&#x5305;&#x7BA1;&#x7406;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#17-1RPM软件包管理"><span class="nav-text"><a href="#17-1RPM&#x8F6F;&#x4EF6;&#x5305;&#x7BA1;&#x7406;" class="headerlink" title="17.1RPM&#x8F6F;&#x4EF6;&#x5305;&#x7BA1;&#x7406;"></a>17.1RPM&#x8F6F;&#x4EF6;&#x5305;&#x7BA1;&#x7406;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#17-1-1卸载"><span class="nav-text"><a href="#17-1-1&#x5378;&#x8F7D;" class="headerlink" title="17.1.1&#x5378;&#x8F7D;"></a>17.1.1&#x5378;&#x8F7D;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17-1-2安装"><span class="nav-text"><a href="#17-1-2&#x5B89;&#x88C5;" class="headerlink" title="17.1.2&#x5B89;&#x88C5;"></a>17.1.2&#x5B89;&#x88C5;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17-1-3RPM其他命令"><span class="nav-text"><a href="#17-1-3RPM&#x5176;&#x4ED6;&#x547D;&#x4EE4;" class="headerlink" title="17.1.3RPM&#x5176;&#x4ED6;&#x547D;&#x4EE4;"></a>17.1.3RPM&#x5176;&#x4ED6;&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17-1-4RPM文件的校验"><span class="nav-text"><a href="#17-1-4RPM&#x6587;&#x4EF6;&#x7684;&#x6821;&#x9A8C;" class="headerlink" title="17.1.4RPM&#x6587;&#x4EF6;&#x7684;&#x6821;&#x9A8C;"></a>17.1.4RPM&#x6587;&#x4EF6;&#x7684;&#x6821;&#x9A8C;</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-2Yum包管理"><span class="nav-text"><a href="#17-2Yum&#x5305;&#x7BA1;&#x7406;" class="headerlink" title="17.2Yum&#x5305;&#x7BA1;&#x7406;"></a>17.2Yum&#x5305;&#x7BA1;&#x7406;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-3源代码包管理"><span class="nav-text"><a href="#17-3&#x6E90;&#x4EE3;&#x7801;&#x5305;&#x7BA1;&#x7406;" class="headerlink" title="17.3&#x6E90;&#x4EE3;&#x7801;&#x5305;&#x7BA1;&#x7406;"></a>17.3&#x6E90;&#x4EE3;&#x7801;&#x5305;&#x7BA1;&#x7406;</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">
+   访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_pv">
+    访问量：<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+<!--  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
