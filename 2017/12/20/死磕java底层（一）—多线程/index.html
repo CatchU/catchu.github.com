@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="多线程,线程池,锁,volatile," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.线程和进程1.1线程和进程的区别 进程它是内存中的一段独立的空间，可以负责当前应用程序的运行。当前这个进程负责调度当前程序中的所有运行细节（操作系统为进程分配一块独立的运行空间）； 线程它是位于进程中，负责当前进程中的某个具备独立运行资格的空间（进程为线程分配一块独立运行的空间）；进程是负责某个程序的执行，线程是负责进程中某个独立功能的运行，一个进程至少要包含一个线程。 多线程在一个进程中可以">
+<meta name="keywords" content="多线程,线程池,锁,volatile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="死磕java底层（一）—多线程">
+<meta property="og:url" content="http://yoursite.com/2017/12/20/死磕java底层（一）—多线程/index.html">
+<meta property="og:site_name" content="Java开发日记">
+<meta property="og:description" content="1.线程和进程1.1线程和进程的区别 进程它是内存中的一段独立的空间，可以负责当前应用程序的运行。当前这个进程负责调度当前程序中的所有运行细节（操作系统为进程分配一块独立的运行空间）； 线程它是位于进程中，负责当前进程中的某个具备独立运行资格的空间（进程为线程分配一块独立运行的空间）；进程是负责某个程序的执行，线程是负责进程中某个独立功能的运行，一个进程至少要包含一个线程。 多线程在一个进程中可以">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20171218143821244?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-12-20T08:58:18.056Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="死磕java底层（一）—多线程">
+<meta name="twitter:description" content="1.线程和进程1.1线程和进程的区别 进程它是内存中的一段独立的空间，可以负责当前应用程序的运行。当前这个进程负责调度当前程序中的所有运行细节（操作系统为进程分配一块独立的运行空间）； 线程它是位于进程中，负责当前进程中的某个具备独立运行资格的空间（进程为线程分配一块独立运行的空间）；进程是负责某个程序的执行，线程是负责进程中某个独立功能的运行，一个进程至少要包含一个线程。 多线程在一个进程中可以">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171218143821244?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/20/死磕java底层（一）—多线程/"/>
+
+
+
+
+
+  <title>死磕java底层（一）—多线程 | Java开发日记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Java开发日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      <!--
+        <p class="site-subtitle">分享前后端开发技术</p>
+      
+	  -->
+	  <p class="site-subtitle" id="site-subtitle">分享前后端开发技术</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button onclick="showSubtitle()">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/死磕java底层（一）—多线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Java开发日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">死磕java底层（一）—多线程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T16:55:34+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台—java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">后台—java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,561 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  23 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-线程和进程"><a href="#1-线程和进程" class="headerlink" title="1.线程和进程"></a>1.线程和进程</h3><h4 id="1-1线程和进程的区别"><a href="#1-1线程和进程的区别" class="headerlink" title="1.1线程和进程的区别"></a>1.1线程和进程的区别</h4><ul>
+<li>进程<br>它是内存中的一段独立的空间，可以负责当前应用程序的运行。当前这个进程负责调度当前程序中的所有运行细节（操作系统为进程分配一块独立的运行空间）；</li>
+<li>线程<br>它是位于进程中，负责当前进程中的某个具备独立运行资格的空间（进程为线程分配一块独立运行的空间）；<br>进程是负责某个程序的执行，线程是负责进程中某个独立功能的运行，一个进程至少要包含一个线程。</li>
+<li>多线程<br>在一个进程中可以开启多个线程，让多个线程同时去完成某项任务。使用多线程的目的是为了提高程序的执行效率。<h4 id="1-2线程运行状态"><a href="#1-2线程运行状态" class="headerlink" title="1.2线程运行状态"></a>1.2线程运行状态</h4><img src="http://img.blog.csdn.net/20171218143821244?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDUzMjc3NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+</ul>
+<p>通过Thread类或Runnable接口创建线程对象之后进入初始状态；调用start方法进入可运行状态（就绪状态），此时并不是真正的运行，只是代表已经做好了运行前的各项装备；如果此线程获取到cpu的时间片，则进入到真正的可运行状态，执行run方法里面的业务逻辑；如果run方法执行完毕或调用stop方法则线程运行结束，进入死亡状态；在运行状态时调用不同方法也会进入其他不同状态，如果调用强制运行方法join或休眠方法将进入等待状态，时间到后自动进入就绪状态，随时准备获取cpu时间片；如果看到synchronized则进入同步队列等待状态，或者如果调用了wait方法则进入等待状态，等待状态的线程必须要通过notify唤醒才可进入等待状态，如果其它线程执行完毕，本线程拿到同步锁则进入就绪状态，等待获取cpu时间片。某个线程是否会执行只能看它能否争抢到cpu时间片，但是通过调高优先级来让线程更大概率的被优先执行。<br>参考文档：<a href="https://mp.weixin.qq.com/s?src=11&amp;timestamp=1513562547&amp;ver=581&amp;signature=30FEkCCQvF3E1tt67vYVym5tRNsSk3d8HGe0v9TAonJmhLh4-53fDEBbgwNF*Olgp5rAlGFAJQXYnviaFRwiQ9NmbtIWnZGpot*GcuV0Ok*3WzWxg4X6e2mxU0JrgbRb&amp;new=1" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?src=11&amp;timestamp=1513562547&amp;ver=581&amp;signature=30FEkCCQvF3E1tt67vYVym5tRNsSk3d8HGe0v9TAonJmhLh4-53fDEBbgwNF*Olgp5rAlGFAJQXYnviaFRwiQ9NmbtIWnZGpot*GcuV0Ok*3WzWxg4X6e2mxU0JrgbRb&amp;new=1</a></p>
+<h3 id="2-多线程"><a href="#2-多线程" class="headerlink" title="2.多线程"></a>2.多线程</h3><p>多线程运行的原理是：cpu在线程中做时间片的切换。cpu负责程序的执行，在每个时间点它其实只能运行一个程序而不是多个程序，不停的在多个程序之间高速切换，而一个程序其实就是一个进程即多个线程，说到底其实就是cpu在多个线程之间不停的做高速切换，而开多个线程就是不让cpu歇着，最大程度的压榨它来为程序服务。实现多线程有三种方式：继承Thread类；实现Runnable接口；使用线程池。</p>
+<h4 id="2-1继承Thread类"><a href="#2-1继承Thread类" class="headerlink" title="2.1继承Thread类"></a>2.1继承Thread类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class MyExtendsThread extends Thread &#123;</span><br><span class="line">    String flag;</span><br><span class="line"></span><br><span class="line">    public MyExtendsThread(String flag)&#123;</span><br><span class="line">        this.flag = flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run()&#123;</span><br><span class="line">        String name = Thread.currentThread().getName();</span><br><span class="line">        System.out.println(&quot;线程&quot;+name+&quot;开始工作了...&quot;);</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        for (int i = 0;i &lt; 20;i++)&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                Thread.sleep(random.nextInt(10)*100);</span><br><span class="line">                System.out.println(name+&quot;=============&quot;+flag);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Thread t0 = new MyExtendsThread(&quot;t0&quot;);</span><br><span class="line">        Thread t1 = new MyExtendsThread(&quot;t1&quot;);</span><br><span class="line"></span><br><span class="line">        t0.start();</span><br><span class="line">        t1.start();</span><br><span class="line">//        t0.run();</span><br><span class="line">//        t1.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用线程要用start方法，而不是run方法，使用run方法只是调用方法，实际执行的还是Main线程，而调用start方法可以明显的看到线程争抢。</p>
+<h4 id="2-2实现Runnable接口"><a href="#2-2实现Runnable接口" class="headerlink" title="2.2实现Runnable接口"></a>2.2实现Runnable接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class MyThreadImplementRunnable implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">    int x;</span><br><span class="line"></span><br><span class="line">    public MyThreadImplementRunnable(int x) &#123;</span><br><span class="line">        this.x = x;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        String name = Thread.currentThread().getName();</span><br><span class="line">        System.out.println(&quot;线程&quot;+name+&quot;开始执行&quot;);</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        for(int i = 0;i&lt;20;i++)&#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                Thread.sleep(random.nextInt(10)*100);</span><br><span class="line">                System.out.println(name+&quot;=============&quot;+x);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Thread t1 = new Thread(new MyThreadImplementRunnable(1),&quot;线程1&quot;);</span><br><span class="line">        Thread t2 = new Thread(new MyThreadImplementRunnable(2),&quot;线程2&quot;);</span><br><span class="line">    </span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-3实现Callable接口"><a href="#2-3实现Callable接口" class="headerlink" title="2.3实现Callable接口"></a>2.3实现Callable接口</h4><ul>
+<li>创建实现Callable接口的类MyThreadImplementCallable；</li>
+<li>创建一个类对象：MyThreadImplementCallable callable = new MyThreadImplementCallable(“测试”);</li>
+<li>由Callable创建一个FutureTask对象：<br>FutureTask futureTask = new FutureTask(callable);<br>注意：FutureTask是一个包装器，它通过接受Callable来创建，它同时实现了Future和Runnable接口。</li>
+<li>由FutureTask创建一个Thread对象：<br>Thread thread = new Thread(futureTask);</li>
+<li>启动线程：<br>thread.start();</li>
+<li>获取任务线程执行结果<br>futureTask.get()；<br>注意：实现Callable接口的线程可以获得任务线程的执行结果；实现Runnable接口的线程无法获取任务线程执行的结果。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class MyThreadImplementCallable implements Callable&lt;String&gt; &#123;</span><br><span class="line"></span><br><span class="line">    String name;</span><br><span class="line">    public MyThreadImplementCallable(String name) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String call() throws Exception &#123;</span><br><span class="line">        Thread thread = Thread.currentThread();</span><br><span class="line">        System.out.println(thread.getName()+&quot;开始工作==============&quot;);</span><br><span class="line">        Random random  = new Random();</span><br><span class="line">        Thread.sleep(random.nextInt(5)*100);  //模拟执行业务</span><br><span class="line">        return name+&quot;:执行完成&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line">        MyThreadImplementCallable callable = new MyThreadImplementCallable(&quot;测试&quot;);</span><br><span class="line">        FutureTask&lt;String&gt; futureTask = new FutureTask&lt;String&gt;(callable);</span><br><span class="line">        Thread thread = new Thread(futureTask);</span><br><span class="line"></span><br><span class="line">        thread.start();</span><br><span class="line">        String result = futureTask.get();  //获取任务线程执行结果</span><br><span class="line">        System.out.println(&quot;线程的执行结果：&quot;+result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="2-4使用线程池"><a href="#2-4使用线程池" class="headerlink" title="2.4使用线程池"></a>2.4使用线程池</h4><p>见下面的线程池专讲。<br>参考文档：<a href="https://www.cnblogs.com/langtianya/archive/2013/03/14/2959713.html" target="_blank" rel="noopener">https://www.cnblogs.com/langtianya/archive/2013/03/14/2959713.html</a></p>
+<h3 id="3-同步"><a href="#3-同步" class="headerlink" title="3.同步"></a>3.同步</h3><h4 id="3-1synchronized关键字"><a href="#3-1synchronized关键字" class="headerlink" title="3.1synchronized关键字"></a>3.1synchronized关键字</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class MySynchronized &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        final MySynchronized synchronized1 = new MySynchronized();</span><br><span class="line">        final MySynchronized synchronized2 = new MySynchronized();</span><br><span class="line">        new Thread(&quot;thread1&quot;)&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run()&#123;</span><br><span class="line">                synchronized (synchronized1)&#123;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        System.out.println(this.getName()+&quot;:start&quot;);</span><br><span class="line">                        Thread.sleep(1000);</span><br><span class="line">                        System.out.println(this.getName()+&quot;:wake up&quot;);</span><br><span class="line">                        System.out.println(this.getName()+&quot;:end&quot;);</span><br><span class="line">                    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        new Thread(&quot;thread2&quot;)&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                synchronized (synchronized1)&#123;  //争抢同一把锁时，线程1没释放之前，线程2只能等待</span><br><span class="line">//                synchronized (synchronized2)&#123; //如果不是一把锁，可以看到两句话交叉打印，发生争抢</span><br><span class="line">                    System.out.println(this.getName()+&quot;:start&quot;);</span><br><span class="line">                    System.out.println(this.getName()+&quot;:end&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>synchronized是java中的关键字，属于java语言的内置特性。如果一个代码块使用synchronized修饰，则这块代码是同步的，当一个线程获取到这个锁并且开始执行时，其它线程只能一直眼睁睁的等着这个线程执行然后释放锁，其中释放锁只有两种原因：1.线程正常执行完毕；2.线程执行时发生异常，jvm自动将锁释放。可以看到使用synchronized关键字之后每个时刻只会有一个线程执行代码块里面的共享代码，线程安全；缺点也很明显，其它线程只能等锁释放，资源浪费严重。</p>
+<h4 id="3-2Lock接口"><a href="#3-2Lock接口" class="headerlink" title="3.2Lock接口"></a>3.2Lock接口</h4><ul>
+<li>lock和synchronized的区别：<br>Lock不是Java语言内置的，它是一个接口，通过这个接口可以实现同步访问，synchronized是Java语言的关键字，是内置特性；Lock和synchronized有一点非常大的不同，采用synchronized不需要用户去手动释放锁，当synchronized方法或者synchronized代码块执行完之后，系统会自动让线程释放对锁的占用；而Lock则必须要用户去手动释放锁，如果没有主动释放锁，就有可能导致出现死锁现象。<br>Lock是一个接口，它里面有如下方法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public interface Lock &#123;</span><br><span class="line">    void lock();</span><br><span class="line">    void lockInterruptibly() throws InterruptedException;</span><br><span class="line">    boolean tryLock();</span><br><span class="line">    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;</span><br><span class="line">    void unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>lock()、tryLock()、tryLock(long time, TimeUnit unit)、lockInterruptibly()是用来获取锁的。<br>unLock()方法是用来释放锁的。</p>
+<ul>
+<li><p>lock就是用来获取锁的，前面说到如果采用Lock，必须主动去释放锁。即使发生异常，程序也不会自动释放锁，因此一般来说，使用Lock必须在try{}catch{}块中进行，并且将释放锁的操作放在finally块中进行，以保证锁一定被被释放，防止死锁的发生。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">public class MyLock &#123;</span><br><span class="line"></span><br><span class="line">    private static ArrayList&lt;Integer&gt; arrayList = new ArrayList&lt;Integer&gt;();</span><br><span class="line">    private static Lock lock = new ReentrantLock();</span><br><span class="line"></span><br><span class="line">    public static &lt;E&gt; void main(String[] args) &#123;</span><br><span class="line">        new Thread() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                Thread thread = Thread.currentThread();</span><br><span class="line"></span><br><span class="line">                lock.lock();  //获取锁</span><br><span class="line">                try &#123;</span><br><span class="line">                    System.out.println(thread.getName() + &quot;得到了锁&quot;);</span><br><span class="line">                    for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">                        arrayList.add(i);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    System.out.println(thread.getName() + &quot;释放了锁&quot;);</span><br><span class="line">                    lock.unlock();  //释放锁</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        new Thread() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                Thread thread = Thread.currentThread();</span><br><span class="line">                lock.lock();</span><br><span class="line">                try &#123;</span><br><span class="line">                    System.out.println(thread.getName() + &quot;得到了锁&quot;);</span><br><span class="line">                    for (int i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">                        arrayList.add(i);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                &#125; finally &#123;</span><br><span class="line">                    System.out.println(thread.getName() + &quot;释放了锁&quot;);</span><br><span class="line">                    lock.unlock();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tryLock()表示用来尝试获取锁，如果获取成功，则返回true，如果获取失败（即锁已被其他线程获取），则返回false，也就说这个方法无论如何都会立即返回，在拿不到锁时不会一直等待。</p>
+</li>
+<li>tryLock(long time, TimeUnit unit)方法和tryLock()方法类似，区别在于这个方法在拿不到锁时会等待一定的时间，在时间期限之内如果还拿不到锁，就返回false。如果一开始就拿到锁或者在等待期间内拿到了锁，则返回true。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">//观察现象：一个线程获得锁后，另一个线程取不到锁，不会一直等待</span><br><span class="line">public class MyTryLock &#123;</span><br><span class="line"></span><br><span class="line">    private static List&lt;Integer&gt; arrayList = new ArrayList&lt;Integer&gt;();</span><br><span class="line">    private static Lock lock = new ReentrantLock();</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        new Thread(&quot;线程1&quot;) &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                Thread thread = Thread.currentThread();</span><br><span class="line">                boolean tryLock = lock.tryLock();</span><br><span class="line">                System.out.println(thread.getName()+&quot;=======&quot;+tryLock);</span><br><span class="line">                if(tryLock)&#123;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        System.out.println(thread.getName() + &quot;得到了锁&quot;);</span><br><span class="line">                        for(int i = 0;i &lt; 20;i++)&#123;</span><br><span class="line">                            arrayList.add(i);</span><br><span class="line">                        &#125;</span><br><span class="line">                        Thread.sleep(1000);</span><br><span class="line">                    &#125; catch (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125; finally &#123;</span><br><span class="line">                        lock.unlock();</span><br><span class="line">                        System.out.println(thread.getName() + &quot;释放了锁&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        new Thread(&quot;线程2&quot;) &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                Thread thread = Thread.currentThread();</span><br><span class="line">                boolean tryLock = lock.tryLock();</span><br><span class="line">                System.out.println(thread.getName()+&quot;=======&quot;+tryLock);</span><br><span class="line">                if(tryLock)&#123;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        System.out.println(thread.getName() + &quot;得到了锁&quot;);</span><br><span class="line">                        for(int i = 0;i &lt; 20;i++)&#123;</span><br><span class="line">                            arrayList.add(i);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; catch (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125; finally &#123;</span><br><span class="line">                        lock.unlock();</span><br><span class="line">                        System.out.println(thread.getName() + &quot;释放了锁&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>线程1和线程2共享成员变量arrayList，当线程1获取锁的时候，线程2就获取不到锁，没办法执行它的业务逻辑，只有等线程1执行完毕，释放了锁，线程2才能获取锁，执行它的代码，进而保证了线程安全。</p>
+<ul>
+<li>lockInterruptibly()方法比较特殊，当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即中断线程的等待状态。<br>注意，当一个线程获取了锁之后，是不会被interrupt()方法中断的。<br>因此当通过lockInterruptibly()方法获取某个锁时，如果不能获取到，只有进行等待的情况下，是可以中断的。而用synchronized修饰的话，当一个线程处于等待某个锁的状态，是无法被中断的，只有一直等待下去。</li>
+<li>Lock接口的实现类——ReentrantLock<br>直接使用lock接口的话，我们需要实现很多方法，不方便，ReentrantLock是唯一实现了Lock接口的类，并且ReentrantLock提供了更多的方法，ReentrantLock，意思是“可重入锁”，使用它可以创建Lock对象。</li>
+<li>ReadWriteLock也是一个接口，在它里面只定义了两个方法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface ReadWriteLock &#123;</span><br><span class="line">    Lock readLock();</span><br><span class="line">    Lock writeLock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>一个用来获取读锁，一个用来获取写锁。也就是说将文件的读写操作分开，分成2个锁来分配给线程，从而使得多个线程可以同时进行读操作。</p>
+<ul>
+<li>ReentrantReadWriteLock里面提供了很多丰富的方法，不过最主要的有两个方法：readLock()和writeLock()用来获取读锁和写锁，使用这个读写锁操作的结果就是：要么执行的全是读操作，结束完之后全执行写操作，中间不会交叉读写。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 刘俊重</span><br><span class="line"> * 如果有一个线程已经占用了读锁，则此时其他线程如果要申请写锁，则申请写锁的线程会一直等待释放读锁。</span><br><span class="line"> * 如果有一个线程已经占用了写锁，则此时其他线程如果申请写锁或者读锁，则申请的线程会一直等待释放写锁。</span><br><span class="line"> */</span><br><span class="line">public class MyReentrantReadWriteLock &#123;</span><br><span class="line"></span><br><span class="line">    ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        final MyReentrantReadWriteLock myTest = new MyReentrantReadWriteLock();</span><br><span class="line">        new Thread(&quot;线程1&quot;)&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run()&#123;</span><br><span class="line">                myTest.read(Thread.currentThread());</span><br><span class="line">                myTest.writer(Thread.currentThread());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line"></span><br><span class="line">        new Thread(&quot;线程2&quot;)&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run()&#123;</span><br><span class="line">                myTest.read(Thread.currentThread());</span><br><span class="line">                myTest.writer(Thread.currentThread());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @Description 读方法</span><br><span class="line">     * @Author 刘俊重</span><br><span class="line">     * @Date 2017/12/18</span><br><span class="line">     */</span><br><span class="line">    private void read(Thread thread)&#123;</span><br><span class="line">        readWriteLock.readLock().lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            long start = System.currentTimeMillis();</span><br><span class="line">            while (System.currentTimeMillis()-start&lt;=1)&#123;</span><br><span class="line">                System.out.println(thread.getName()+&quot;===正在执行读操作&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            readWriteLock.readLock().unlock();</span><br><span class="line">            System.out.println(thread.getName()+&quot;==释放读锁&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @Description 写方法</span><br><span class="line">     * @Author 刘俊重</span><br><span class="line">     * @Date 2017/12/18</span><br><span class="line">     */</span><br><span class="line">    private void writer(Thread thread)&#123;</span><br><span class="line">        readWriteLock.writeLock().lock();</span><br><span class="line">        try &#123;</span><br><span class="line">            long start = System.currentTimeMillis();</span><br><span class="line">            while (System.currentTimeMillis()-start&lt;=1)&#123;</span><br><span class="line">                System.out.println(thread.getName()+&quot;===正在执行写操作&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            readWriteLock.writeLock().unlock();</span><br><span class="line">            System.out.println(thread.getName()+&quot;==释放写锁&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Lock和Synchronized的选择：</p>
+<ul>
+<li>Lock是一个接口，而sysnchrinized是java关键字，属于内置的语言实现；</li>
+<li>synchronized关键字程序运行完成之后或出现异常时会释放锁，使用lock不会自动释放锁，只能自己使用unlock释放，否则会引起死锁，最好在finally中释放；</li>
+<li>使用lock可以使用trylock方法判断有没有获得锁，使用synchronized无法判断；</li>
+<li>使用lock可以让等待锁的线程中断，使用synchronized无法让线程中断，只能一直等待下去；</li>
+<li>使用lock可以提高多线程读操作的效率。<br>结论：如果竞争的资源不激烈，则使用synchronized和lock效率差不多；如果有大量线程同时竞争，则lock要远远优于synchronized。<h3 id="4-volatile关键字"><a href="#4-volatile关键字" class="headerlink" title="4.volatile关键字"></a>4.volatile关键字</h3>程序执行时有主内存，每个线程工作时也有自己的工作内存。当一个线程开始工作时会从主内存中拷贝一个变量的副本到工作内存中，在工作内存中操作完副本时再更新回主内存。当存在多线程时，如果工作内存A处理完还没来得及更新回主内存之前，工作内存B就从主内存中拉取了这个变量，那么很明显这个变量并不是最新的数据，会出现问题。怎么解决呢？可以使用volatile,volatile有个最显著的特性就是对它所修饰变量具有可见性，什么意思呢，就是当一个线程修改了变量的值，新的值会立刻（马上）同步到主内存中，其它线程使用时拉取到的就是最新的变量值。尽管volatile能保证变量的可见性，但并不能保证线程安全，因为它不能保证原子性。要想线程安全还是要用同步或者锁。<br>有一篇文档写volatile写的很好，贴一下：<a href="http://dwz.cn/76TMGW" target="_blank" rel="noopener">http://dwz.cn/76TMGW</a><h3 id="5-线程池"><a href="#5-线程池" class="headerlink" title="5.线程池"></a>5.线程池</h3>JDK1.5之后引入了高级并发特性，在java.util.concurrent包中，是专门用于多线程并发编程的，充分利用了现代计算机多处理器和多核心的功能以编写大规模并发应用程序。主要包含原子量、并发集合、同步器、可重入锁，并对线程池的创建提供了强力的支持。<h4 id="5-1线程池的5种创建方式"><a href="#5-1线程池的5种创建方式" class="headerlink" title="5.1线程池的5种创建方式"></a>5.1线程池的5种创建方式</h4></li>
+<li>Single Thread Executor : 只有一个线程的线程池，所有提交的任务都是顺序执行；<br>代码： Executors.newSingleThreadExecutor()</li>
+<li>Cached Thread Pool : 线程池里有很多线程需要同时执行，老的可用线程将被新的任务触发重新执行，如果线程超过60秒内没执行，那么将被终止并从池中删除；<br>代码：Executors.newCachedThreadPool()</li>
+<li>Fixed Thread Pool : 拥有固定线程数的线程池，如果没有任务执行，那么线程会一直等待，<br>代码： Executors.newFixedThreadPool(4)<br>在构造函数中的参数4是线程池的大小，你可以随意设置，最好设置成和cpu的核数量保持一致，获取cpu的核数量int cpuNums = Runtime.getRuntime().availableProcessors();</li>
+<li>Scheduled Thread Pool : 用来调度即将执行的任务的线程池，可能不是直接执行, 每隔多久执行一次，属于策略型的。<br>代码：Executors.newScheduledThreadPool()</li>
+<li>Single Thread Scheduled Pool : 只有一个线程，用来调度任务在指定时间执行，代码：Executors.newSingleThreadScheduledExecutor()<br>示例代码如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    ExecutorService newSingleThreadExecutor = Executors.newSingleThreadExecutor();</span><br><span class="line">    ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();</span><br><span class="line">    //获取cpu核心数</span><br><span class="line">    int num = Runtime.getRuntime().availableProcessors();</span><br><span class="line">    ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(num);</span><br><span class="line">    ScheduledExecutorService newScheduledThreadPool = Executors.newScheduledThreadPool(8);</span><br><span class="line">    ScheduledExecutorService newSingleThreadScheduledExecutor = Executors.newSingleThreadScheduledExecutor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="5-2线程池的使用"><a href="#5-2线程池的使用" class="headerlink" title="5.2线程池的使用"></a>5.2线程池的使用</h4><p>说到线程池使用之前再强调一下Runnable的孪生兄弟——Callable，他们两个很像，只是Runnable的run方法不会有任何返回结果，主线程无法获得任务线程的返回值；但是Callable的call方法可以返回结果，但是主线程在获取时是被阻塞，需要等待任务线程返回才能拿到结果，所以Callable比Runnable更强大，那么怎么获取到这个执行结果呢？答案是Future，使用Future可以获取到Callable执行的结果。<br>现在开始说线程池怎么使用，也有两种方式，一种Runnable的，一种Callable的:</p>
+<ul>
+<li><p>提交 Runnable ，任务完成后 Future 对象返回 null，调用excute,提交任务, 匿名Runable重写run方法, run方法里是业务逻辑。<br>示例代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class TestPoolWithRunnable &#123;</span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line">        ExecutorService pool = Executors.newFixedThreadPool(4);</span><br><span class="line">        for (int i=0;i&lt;10;i++)&#123;</span><br><span class="line">            Future&lt;?&gt; submit = pool.submit(new Runnable() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void run() &#123;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + &quot;开始执行&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            System.out.println(&quot;执行结果：&quot;+submit.get());  //所有的执行结果全是null</span><br><span class="line">        &#125;</span><br><span class="line">        pool.shutdown();  //关闭线程池</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提交 Callable，该方法返回一个 Future 实例表示任务的状态，调用submit提交任务, 匿名Callable,重写call方法, 有返回值, 获取返回值会阻塞,一直要等到线程任务返回结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @author 刘俊重</span><br><span class="line"> * Callable 跟Runnable的区别：</span><br><span class="line"> * Runnable的run方法不会有任何返回结果，所以主线程无法获得任务线程的返回值</span><br><span class="line"> * Callable的call方法可以返回结果，但是主线程在获取时是被阻塞，需要等待任务线程返回才能拿到结果</span><br><span class="line"> */</span><br><span class="line">public class TestPoolWithCallable &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line">        ExecutorService pool = Executors.newFixedThreadPool(4);</span><br><span class="line">        for(int i=0;i&lt;10;i++)&#123;</span><br><span class="line">            Future&lt;String&gt; future = pool.submit(new Callable&lt;String&gt;() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public String call() throws Exception &#123;</span><br><span class="line">                    Thread.sleep(500);</span><br><span class="line">                    return &quot;====&quot;+Thread.currentThread().getName();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            //从Future中get结果，这个方法是会被阻塞的，一直要等到线程任务返回结果</span><br><span class="line">            System.out.println(&quot;执行结果：&quot;+future.get());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        pool.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如何解决获取执行结果阻塞的问题？<br>在使用future.get()方法获取结果时，这个方法是阻塞的，怎么提高效率呢？如果在不要求立马拿到执行结果的情况下，可以先将执行结果放在队列里面，待程序执行完毕之后在获取每个线程的执行结果，示例代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class TestThreadPool &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line">        Future&lt;?&gt; submit = null;</span><br><span class="line">        //创建缓存线程池</span><br><span class="line">        ExecutorService cachePool = Executors.newCachedThreadPool();</span><br><span class="line"></span><br><span class="line">        //用来存在Callable执行结果</span><br><span class="line">        List&lt;Future&lt;?&gt;&gt; futureList = new ArrayList&lt;Future&lt;?&gt;&gt;();</span><br><span class="line"></span><br><span class="line">        for(int i = 0;i&lt;10;i++)&#123;</span><br><span class="line">            //cachePool提交线程，Callable，Runnable无返回值</span><br><span class="line">            //submit = cachePool.submit(new TaskCallable(i));</span><br><span class="line">            submit = cachePool.submit(new TaskRunnable(i));</span><br><span class="line"></span><br><span class="line">            //把这些执行结果放到list中，后面再取可以避免阻塞</span><br><span class="line">            futureList.add(submit);</span><br><span class="line">        &#125;</span><br><span class="line">        cachePool.shutdown();</span><br><span class="line">        //打印执行结果</span><br><span class="line">        for(Future f : futureList)&#123;</span><br><span class="line">            boolean done = f.isDone();</span><br><span class="line">            System.out.println(done?&quot;已完成&quot;:&quot;未完成&quot;);</span><br><span class="line">            System.out.println(&quot;线程返回结果：&quot;+f.get());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>把submit放在list集合中，线程直线完毕之后再取。</p>
+<h3 id="6-java并发编程总结"><a href="#6-java并发编程总结" class="headerlink" title="6.java并发编程总结"></a>6.java并发编程总结</h3><h4 id="6-1不使用线程池的缺点"><a href="#6-1不使用线程池的缺点" class="headerlink" title="6.1不使用线程池的缺点"></a>6.1不使用线程池的缺点</h4><p>直接使用new Thread().start()的方式，对于一般场景是没问题的，但如果是在并发请求很高的情况下，就会有隐患：</p>
+<ul>
+<li>新建线程的开销。线程虽然比进程要轻量许多，但对于JVM来说，新建一个线程的代价还是很大的，决不同于新建一个对象。</li>
+<li>资源消耗量。没有一个池来限制线程的数量，会导致线程的数量直接取决于应用的并发量。</li>
+<li>稳定性。当线程数量超过系统资源所能承受的程度，稳定性就会成问题。<h4 id="6-2线程池的类型"><a href="#6-2线程池的类型" class="headerlink" title="6.2线程池的类型"></a>6.2线程池的类型</h4>不管是通过Executors创建线程池，还是通过Spring来管理，都得知道有哪几种线程池：</li>
+<li>FixedThreadPool：定长线程池，提交任务时创建线程，直到池的最大容量，如果有线程非预期结束，会补充新线程；</li>
+<li>CachedThreadPool：可变线程池，它犹如一个弹簧，如果没有任务需求时，它回收空闲线程，如果需求增加，则按需增加线程，不对池的大小做限制；</li>
+<li>SingleThreadExecutor：单线程。处理不过来的任务会进入FIFO队列等待执行；</li>
+<li>SecheduledThreadPool：周期性线程池。支持执行周期性线程任务<br>其实，这些不同类型的线程池都是通过构建一个ThreadPoolExecutor来完成的，所不同的是corePoolSize,maximumPoolSize,keepAliveTime,unit,workQueue,threadFactory这么几个参数。<h4 id="6-3线程池饱和策略"><a href="#6-3线程池饱和策略" class="headerlink" title="6.3线程池饱和策略"></a>6.3线程池饱和策略</h4>由以上线程池类型可知，除了CachedThreadPool其他线程池都有饱和的可能，当饱和以后就需要相应的策略处理请求线程的任务，比如，达到上限时通过ThreadPoolExecutor.setRejectedExecutionHandler方法设置一个拒绝任务的策略，JDK提供了AbortPolicy、CallerRunsPolicy、DiscardPolicy、DiscardOldestPolicy几种策略。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/多线程/" rel="tag"><i class="fa fa-tag"></i> 多线程</a>
+          
+            <a href="/tags/线程池/" rel="tag"><i class="fa fa-tag"></i> 线程池</a>
+          
+            <a href="/tags/锁/" rel="tag"><i class="fa fa-tag"></i> 锁</a>
+          
+            <a href="/tags/volatile/" rel="tag"><i class="fa fa-tag"></i> volatile</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/15/分布式协调服务zookeeper总结/" rel="next" title="分布式协调服务zookeeper总结">
+                <i class="fa fa-chevron-left"></i> 分布式协调服务zookeeper总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">微信公众号【Java开发日记】</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:653837271@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gitee.com/catchu/projects" title="码云" target="_blank">码云</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/u014532775" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-线程和进程"><span class="nav-text"><a href="#1-&#x7EBF;&#x7A0B;&#x548C;&#x8FDB;&#x7A0B;" class="headerlink" title="1.&#x7EBF;&#x7A0B;&#x548C;&#x8FDB;&#x7A0B;"></a>1.&#x7EBF;&#x7A0B;&#x548C;&#x8FDB;&#x7A0B;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1线程和进程的区别"><span class="nav-text"><a href="#1-1&#x7EBF;&#x7A0B;&#x548C;&#x8FDB;&#x7A0B;&#x7684;&#x533A;&#x522B;" class="headerlink" title="1.1&#x7EBF;&#x7A0B;&#x548C;&#x8FDB;&#x7A0B;&#x7684;&#x533A;&#x522B;"></a>1.1&#x7EBF;&#x7A0B;&#x548C;&#x8FDB;&#x7A0B;&#x7684;&#x533A;&#x522B;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2线程运行状态"><span class="nav-text"><a href="#1-2&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;&#x72B6;&#x6001;" class="headerlink" title="1.2&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;&#x72B6;&#x6001;"></a>1.2&#x7EBF;&#x7A0B;&#x8FD0;&#x884C;&#x72B6;&#x6001;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-多线程"><span class="nav-text"><a href="#2-&#x591A;&#x7EBF;&#x7A0B;" class="headerlink" title="2.&#x591A;&#x7EBF;&#x7A0B;"></a>2.&#x591A;&#x7EBF;&#x7A0B;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1继承Thread类"><span class="nav-text"><a href="#2-1&#x7EE7;&#x627F;Thread&#x7C7B;" class="headerlink" title="2.1&#x7EE7;&#x627F;Thread&#x7C7B;"></a>2.1&#x7EE7;&#x627F;Thread&#x7C7B;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2实现Runnable接口"><span class="nav-text"><a href="#2-2&#x5B9E;&#x73B0;Runnable&#x63A5;&#x53E3;" class="headerlink" title="2.2&#x5B9E;&#x73B0;Runnable&#x63A5;&#x53E3;"></a>2.2&#x5B9E;&#x73B0;Runnable&#x63A5;&#x53E3;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3实现Callable接口"><span class="nav-text"><a href="#2-3&#x5B9E;&#x73B0;Callable&#x63A5;&#x53E3;" class="headerlink" title="2.3&#x5B9E;&#x73B0;Callable&#x63A5;&#x53E3;"></a>2.3&#x5B9E;&#x73B0;Callable&#x63A5;&#x53E3;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4使用线程池"><span class="nav-text"><a href="#2-4&#x4F7F;&#x7528;&#x7EBF;&#x7A0B;&#x6C60;" class="headerlink" title="2.4&#x4F7F;&#x7528;&#x7EBF;&#x7A0B;&#x6C60;"></a>2.4&#x4F7F;&#x7528;&#x7EBF;&#x7A0B;&#x6C60;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-同步"><span class="nav-text"><a href="#3-&#x540C;&#x6B65;" class="headerlink" title="3.&#x540C;&#x6B65;"></a>3.&#x540C;&#x6B65;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1synchronized关键字"><span class="nav-text"><a href="#3-1synchronized&#x5173;&#x952E;&#x5B57;" class="headerlink" title="3.1synchronized&#x5173;&#x952E;&#x5B57;"></a>3.1synchronized&#x5173;&#x952E;&#x5B57;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2Lock接口"><span class="nav-text"><a href="#3-2Lock&#x63A5;&#x53E3;" class="headerlink" title="3.2Lock&#x63A5;&#x53E3;"></a>3.2Lock&#x63A5;&#x53E3;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-volatile关键字"><span class="nav-text"><a href="#4-volatile&#x5173;&#x952E;&#x5B57;" class="headerlink" title="4.volatile&#x5173;&#x952E;&#x5B57;"></a>4.volatile&#x5173;&#x952E;&#x5B57;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-线程池"><span class="nav-text"><a href="#5-&#x7EBF;&#x7A0B;&#x6C60;" class="headerlink" title="5.&#x7EBF;&#x7A0B;&#x6C60;"></a>5.&#x7EBF;&#x7A0B;&#x6C60;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1线程池的5种创建方式"><span class="nav-text"><a href="#5-1&#x7EBF;&#x7A0B;&#x6C60;&#x7684;5&#x79CD;&#x521B;&#x5EFA;&#x65B9;&#x5F0F;" class="headerlink" title="5.1&#x7EBF;&#x7A0B;&#x6C60;&#x7684;5&#x79CD;&#x521B;&#x5EFA;&#x65B9;&#x5F0F;"></a>5.1&#x7EBF;&#x7A0B;&#x6C60;&#x7684;5&#x79CD;&#x521B;&#x5EFA;&#x65B9;&#x5F0F;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2线程池的使用"><span class="nav-text"><a href="#5-2&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x4F7F;&#x7528;" class="headerlink" title="5.2&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x4F7F;&#x7528;"></a>5.2&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x4F7F;&#x7528;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-java并发编程总结"><span class="nav-text"><a href="#6-java&#x5E76;&#x53D1;&#x7F16;&#x7A0B;&#x603B;&#x7ED3;" class="headerlink" title="6.java&#x5E76;&#x53D1;&#x7F16;&#x7A0B;&#x603B;&#x7ED3;"></a>6.java&#x5E76;&#x53D1;&#x7F16;&#x7A0B;&#x603B;&#x7ED3;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1不使用线程池的缺点"><span class="nav-text"><a href="#6-1&#x4E0D;&#x4F7F;&#x7528;&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x7F3A;&#x70B9;" class="headerlink" title="6.1&#x4E0D;&#x4F7F;&#x7528;&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x7F3A;&#x70B9;"></a>6.1&#x4E0D;&#x4F7F;&#x7528;&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x7F3A;&#x70B9;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2线程池的类型"><span class="nav-text"><a href="#6-2&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x7C7B;&#x578B;" class="headerlink" title="6.2&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x7C7B;&#x578B;"></a>6.2&#x7EBF;&#x7A0B;&#x6C60;&#x7684;&#x7C7B;&#x578B;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3线程池饱和策略"><span class="nav-text"><a href="#6-3&#x7EBF;&#x7A0B;&#x6C60;&#x9971;&#x548C;&#x7B56;&#x7565;" class="headerlink" title="6.3&#x7EBF;&#x7A0B;&#x6C60;&#x9971;&#x548C;&#x7B56;&#x7565;"></a>6.3&#x7EBF;&#x7A0B;&#x6C60;&#x9971;&#x548C;&#x7B56;&#x7565;</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">
+   访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_pv">
+    访问量：<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+<!--  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript">
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+</body>
+</html>
