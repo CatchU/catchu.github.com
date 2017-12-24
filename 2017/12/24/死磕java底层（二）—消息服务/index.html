@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="消息服务,BlockingQueue,ActiveMQ," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这一节作为上一节多线程的延续，先说一下java原生的阻塞队列（Blocking Queue），之后再说一下JMS（Java Messaging Service，java消息服务）以及它的实现之一ActiveMQ消息队列，所以都归并到消息服务中讨论。 1.阻塞队列（Blocking Queue）BlockingQueue也是java.util.concurrent下的接口，它解决了多线程中如何高效传">
+<meta name="keywords" content="消息服务,BlockingQueue,ActiveMQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="死磕java底层（二）—消息服务">
+<meta property="og:url" content="http://yoursite.com/2017/12/24/死磕java底层（二）—消息服务/index.html">
+<meta property="og:site_name" content="Java开发日记">
+<meta property="og:description" content="这一节作为上一节多线程的延续，先说一下java原生的阻塞队列（Blocking Queue），之后再说一下JMS（Java Messaging Service，java消息服务）以及它的实现之一ActiveMQ消息队列，所以都归并到消息服务中讨论。 1.阻塞队列（Blocking Queue）BlockingQueue也是java.util.concurrent下的接口，它解决了多线程中如何高效传">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-24T04:18:43.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="死磕java底层（二）—消息服务">
+<meta name="twitter:description" content="这一节作为上一节多线程的延续，先说一下java原生的阻塞队列（Blocking Queue），之后再说一下JMS（Java Messaging Service，java消息服务）以及它的实现之一ActiveMQ消息队列，所以都归并到消息服务中讨论。 1.阻塞队列（Blocking Queue）BlockingQueue也是java.util.concurrent下的接口，它解决了多线程中如何高效传">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/24/死磕java底层（二）—消息服务/"/>
+
+
+
+
+
+  <title>死磕java底层（二）—消息服务 | Java开发日记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3c8433f31ad3b1b35b684edbbacacf20";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Java开发日记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      <!--
+        <p class="site-subtitle">分享前后端开发技术</p>
+      
+	  -->
+	  <p class="site-subtitle" id="site-subtitle">分享前后端开发技术</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button onclick="showSubtitle()">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav" id="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/24/死磕java底层（二）—消息服务/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘俊重">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Java开发日记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">死磕java底层（二）—消息服务</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-24T12:16:43+08:00">
+                2017-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台—java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">后台—java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/12/24/死磕java底层（二）—消息服务/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/12/24/死磕java底层（二）—消息服务/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,563 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一节作为上一节多线程的延续，先说一下java原生的阻塞队列（Blocking Queue），之后再说一下JMS（Java Messaging Service，java消息服务）以及它的实现之一ActiveMQ消息队列，所以都归并到消息服务中讨论。</p>
+<h3 id="1-阻塞队列（Blocking-Queue）"><a href="#1-阻塞队列（Blocking-Queue）" class="headerlink" title="1.阻塞队列（Blocking Queue）"></a>1.阻塞队列（Blocking Queue）</h3><p>BlockingQueue也是java.util.concurrent下的接口，它解决了多线程中如何高效传输数据的问题，通过这些高效并且线程安全的类，我们可以搭建高质量的多线程程序。 主要用来控制线程同步的工具。<br>BlockingQueue是一个接口，里面的方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public interface BlockingQueue&lt;E&gt; extends Queue&lt;E&gt; &#123;</span><br><span class="line">    boolean add(E e);</span><br><span class="line">    boolean offer(E e);</span><br><span class="line">    void put(E e) throws InterruptedException;</span><br><span class="line">    boolean offer(E e, long timeout, TimeUnit unit);</span><br><span class="line">    E take() throws InterruptedException;</span><br><span class="line">    E poll(long timeout, TimeUnit unit)</span><br><span class="line">    int remainingCapacity();</span><br><span class="line">    boolean remove(Object o);</span><br><span class="line">    public boolean contains(Object o);</span><br><span class="line">    int drainTo(Collection&lt;? super E&gt; c);</span><br><span class="line">    int drainTo(Collection&lt;? super E&gt; c, int maxElements);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>插入:</li>
+</ul>
+<ol>
+<li>add(anObject):把anObject加到BlockingQueue里,即如果BlockingQueue可以容纳,则返回true,否则抛出异常,不好</li>
+<li>offer(anObject):表示如果可能的话,将anObject加到BlockingQueue里,即如果BlockingQueue可以容纳,则返回true,否则返回false.</li>
+<li>put(anObject):把anObject加到BlockingQueue里,如果BlockQueue没有空间,则调用此方法的线程被阻断直到BlockingQueue里面有空间再继续, 有阻塞, 放不进去就等待</li>
+</ol>
+<ul>
+<li>读取：</li>
+</ul>
+<ol>
+<li>poll(time):取走BlockingQueue里排在首位的对象,若不能立即取出,则可以等time参数规定的时间,取不到时返回null; 取不到返回null</li>
+<li>take():取走BlockingQueue里排在首位的对象,若BlockingQueue为空,阻断进入等待状态直到Blocking有新的对象被加入为止; 阻塞, 取不到就一直等</li>
+</ol>
+<ul>
+<li>其他</li>
+</ul>
+<ol>
+<li>int remainingCapacity();返回队列剩余的容量，在队列插入和获取的时候使用，数据可能不准。</li>
+<li>boolean remove(Object o); 从队列移除元素，如果存在，即移除一个或者更多，队列改变了返回true</li>
+<li>public boolean contains(Object o); 查看队列是否存在这个元素，存在返回true</li>
+<li>int drainTo(Collection&lt;? super E&gt; c); 移除此队列中所有可用的元素,并将它们添加到给定 collection 中。（即取出放到集合中）</li>
+<li>int drainTo(Collection&lt;? super E&gt; c, int maxElements); 和上面方法的区别在于，指定了移动的数量; （取出指定个数放到集合）<br>主要的方法是：put、take一对阻塞存取；add、poll一对非阻塞存取。<br>上面说了BlockingQueue是一个接口，它有四个具体的实现类,常用的有两个:  </li>
+<li>ArrayBlockingQueue：一个由数组支持的有界阻塞队列，规定大小的BlockingQueue,其构造函数必须带一个int参数来指明其大小.其所含的对象是以FIFO(先入先出)顺序排序的。</li>
+<li>LinkedBlockingQueue：大小不定的BlockingQueue，其构造函数中可以指定容量，也可以不指定，不指定的话，默认最大是Integer.MAX_VALUE,其中主要用到put和take方法，put方法在队列满的时候会阻塞直到有队列成员被消费，take方法在队列空的时候会阻塞，直到有队列成员被放进来。<br>LinkedBlockingQueue和ArrayBlockingQueue区别：<br>LinkedBlockingQueue和ArrayBlockingQueue比较起来,它们背后所用的数据结构不一样,导致LinkedBlockingQueue的数据吞吐量要大于ArrayBlockingQueue,但在线程数量很大时其性能的可预见性低于ArrayBlockingQueue.<br>下面是是用BlockingQueue实现的生产者和消费者的示例：<br>生产者Product：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class Product implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">    BlockingQueue&lt;String&gt; queue;</span><br><span class="line">    public Product(BlockingQueue&lt;String&gt; queue) &#123;</span><br><span class="line">        //创建对象时就传入一个阻塞队列</span><br><span class="line">        this.queue = queue;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void run()&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+&quot;开始生产&quot;);</span><br><span class="line">            String temp =  Thread.currentThread().getName()+&quot;：生产线程&quot;;</span><br><span class="line">            queue.put(temp);//向队列中放数据，如果队列是满的话，会阻塞当前线程</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>消费者Consumer：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class Consumer implements Runnable&#123;</span><br><span class="line">    BlockingQueue&lt;String&gt; queue;</span><br><span class="line">    public Consumer(BlockingQueue&lt;String&gt; queue) &#123;</span><br><span class="line">        //使用有参构造函数的目的是我在创建这个消费者对象的时候就可以传进来一个队列</span><br><span class="line">        this.queue = queue;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        try &#123;</span><br><span class="line">            while(true)&#123;</span><br><span class="line">                Thread.sleep(random.nextInt(10));</span><br><span class="line">                System.out.println(Thread.currentThread().getName()+ &quot;准备消费...&quot;);</span><br><span class="line">                String temp = queue.take();//从队列中取任务消费，如果队列为空，会阻塞当前线程</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + &quot; 获取到工作任务==== &quot; +temp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试类TestQueue：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class TestQueue &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //新建一个阻塞队列，队列长度是5</span><br><span class="line">        BlockingQueue&lt;String&gt; queue = new LinkedBlockingDeque&lt;String&gt;(5);</span><br><span class="line">        //BlockingQueue&lt;String&gt; queue = new ArrayBlockingQueue&lt;String&gt;(5);</span><br><span class="line">        Consumer consumer = new Consumer(queue);</span><br><span class="line">        Product product = new Product(queue);</span><br><span class="line"></span><br><span class="line">        for(int i = 0;i&lt;3;i++)&#123;</span><br><span class="line">            new Thread(product,&quot;product&quot;+i).start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //for (int i = 0;i&lt;5;i++)&#123;</span><br><span class="line">            new Thread(consumer,&quot;consumer&quot;).start();</span><br><span class="line">        //&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>整套代码的意思就是初始化一个消息队列，里面放String类型，队列长度是5，使用生产者线程来模拟三个用户发出请求，把用户的请求数据暂时放在BlockingQueue队列里面，随后消费者线程不断的从队列里面取任务进行业务逻辑处理，直到队列里面消费的什么都不剩了。由此可以看出消息队列有两大特点：解耦和削峰填谷。生产者和消费者毛关系没有，生产者往队列里放数据，消费者从队列里取数据，它们都跟队列建立关系，解耦；生产者如果并发量很高也只不过是把数据先放到队列里，消费者可以慢慢吃，实际中不会立马拖垮服务端。<br>参考地址：<a href="http://blog.csdn.net/ghsau/article/details/8108292" target="_blank" rel="noopener">http://blog.csdn.net/ghsau/article/details/8108292</a></p>
+<h3 id="2-Java消息服务"><a href="#2-Java消息服务" class="headerlink" title="2.Java消息服务"></a>2.Java消息服务</h3><h4 id="2-1JMS简介"><a href="#2-1JMS简介" class="headerlink" title="2.1JMS简介"></a>2.1JMS简介</h4><p>JMS即Java消息服务（Java Message Service）用于在两个应用程序之间，或分布式系统中发送消息，进行异步通信。JMS是一种与厂商（或者说是平台）无关的 API。类似于JDBC(Java Database Connectivity)：这里，JDBC 是可以用来访问许多不同关系数据库的 API，而 JMS 则提供同样与厂商无关的访问方法，以访问消息收发服务。<br>许多厂商都支持 JMS，包括 IBM 的 MQSeries、BEA的 Weblogic JMS service和 Progress 的 SonicMQ等等。 JMS 可以让你通过消息收发服务从一个 JMS 客户机向另一个 JMS客户机发送消息。<br>消息是 JMS 中的一种类型对象，由两部分组成：报头和消息主体。报头由路由信息以及有关该消息的元数据组成；消息主体则携带着应用程序的数据或有效负载。根据有效负载的类型来划分，可以将消息分为几种类型，它们分别携带：简单文本(TextMessage)、可序列化的对象 (ObjectMessage)、属性集合 (MapMessage)、字节流 (BytesMessage)、原始值流 (StreamMessage)，还有无有效负载的消息 (Message)。</p>
+<h4 id="2-2JMS的组成"><a href="#2-2JMS的组成" class="headerlink" title="2.2JMS的组成"></a>2.2JMS的组成</h4><p>JMS由以下元素组成：<br>JMS提供者provider：面向消息中间件的，JMS规范的一个实现。提供者可以是Java平台的JMS实现，也可以是非Java平台的面向消息中间件的适配器。<br>JMS客户：生产或消费基于消息的Java应用程序或对象（即生产者和消费者都统称JMS客户）。<br>JMS生产者：创建并发送消息的JMS客户。<br>JMS消费者：接收消息的JMS客户。<br>JMS消息：可以在JMS客户之间传递数据的对象<br>JMS队列：一个容纳被发送的正在等待阅读的消息的区域。一个消息如果被阅读，它将被从队列中移走。<br>JMS主题：一种支持发送消息给多个订阅者的机制。</p>
+<h4 id="2-3Java消息服务模型"><a href="#2-3Java消息服务模型" class="headerlink" title="2.3Java消息服务模型"></a>2.3Java消息服务模型</h4><ul>
+<li>点对点模型<br>在点对点队列模型下，一个生产者向一个特定的队列发布消息，一个消费者从该队列中读取消息。这里，生产者知道消费者的队列，并直接将消息发送到消费者的队列。<br>这种模式有如下特点：<br>只有一个消费者将获得消息；<br>生产者不需要消费者在消费该消息期间处于运行状态，消费者也同样不需要在生产者在发送消息时处于运行状态；<br>每一个成功处理的消息都由消费者者签收。</li>
+<li>发布者/订阅者模型<br>发布者/订阅者模型支持向一个特定的<strong>消息主题</strong>发布消息。在这种模型下，发布者和订阅者彼此不知道对方，类似于匿名公告板。<br>这种模式有如下特点：<br>多个消费者可以获得消息；<br>在发布者和订阅者之间存在时间依赖性。发布者需要建立一个订阅（subscription），以便消费者能够订阅。订阅者必须保持持续的活动状态以接收消息，除非订阅者建立了持久的订阅。<h4 id="2-4消息队列（ActiveMQ）"><a href="#2-4消息队列（ActiveMQ）" class="headerlink" title="2.4消息队列（ActiveMQ）"></a>2.4消息队列（ActiveMQ）</h4>ActiveMQ是JMS规范的一种实现，下面说如何使用</li>
+<li>下载ActiveMQ<br>去官方网站下载：<a href="http://activemq.apache.org/" target="_blank" rel="noopener">http://activemq.apache.org/</a></li>
+<li>运行ActiveMQ<br>解压apache-activemq-5.5.1-bin.zip（类似于Tomcat，解压即可用），我在网上搜的有的人修改了配置文件activeMQ.xml中连接的地址和协议，我在测试时没有修改也可以测试成功，如果你测试不成功可以修改如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;transportConnectors&gt;</span><br><span class="line">   &lt;transportConnector name=&quot;openwire&quot; uri=&quot;tcp://localhost:61616&quot;/&gt;</span><br><span class="line">   &lt;transportConnector name=&quot;ssl&quot;     uri=&quot;ssl://localhost:61617&quot;/&gt;</span><br><span class="line">   &lt;transportConnector name=&quot;stomp&quot;   uri=&quot;stomp://localhost:61613&quot;/&gt;</span><br><span class="line">   &lt;transportConnector uri=&quot;http://localhost:8081&quot;/&gt;</span><br><span class="line">   &lt;transportConnector uri=&quot;udp://localhost:61618&quot;/&gt;</span><br><span class="line">&lt;/transportConnectors&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>测试代码如下：<br>生产者Product：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">public class Product &#123;</span><br><span class="line"></span><br><span class="line">    private String username = ActiveMQConnectionFactory.DEFAULT_USER;</span><br><span class="line">    private String password = ActiveMQConnectionFactory.DEFAULT_PASSWORD;</span><br><span class="line">    private String url = ActiveMQConnectionFactory.DEFAULT_BROKER_URL;</span><br><span class="line"></span><br><span class="line">    private Connection connection = null;</span><br><span class="line">    private Session session = null;</span><br><span class="line">    private String subject = &quot;myQueue&quot;;</span><br><span class="line">    private Destination destination = null;</span><br><span class="line">    private MessageProducer producer = null;</span><br><span class="line">    /**</span><br><span class="line">     * @Description 初始化方法</span><br><span class="line">     * @Author 刘俊重</span><br><span class="line">     * @Date 2017/12/20</span><br><span class="line">     */</span><br><span class="line">    private void init() throws JMSException &#123;</span><br><span class="line">        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(username,password,url);</span><br><span class="line">        connection = connectionFactory.createConnection();</span><br><span class="line">        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">        destination = session.createQueue(subject);</span><br><span class="line">        producer = session.createProducer(destination);</span><br><span class="line">        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void productMessage(String message) throws JMSException &#123;</span><br><span class="line">        this.init();</span><br><span class="line">        TextMessage textMessage = session.createTextMessage(message);</span><br><span class="line">        connection.start();</span><br><span class="line">        System.out.println(&quot;生产者准备发送消息：&quot;+textMessage);</span><br><span class="line">        producer.send(textMessage);</span><br><span class="line">        System.out.println(&quot;生产者已发送完毕消息。。。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void close() throws JMSException &#123;</span><br><span class="line">        System.out.println(&quot;生产者开始关闭连接&quot;);</span><br><span class="line">        if(null!=producer)&#123;</span><br><span class="line">            producer.close();</span><br><span class="line">        &#125;</span><br><span class="line">        if(null!=session)&#123;</span><br><span class="line">            session.close();</span><br><span class="line">        &#125;</span><br><span class="line">        if(null!=connection)&#123;</span><br><span class="line">            connection.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>消费者Consumer：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">public class Consumer implements MessageListener,ExceptionListener&#123;</span><br><span class="line">    private String name = ActiveMQConnectionFactory.DEFAULT_USER;</span><br><span class="line">    private String password = ActiveMQConnectionFactory.DEFAULT_PASSWORD;</span><br><span class="line">    private String url = ActiveMQConnectionFactory.DEFAULT_BROKER_URL;</span><br><span class="line">    private ActiveMQConnectionFactory connectionFactory = null;</span><br><span class="line">    private Connection connection = null;</span><br><span class="line">    private Session session = null;</span><br><span class="line">    private String subject = &quot;myQueue&quot;;</span><br><span class="line">    private Destination destination = null;</span><br><span class="line">    private MessageConsumer consumer = null;</span><br><span class="line"></span><br><span class="line">    public static Boolean isconnection=false;</span><br><span class="line">    /**</span><br><span class="line">     * @Description 连接ActiveMQ</span><br><span class="line">     * @Author 刘俊重</span><br><span class="line">     * @Date 2017/12/20</span><br><span class="line">     */</span><br><span class="line">    private void init() throws JMSException &#123;</span><br><span class="line">        connectionFactory = new ActiveMQConnectionFactory(name,password,url);</span><br><span class="line">        connection = connectionFactory.createConnection();</span><br><span class="line">        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">        destination = session.createQueue(subject);</span><br><span class="line">        consumer = session.createConsumer(destination);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void consumerMessage() throws JMSException &#123;</span><br><span class="line">        this.init();</span><br><span class="line">        connection.start();</span><br><span class="line"></span><br><span class="line">        //设置消息监听和异常监听</span><br><span class="line">        consumer.setMessageListener(this);</span><br><span class="line">        connection.setExceptionListener(this);</span><br><span class="line">        System.out.println(&quot;消费者开始监听....&quot;);</span><br><span class="line">        isconnection = true;</span><br><span class="line">        //Message receive = consumer.receive();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void close() throws JMSException &#123;</span><br><span class="line">        if(null!=consumer)&#123;</span><br><span class="line">            consumer.close();</span><br><span class="line">        &#125;</span><br><span class="line">        if(null!=session)&#123;</span><br><span class="line">            session.close();</span><br><span class="line">        &#125;</span><br><span class="line">        if(null!=connection)&#123;</span><br><span class="line">            connection.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * 异常处理函数</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void onException(JMSException exception) &#123;</span><br><span class="line">        //发生异常关闭连接</span><br><span class="line">        isconnection = false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 消息处理函数</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void onMessage(Message message) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if(message instanceof TextMessage)&#123;</span><br><span class="line">                TextMessage textMsg = (TextMessage) message;</span><br><span class="line">                String text = textMsg.getText();</span><br><span class="line">                System.out.println(&quot;消费者接收到的消息=======&quot;+text);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                System.out.println(&quot;接收的消息不符合&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (JMSException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：消费者需要实现MessageListener和ExceptionListener来监听收到消息和出错时的处理。<br>生产者测试类TestProduct：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class TestProduct &#123;</span><br><span class="line">    public static void main(String[] args) throws JMSException &#123;</span><br><span class="line">        for(int i=0;i&lt;100;i++)&#123;</span><br><span class="line">            Product product = new Product();</span><br><span class="line">            product.productMessage(&quot;Hello World!&quot;+i);</span><br><span class="line">            product.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>TestProduct是用来模拟生成100条消息，写入到ActiveMQ队列中。<br>消费者测试类TestConsumer：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class TestConsumer implements Runnable &#123;</span><br><span class="line">    static Thread thread = null;</span><br><span class="line">    public static void main(String[] args) throws InterruptedException &#123;</span><br><span class="line">        thread = new Thread(new TestConsumer());</span><br><span class="line">        thread.start();</span><br><span class="line">        while (true)&#123;</span><br><span class="line">            //时刻监听消息队列，如果线程死了，则新建一个线程</span><br><span class="line">            boolean alive = thread.isAlive();</span><br><span class="line">            System.out.println(&quot;当前线程状态：&quot;+alive);</span><br><span class="line">            if(!alive)&#123;</span><br><span class="line">                thread = new Thread(new TestConsumer());</span><br><span class="line">                thread.start();</span><br><span class="line">                System.out.println(&quot;线程重启完成&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Consumer consumer = new Consumer();</span><br><span class="line">            consumer.consumerMessage();</span><br><span class="line">            while (Consumer.isconnection) &#123;</span><br><span class="line">                //System.out.println(123);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (JMSException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>TestConsumer这里用了多线程，保证时刻有个线程活着等着接收ActiveMQ的消息队列并调用消费者处理。<br>总结：我的理解是线程间通信使用queue，如BlockingQueue，进程间通信使用JMS，如ActiveMQ。<br>另附上一篇将58架构师沈剑老师写的消息队列的文章，可以作为参考：<a href="http://dwz.cn/78yLxL" target="_blank" rel="noopener">http://dwz.cn/78yLxL</a><br>需要强调的是任何一项技术的引用都要为解决业务问题服务，而不能是单纯的炫技。举个例子，就拿消息服务来说，比如用户注册某个网站，注册完了之后我要调用邮件和短信服务给他发通知，我可能还要通过他填的信息，给他推荐一下可能认识的用户，那么这里核心业务是注册，其它的发通知和推荐用户就可以放在消息队列里处理，先响应注册信息，随后调用其它服务来处理发通知和推荐用户这两个业务。但是网站前期可能用户量比较少，不用消息队列就能满足我的需求了，引用消息队列反而会增加项目的复杂性，所以新技术的使用一定是需要解决业务的问题，而不是单纯的炫技。<br>参考文档：<br><a href="http://blog.csdn.net/fanzhigang0/article/details/43764121" target="_blank" rel="noopener">http://blog.csdn.net/fanzhigang0/article/details/43764121</a><br><a href="http://blog.csdn.net/u010702229/article/details/18085263" target="_blank" rel="noopener">http://blog.csdn.net/u010702229/article/details/18085263</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="刘俊重 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注我的微信公众号</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="刘俊重 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/消息服务/" rel="tag"><i class="fa fa-tag"></i> 消息服务</a>
+          
+            <a href="/tags/BlockingQueue/" rel="tag"><i class="fa fa-tag"></i> BlockingQueue</a>
+          
+            <a href="/tags/ActiveMQ/" rel="tag"><i class="fa fa-tag"></i> ActiveMQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/20/死磕java底层（一）—多线程/" rel="next" title="死磕java底层（一）—多线程">
+                <i class="fa fa-chevron-left"></i> 死磕java底层（一）—多线程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="刘俊重" />
+            
+              <p class="site-author-name" itemprop="name">刘俊重</p>
+              <p class="site-description motion-element" itemprop="description">微信公众号【Java开发日记】</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/CatchU" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://weibo.com/u/2950177635" target="_blank" title="微博">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>微博</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:653837271@qq.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gitee.com/catchu/projects" title="码云" target="_blank">码云</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.csdn.net/u014532775" title="CSDN" target="_blank">CSDN</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-阻塞队列（Blocking-Queue）"><span class="nav-text"><a href="#1-&#x963B;&#x585E;&#x961F;&#x5217;&#xFF08;Blocking-Queue&#xFF09;" class="headerlink" title="1.&#x963B;&#x585E;&#x961F;&#x5217;&#xFF08;Blocking Queue&#xFF09;"></a>1.&#x963B;&#x585E;&#x961F;&#x5217;&#xFF08;Blocking Queue&#xFF09;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Java消息服务"><span class="nav-text"><a href="#2-Java&#x6D88;&#x606F;&#x670D;&#x52A1;" class="headerlink" title="2.Java&#x6D88;&#x606F;&#x670D;&#x52A1;"></a>2.Java&#x6D88;&#x606F;&#x670D;&#x52A1;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1JMS简介"><span class="nav-text"><a href="#2-1JMS&#x7B80;&#x4ECB;" class="headerlink" title="2.1JMS&#x7B80;&#x4ECB;"></a>2.1JMS&#x7B80;&#x4ECB;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2JMS的组成"><span class="nav-text"><a href="#2-2JMS&#x7684;&#x7EC4;&#x6210;" class="headerlink" title="2.2JMS&#x7684;&#x7EC4;&#x6210;"></a>2.2JMS&#x7684;&#x7EC4;&#x6210;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3Java消息服务模型"><span class="nav-text"><a href="#2-3Java&#x6D88;&#x606F;&#x670D;&#x52A1;&#x6A21;&#x578B;" class="headerlink" title="2.3Java&#x6D88;&#x606F;&#x670D;&#x52A1;&#x6A21;&#x578B;"></a>2.3Java&#x6D88;&#x606F;&#x670D;&#x52A1;&#x6A21;&#x578B;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4消息队列（ActiveMQ）"><span class="nav-text"><a href="#2-4&#x6D88;&#x606F;&#x961F;&#x5217;&#xFF08;ActiveMQ&#xFF09;" class="headerlink" title="2.4&#x6D88;&#x606F;&#x961F;&#x5217;&#xFF08;ActiveMQ&#xFF09;"></a>2.4&#x6D88;&#x606F;&#x961F;&#x5217;&#xFF08;ActiveMQ&#xFF09;</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘俊重</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i>
+<span id="busuanzi_container_site_uv">
+   访客数：<span id="busuanzi_value_site_uv"></span>
+</span>
+<span class="post-meta-divider">|</span>
+<span id="busuanzi_container_site_pv">
+    访问量：<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+<!--  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytni642r';
+      var conf = 'd2b73778ad069b511dab6230b39c6b44';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript">
+function showSubtitle()
+{
+  var siteNav=document.getElementById("site-nav");
+  if(siteNav.style.display=="block")
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="none";
+  }else
+  {
+   var subTitle=document.getElementById("site-subtitle");
+   subTitle.style.display="block";
+  }
+}
+</script>
+</body>
+</html>
